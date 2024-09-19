@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 3 with External A Tag</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://unpkg.com/vue-router@4"></script>
+    <script src="test.js"></script>
+
+</head>
+
+<body>
+    <!-- 外部的 A 标签 -->
+    <a href="#/about">Go to About Page (External Link)</a>
+
+    <!-- Vue 应用的挂载点 -->
+    <div id="app">
+        <nav>
+            <!-- Vue Router 的 router-link -->
+            <router-link to="/">Home</router-link> |
+            <router-link to="/about">About</router-link>
+        </nav>
+
+        <!-- router-view 显示匹配的组件 -->
+        <router-view></router-view>
+    </div>
+
+    <!-- 引入 Vue 3 和 Vue Router -->
+
+    <script>
+        // 定义组件
+        const Home = {
+            template: '<h2>{{ message }}</h2>',
+            data() {
+                return {
+                    message: 'home page'
+                };
+            },
+            mounted() {
+                // 在组件挂载时调用外部函数
+
+            }
+        }
+        const About = { template: '<h2>About Page</h2>' }
+
+        // 定义路由
+        const routes = [
+            { path: '/', component: Home },
+            { path: '/about', component: About }
+        ]
+
+        // 创建Vue Router实例
+        const router = VueRouter.createRouter({
+            history: VueRouter.createWebHashHistory(),
+            routes
+        })
+
+        // 创建Vue实例并挂载
+        const app = Vue.createApp({})
+        app.use(router) // 注册路由
+        app.mount('#app') // 挂载到 #app
+    </script>
+</body>
+
+</html>

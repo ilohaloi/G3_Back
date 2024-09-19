@@ -5,6 +5,7 @@
   "license": "MIT",
   "author": "Colorlib <https://colorlib.com>",
   "main": "dist/js/adminlte.min.js",
+  "type": "module",
   "scripts": {
     "bundlewatch": "bundlewatch --config .bundlewatch.config.json",
     "css": "npm-run-all css-compile css-prefix css-minify",
@@ -20,7 +21,7 @@
     "css-minify-splits": "npm run css-minify-bash -- dist/css/alt/ --batch --batch-suffix \".min\" \"dist/css/alt/*.css\" \"!dist/css/alt/*.min.css\"",
     "css-lint": "stylelint \"build/scss/**/*.scss\" --cache --cache-location .cache/.stylelintcache",
     "compile": "npm-run-all --parallel js css-all",
-    "dev": "npm-run-all --parallel watch sync",
+    "dev": "vite",
     "docs": "npm-run-all docs-prepare docs-compile",
     "docs-lint": "node build/npm/vnu-jar.js",
     "docs-compile": "cd docs/ && bundle exec jekyll build -d ../docs_html",
@@ -124,7 +125,9 @@
     "sweetalert2": "^11.4.0",
     "tempusdominus-bootstrap-4": "^5.39.0",
     "toastr": "^2.1.4",
-    "uplot": "^1.6.18"
+    "uplot": "^1.6.18",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "vite": "^5.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.17.0",
