@@ -1,0 +1,258 @@
+/* 全局設定 */
+.content-wrapper {
+    width: 100%;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.main-container {
+    display: flex;
+    gap: 20px;
+}
+
+
+/* ============================================會員LIST區塊====================== */
+.member-selection {
+    width: 30%;
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 未讀按鈕 */
+#unread-button {
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+#unread-button:hover {
+  background-color: #0056b3;
+}
+
+/* 已完成按鈕 */
+#finished-button {
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+#finished-button:hover {
+  background-color: #0056b3;
+}
+
+/* 搜尋框區域 */
+.search-container {
+    margin-bottom: 15px;
+}
+
+#search-input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+/* ===============================會員列表====================================== */
+#member-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* 設置未讀訊息標記樣式 */
+.unread-badge {
+  display: inline-block;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+/* 隱藏未讀標記時 */
+.unread-badge.hidden {
+  display: none;
+}
+
+
+/* 會員 1 單獨樣式 */
+.member-one {
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.member-one:hover {
+    background-color: #e0f7fa;
+}
+
+/* 會員 2 單獨樣式 */
+.member-two {
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.member-two:hover {
+    background-color: #ffecb3;
+}
+
+/* 會員 3 單獨樣式 */
+.member-three {
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.member-three:hover {
+    background-color: #dcedc8;
+}
+
+/* 會員 4 單獨樣式 */
+.member-four {
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.member-four:hover {
+  background-color: #dcedc8;
+}
+/* 會員 5 單獨樣式 */
+.member-five {
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.member-five:hover {
+  background-color: #dcedc8;
+}
+/* 會員 6 單獨樣式 */
+.member-six {
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.member-six:hover {
+  background-color: #dcedc8;
+}
+
+
+
+
+
+/* ==========================================聊天室區================================================== */
+.chat-container {
+    flex-grow: 1;
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.chat-box {
+    height: 400px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+/* 每個訊息的樣式 */
+.message {
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #0eaaf3;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 發送者訊息樣式 */
+.message-sender {
+  background-color: #e50b0b;
+  align-self: flex-end; /* 右對齊 */
+  text-align: right; /* 文字靠右 */
+}
+
+/* 接收者訊息樣式 */
+.message-receiver {
+  background-color: #dcedc8;
+  align-self: flex-start; /* 左對齊 */
+  text-align: left; /* 文字靠左 */
+}
+/* 輸入框區 */
+.input-box {
+    display: flex;
+    gap: 10px;
+}
+
+/* 訊息輸入框 */
+.input-box input {
+    flex-grow: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+/* 發送按鈕 */
+#send-button {
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+#send-button:hover {
+    background-color: #0056b3;
+}
+
+/* 夾帶檔案按鈕 */
+#attach-button {
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: none;
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+}
+
+#attach-button:hover {
+    background-color: #218838;
+}
