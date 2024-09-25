@@ -265,7 +265,7 @@
                     <script type="module">
                         import { getProducts } from './js/prod.js';
                         import { updateProd } from './js/prod.js';
-                        const prod_views = {
+                        const prod_view = {
                             template: `
                             <div class="row">
                                 <div class="col-12">
@@ -373,14 +373,11 @@
                             },
                             async mounted() {
                                 try {
-                                    // 使用 async/await 处理异步请求
                                     const products = await getProducts();
                                     this.prod = products;
-                                    console.log(this.prod); // 输出获取的数据
                                 } catch (error) {
                                     console.error('Failed to get products:', error); // 捕获并处理错误
                                 }
-
                             },
                         }
                         const prod_control = {
@@ -457,21 +454,11 @@
                                     console.log("照片路徑", files);
                                 },
                                 async submitForm(event) {
-
-                                    if (!this.prod.name || !this.prod.category || !this.prod.stock || !this.prod.price) {
-                                        this.message.str = '所有字段都是必填的';
-                                        this.message.color = 'red';
-                                        return;
-                                    }
-
-
                                     event.preventDefault();
                                     const type = "new";
                                     try {
                                         const resp = await updateProd(this.prod, type);
-                                        console.log("resp ", resp);
-
-                                        if (resp === "success") {
+                                        if (resp.status === 200) {
                                             this.message.str = "新增成功"
                                             this.message.color = "green";
                                         }
@@ -492,7 +479,7 @@
 
                         // 定义路由
                         const routes = [
-                            { path: '/', component: prod_views },
+                            { path: '/', component: prod_view },
                             { path: '/control', component: prod_control }
                         ]
 
@@ -520,14 +507,7 @@
 
         <!-- AdminLTE App -->
         <script src="../../dist/js/adminlte.min.js"></script>
-        <script>
-            $(function () {
-                $("#example1").DataTable({
-                    "responsive": true, "lengthChange": false, "autoWidth": false,
-                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            });
-        </script>
+
 </body>
 
 </html>

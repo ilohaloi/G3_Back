@@ -89,6 +89,7 @@
                         this.message = "入庫 或 價格 不得為0"
                         return;
                     }
+
                     // -1 表示未修改
                     if (this.prod_newValue.stock === 0) {
                         type = "price";
@@ -107,12 +108,13 @@
                     const resp = await updateProd(this.prod, type);
                     console.log(resp);
 
-                    if (resp === 'success') {
+                    if (resp.status === 200) {
                         this.uploadStatus = true;
                         this.message = "";
                     }
-                    else
+                    else {
                         this.message = "更新失敗";
+                    }
                 },
                 windowClose() {
                     if (window.opener) {

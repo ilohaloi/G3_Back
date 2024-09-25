@@ -76,14 +76,13 @@ export async function updateProd(prod, type) {
                 method: 'POST',
                 body: formData
             });
-            const resp = await response.json();
-            return resp.status;
+          
+            return response;
         } catch (error) {
             console.error('錯誤訊息: ', error);
             return error;
         }
     } else {
-        console.log(prod);
         try {
             response = await fetch("http://localhost:8081/shoppingCart-server/UpdateProd", {
             method: "POST",
@@ -92,8 +91,8 @@ export async function updateProd(prod, type) {
             },
             body: JSON.stringify(prod)
             });
-            const resp = await response.json();
-            return resp.status;
+          
+            return response;
         } catch(error) {
             console.error('錯誤訊息: ',error);
             return error;
