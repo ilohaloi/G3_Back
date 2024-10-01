@@ -18,7 +18,6 @@ export async function addNewOrder(data,router) {
             },
             body: JSON.stringify(data)
         });
-
         if (!response.ok) {
             throw new Error(`Network response was not ok: ${response.statusText}`);
         }
@@ -54,9 +53,7 @@ export function handleFileUpload(event,prod){
 export async function updateProd(prod, type) {
 
     let response;
-
     if (prod.imges || type=== "new") {
-
         const formData = new FormData();
         formData.append('name', prod.name);
         formData.append('category', prod.category);
@@ -76,7 +73,6 @@ export async function updateProd(prod, type) {
                 method: 'POST',
                 body: formData
             });
-          
             return response;
         } catch (error) {
             console.error('錯誤訊息: ', error);
@@ -91,7 +87,6 @@ export async function updateProd(prod, type) {
             },
             body: JSON.stringify(prod)
             });
-          
             return response;
         } catch(error) {
             console.error('錯誤訊息: ',error);

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 | Log in</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+
+    <link rel="stylesheet" href="./plugins/fontawesome-free/css/all.min.css">
+
+    <link rel="stylesheet" href="./plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+
+    <link rel="stylesheet" href="./dist/css/adminlte.min.css?v=3.2.0">
+</head>
+
+<body class="hold-transition login-page">
+
+    <div id="app">
+
+        <div class="login-box">
+            <div class="login-logo">
+                <div href="#"><b>Ship</b></div>
+            </div>
+
+            <div class="card">
+                <div class="card-body login-card-body">
+                    <p class="login-box-msg">登入</p>
+                    <form>
+                        <div class="input-group mb-3">
+                            <input type="email" v-model="loginInfo.account" class="form-control" placeholder="Email">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-envelope"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="password" v-model="loginInfo.password" class="form-control"
+                                placeholder="Password">
+
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <button @click="send" class="btn btn-primary btn-block">Sign In</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module">
+        import { Encryption } from './ourFile/dev_employee_login/js/login.js'
+        const app = Vue.createApp({
+            data() {
+                return {
+                    loginInfo: {
+                        account: "",
+                        passwrd: ""
+                    }
+                }
+            },
+            methods: {
+                async send(event) {
+                    event.preventDefault();
+                    const info = Encryption(JSON.stringify(this.loginInfo), sessionStorage.getItem('key'));
+
+                    try {
+                        let response = await fetch("http://localhost:8081/TIA103G3_Hibernate/decryptdata", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+
+                            //TODO info 改 Data
+                            body: JSON.stringify({ info: info, key: sessionStorage.getItem('key') })
+                        });
+                        //TODO 改JWT
+                        if (response.ok) {
+                            const info = await response.json();
+                            console.log("info: ", info);
+                            sessionStorage.setItem('key', info.key);
+
+                        }
+                    } catch (error) {
+                        console.log("Error: ", error);
+
+                    }
+                }
+            },
+            async mounted() {
+
+                if (!sessionStorage.getItem('key')) {
+                    try {
+
+                        const response = await fetch("http://localhost:8081/TIA103G3_Hibernate/createtempaeskey", {
+                            method: "get",
+                            mode: 'cors'
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+
+                        const info = await response.json();
+
+                        sessionStorage.setItem('key', info.key);
+
+                    } catch (error) {
+                        console.log("Error: ", error);
+                    }
+                }
+            }
+
+        });
+        app.mount('#app');
+    </script>
+
+
+
+
+    <script src="./plugins/jquery/jquery.min.js"></script>
+
+    <script src="./plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="./dist/js/adminlte.min.js?v=3.2.0"></script>
+</body>
+
+</html>
