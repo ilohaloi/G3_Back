@@ -40,13 +40,13 @@
                             <p>{{prod.category}}</p>
                         </div>
                         <div class="form-group">
-                            <label for="stock" class="form-label">入庫數量 (0等於無修改)</label>
-                            <input type="number" id="stock" v-model="prod_newValue.stock" class="form-control" min="0"
+                            <label for="stock" class="form-label">入庫數量 (0為無修改)</label>
+                            <input type="number" id="stock" v-model="prod.stock" class="form-control" min="0"
                                 required />
                         </div>
                         <div class="form-group">
-                            <label for="price" class="form-label">價格 (0等於無修改)</label>
-                            <input type="number" id="price" v-model="prod_newValue.price" class="form-control" min="0"
+                            <label for="price" class="form-label">價格 (0為無修改)</label>
+                            <input type="number" id="price" v-model="prod.price" class="form-control" min="0"
                                 required />
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
@@ -60,7 +60,8 @@
     </div>
     </div>
     <script type="module">
-        import { updateProd } from '../js/prod.js'
+        import { updateProd } from "../js/prod.js"
+        import { getProduct } from "../js/prod.js"
         const app = Vue.createApp({
             data() {
                 return {
@@ -68,10 +69,6 @@
                         id: 0,
                         name: "",
                         category: "",
-                        stock: 0,
-                        price: 0
-                    },
-                    prod_newValue: {
                         stock: 0,
                         price: 0
                     },
@@ -83,28 +80,11 @@
                 async submitForm(event) {
                     event.preventDefault();
                     let type = null;
-                    if (this.prod_newValue.stock === 0 && this.prod_newValue.price === 0) {
+                    if (this.prod.stock === 0 && this.prod.price === 0) {
                         this.message = "入庫 或 價格 不得為0"
                         return;
                     }
-
-                    // -1 表示未修改
-                    if (this.prod_newValue.stock === 0) {
-                        type = "price";
-                        this.prod.price = this.prod_newValue.price;
-                        this.prod.stock = -1;
-                    }
-                    else if (this.prod_newValue.price === 0) {
-                        type = "stock";
-                        this.prod.stock = this.prod_newValue.stock;
-                        this.prod.price = -1;
-                    }
-                    else {
-                        this.prod.stock = this.prod_newValue.stock;
-                        this.prod.price = this.prod_newValue.price;
-                    }
-                    const resp = await updateProd(this.prod, type);
-                    console.log(resp);
+                    const resp = await updateProd(this.prod);
 
                     if (resp.status === 200) {
                         this.uploadStatus = true;
@@ -120,11 +100,12 @@
                     }
                 }
             },
-            mounted() {
+            async mounted() {
                 const urlParams = new URLSearchParams(window.location.search);
-                this.prod.id = urlParams.get('id');
-                this.prod.name = urlParams.get('name');
-                this.prod.category = urlParams.get('category');
+                const prod = await getProduct(urlParams.get('id'))
+                this.prod.id = prod.id;
+                this.prod.name = prod.name;
+                this.prod.category = prod.category;
             }
         });
         app.mount('#app')

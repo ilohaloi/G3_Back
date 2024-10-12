@@ -282,6 +282,7 @@
                     <script type="module">
                         import { getProducts } from '../js/prod.js';
                         import { updateProd } from '../js/prod.js';
+                        import { insertProd } from '../js/prod.js';
                         const prod_view = {
                             template: `
                             <div class="row">
@@ -378,8 +379,7 @@
                                     this.currentPage = page;
                                 },
                                 openWindow(prod) {
-                                    // 打开一个新窗口，设置宽度、高度、位置等
-                                    const params = `id=${prod.id}&name=${encodeURIComponent(prod.name)}&category=${encodeURIComponent(prod.category)}&price=${prod.price}&stock=${prod.stock}`;
+                                    const params = `id=${prod.id}`;
                                     window.open(
                                         `./prod_popwindow.html?${params}`, // 要打开的 URL
                                         'popupWindow', // 窗口名称
@@ -399,7 +399,7 @@
                                 }
                             },
                         }
-                        const prod_control = {
+                        const prod_upload = {
                             template: `
                                 <div class="card card-success">
                                     <div class="card-header">
@@ -433,7 +433,7 @@
                                         </div>
                                     
                                         <div class="form-group">
-                                            <label for="imges" class="form-label">上傳圖片（最多 3 张）</label>
+                                            <label for="imges" class="form-label">上傳圖片（最多三張，圖片大小不得超過10MB）</label>
                                             <input type="file" name="imges" id="imges" @change="handleFileUpload" class="input-group-text" multiple accept="image/*" />
                                         </div>
                                         <div class="card-footer">
@@ -474,25 +474,22 @@
                                 },
                                 async submitForm(event) {
                                     event.preventDefault();
-                                    const type = "new";
+                                    this.message.str = "";
                                     try {
-                                        const resp = await updateProd(this.prod, type);
+                                        const resp = await insertProd(this.prod);
                                         if (resp.status === 200) {
                                             this.message.str = "新增成功"
                                             this.message.color = "green";
                                         }
-                                        else {
-                                            this.message.str = "新增失敗"
+                                        else if (resp.status === 400) {
+                                            const err = await resp.json();
+                                            this.message.str = err.error;
                                             this.message.color = "red";
                                         }
-
                                     } catch (error) {
                                         console.error('提交出错:', error);
                                     }
                                 }
-                            },
-                            mounted() {
-
                             },
                         }
                         const orders_view = {
@@ -558,7 +555,7 @@
                         // 定义路由
                         const routes = [
                             { path: '/', component: prod_view },
-                            { path: '/prod', component: prod_control },
+                            { path: '/prod', component: prod_upload },
                             { path: '/orders', component: orders_view }
                         ]
 

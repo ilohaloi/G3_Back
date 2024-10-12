@@ -19,35 +19,35 @@ export async function getAesKey() {
     
     const response =  await fetch("http://localhost:8081/TIA103G3_Hibernate/createtempaeskey", {
         method: "post",
-        mode: 'cors'
+        mode: "cors"
     })
     .catch(error => {
         console.log("Error" ,error);
     });
     const info = await response.json();
-    sessionStorage.setItem('key', info.key);
+    sessionStorage.setItem("key", info.key);
     
 }
 export async function getRsaKey(data) { 
     const response = await fetch('http://localhost:8081/TIA103G3_Hibernate/decryptdata', {
-        method: 'post',
+        method: "post",
         headers: {
                 "Content-Type": "application/json"
         },
         body: JSON.stringify({ action:"getEmpPubKey",identity: "", data: data.account, base64key: ""})
     })
     .catch(error => {
-        console.error('获取数据时出错:', error);
+        console.error("获取数据时出错:", error);
     });
     const keyData = await response.json();
     console.log(keyData);
     
-    sessionStorage.setItem('key', keyData.key);
+    sessionStorage.setItem("key", keyData.key);
 }
 export async function getEmployee() { 
     return  fetch('http://127.0.0.1:8081/TIA103G3_Hibernate/getEmpData', {
-        method: 'get',
-        mode: 'cors'
+        method: "get",
+        mode: "cors"
     })
     .catch(error => {
         console.error('获取数据时出错:', error);
@@ -56,7 +56,7 @@ export async function getEmployee() {
 }
 export async function updateEmp(data) { 
     const response = await fetch('http://localhost:8081/TIA103G3_Hibernate/decryptdata', {
-        method: 'post',
+        method: "post",
         headers: {
                 "Content-Type": "application/json"
         },
@@ -72,11 +72,11 @@ export async function login(data) {
     
     const encrypdata = encryptionRsa(JSON.stringify(data));
     const response = await fetch('http://127.0.0.1:8081/TIA103G3_Hibernate/decryptdata', {
-        method: 'post',
+        method: "post",
         headers: {
                 "Content-Type": "application/json"
         },
-        credentials: 'include',
+        credentials: "include",
         body: JSON.stringify({ action: "empLogin", identity: data.account, data: encrypdata, base64key: "" })
     })
     .catch(error => {
@@ -96,32 +96,3 @@ export async function login(data) {
 
 
 
-const app = Vue.createApp({
-            data() {
-                return {
-                    data: {
-                        account: "",
-                        password: ""
-                    },
-                    info: ""
-                }
-            },
-            methods: {
-                async send(event) {
-                    event.preventDefault();
-                    this.data.account = this.data.account.trim();
-                    this.data.password = this.data.password.trim();
-                    console.log(this.data.account);
-
-                    //TODO 
-                    if (!sessionStorage.getItem('key')) {
-                        await getRsaKey(this.data);
-                    }
-                    const log = await login(this.data);
-                    this.info = log.info;
-                }
-            },
-            mounted() {
-            }
-        });
-        app.mount('#app');
