@@ -1,6 +1,6 @@
 export async function getRoute() {
     try {
-        const response = await fetch('http://localhost:8081/TIA103G3_Servlet/prod', {
+        const response = await fetch('http://localhost:8081/journey/route', {
             method: "get",
             mode: "cros"
         })

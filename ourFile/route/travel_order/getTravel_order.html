@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <title>顯示後端 JSON(Travel_order) 資料</title>
+    <style>
+        /* 全局樣式 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        #user-container {
+            margin: 20px auto;
+            max-width: 800px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        /* 表格樣式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 600px) {
+
+            table,
+            thead,
+            tbody,
+            th,
+            td,
+            tr {
+                display: block;
+            }
+
+            th {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            tr {
+                margin-bottom: 15px;
+            }
+
+            td {
+                border: none;
+                position: relative;
+                padding-left: 50%;
+            }
+
+            td:before {
+                position: absolute;
+                top: 12px;
+                left: 12px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                font-weight: bold;
+                content: attr(data-label);
+            }
+        }
+                /* 模态窗口的基本样式 */
+                .modal {
+            display: none; /* 默认隐藏 */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%; /* 模态窗口大小 */
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>訂單表格</h1>
+    <!-- <h2>書籍列表</h2> -->
+    <div id="user-container">
+        <!-- 使用者資料將會顯示在這裡 -->
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>編輯訂單</h2>
+            <!-- 编辑行程的输入框 -->
+            <label for="routeField">訂單編號:</label>
+            <input type="text" id="id" value="" disabled>
+            <br>
+            <label for="routeField">會員編號:</label>
+            <input type="text" id="memb_id" value="">
+            <br>
+            <label for="routeField">船隻編號:</label>
+            <input type="text" id="ship_id" value="">
+            <br>
+            <label for="routeField">優惠券編號:</label>
+            <input type="text" id="coup_id" value="">
+            <br>
+            <label for="routeField">訂單狀況:</label>
+            <input type="text" id="trav_orde_status" value="">
+            <br>
+            <label for="routeField">房間數量:</label>
+            <input type="text" id="room_amount" value="">
+            <br>
+            <label for="routeField">訂單總價:</label>
+            <input type="text" id="trav_orde_amount" value="">
+
+            <button id="saveBtn">保存</button>
+        </div>
+    </div>
+    <button  onclick="window.location.href='insertTravel_orderFetch.html'" style="display: block; margin: 0 auto;">跳轉到新增訂單 </button>
+    
+
+    <script src="Travel_ordermain.js"></script>
+</body>
+
+</html>
+

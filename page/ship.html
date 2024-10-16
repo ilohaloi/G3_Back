@@ -382,7 +382,11 @@
                             },
                             async mounted() {
                                 try {
+                                    
                                     this.route = await getRoute();
+                                    
+                                    console.log(this.route);
+
                                 } catch (error) {
                                     console.error('Failed to get products:', error); // 捕获并处理错误
                                 }
