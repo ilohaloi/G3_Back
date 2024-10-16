@@ -17,7 +17,7 @@ export function encryptionRsa(value) {
 
 export async function getAesKey() { 
     
-    const response =  await fetch("http://localhost:8081/TIA103G3_Hibernate/createtempaeskey", {
+    const response =  await fetch("http://localhost:8081/TIA103G3_Servlet/createtempaeskey", {
         method: "post",
         mode: "cors"
     })
@@ -29,7 +29,7 @@ export async function getAesKey() {
     
 }
 export async function getRsaKey(data) { 
-    const response = await fetch('http://localhost:8081/TIA103G3_Hibernate/decryptdata', {
+    const response = await fetch('http://localhost:8081/TIA103G3_Servlet/decryptdata', {
         method: "post",
         headers: {
                 "Content-Type": "application/json"
@@ -45,7 +45,7 @@ export async function getRsaKey(data) {
     sessionStorage.setItem("key", keyData.key);
 }
 export async function getEmployee() { 
-    return  fetch('http://127.0.0.1:8081/TIA103G3_Hibernate/getEmpData', {
+    return  fetch('http://127.0.0.1:8081/TIA103G3_Servlet/getEmpData', {
         method: "get",
         mode: "cors"
     })
@@ -55,7 +55,7 @@ export async function getEmployee() {
     
 }
 export async function updateEmp(data) { 
-    const response = await fetch('http://localhost:8081/TIA103G3_Hibernate/decryptdata', {
+    const response = await fetch('http://localhost:8081/TIA103G3_Servlet/decryptdata', {
         method: "post",
         headers: {
                 "Content-Type": "application/json"
@@ -71,7 +71,7 @@ export async function updateEmp(data) {
 export async function login(data) { 
     
     const encrypdata = encryptionRsa(JSON.stringify(data));
-    const response = await fetch('http://127.0.0.1:8081/TIA103G3_Hibernate/decryptdata', {
+    const response = await fetch('http://127.0.0.1:8081/TIA103G3_Servlet/decryptdata', {
         method: "post",
         headers: {
                 "Content-Type": "application/json"

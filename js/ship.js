@@ -1,6 +1,6 @@
 export async function getRoute() {
     try {
-        const response = await fetch('http://localhost:8081/TIA103G3_Hibernate/prod', {
+        const response = await fetch('http://localhost:8081/TIA103G3_Servlet/prod', {
             method: "get",
             mode: "cros"
         })
@@ -14,7 +14,7 @@ export async function getRoute() {
 };
 export async function getSchedule() {
     try {
-        const response = await fetch('http://localhost:8081/TIA103G3_Hibernate/prod', {
+        const response = await fetch('http://localhost:8081/TIA103G3_Servlet/prod', {
             method: "get",
             mode: "cros"
         })
@@ -28,7 +28,7 @@ export async function getSchedule() {
 };
 export async function getOrder() {
     try {
-        const response = await fetch('http://localhost:8081/TIA103G3_Hibernate/prod', {
+        const response = await fetch('http://localhost:8081/TIA103G3_Servlet/prod', {
             method: "get",
             mode: "cros"
         })
