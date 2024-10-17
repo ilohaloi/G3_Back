@@ -1,8 +1,8 @@
 export async function getRoute() {
     try {
-        const response = await fetch('http://localhost:8081/TIA103G3_Servlet/prod', {
+        const response = await fetch('http://localhost:8081/TIA103G3_Servlet/route', {
             method: "get",
-            mode: "cros"
+            mode: "cors"
         })
         if (response.status === 200) {
             const route = await response.json();
@@ -16,7 +16,7 @@ export async function getSchedule() {
     try {
         const response = await fetch('http://localhost:8081/TIA103G3_Servlet/prod', {
             method: "get",
-            mode: "cros"
+            mode: "cors"
         })
         if (response.status === 200) {
             const schedule = await response.json();
@@ -30,7 +30,7 @@ export async function getOrder() {
     try {
         const response = await fetch('http://localhost:8081/TIA103G3_Servlet/prod', {
             method: "get",
-            mode: "cros"
+            mode: "cors"
         })
         if (response.status === 200) {
             const order = await response.json();
