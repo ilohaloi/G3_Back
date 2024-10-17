@@ -51,7 +51,9 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <p class="mb-0" style="color: red">{{info}}</p>
+                            <div class="mb-0" style="color: red; min-width: 200px;">
+                                <span>{{error}}</span>
+                            </div>
                             <button @click="send" class="btn btn-primary">Sign In</button>
                         </div>
                     </form>
@@ -60,9 +62,9 @@
         </div>
     </div>
     <script type="module">
-        import { login } from './js/emplogin.js'
-        import { getRsaKey } from './js/emplogin.js'
-        import { encryptionRsa } from './js/emplogin.js'
+        import { login } from './js/emp.js'
+        import { getRsaKey } from './js/emp.js'
+        import { encryptionRsa } from './js/emp.js'
         const app = Vue.createApp({
             data() {
                 return {
@@ -70,7 +72,7 @@
                         account: "",
                         password: ""
                     },
-                    info: ""
+                    error: ""
                 }
             },
             methods: {
@@ -78,14 +80,11 @@
                     event.preventDefault();
                     this.data.account = this.data.account.trim();
                     this.data.password = this.data.password.trim();
-                    console.log(this.data.account);
+                    await getRsaKey(this.data);
 
-                    //TODO 
-                    if (!sessionStorage.getItem('key')) {
-                        await getRsaKey(this.data);
+                    if (await login(this.data) === 203) {
+                        this.error = "帳號密碼輸入錯誤";
                     }
-                    const log = await login(this.data);
-                    this.info = log.info;
                 }
             },
             mounted() {
