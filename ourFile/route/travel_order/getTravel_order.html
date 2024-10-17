@@ -33,13 +33,17 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            table-layout: fixed; /* 保證表格欄位寬度一致 */
         }
 
         th,
         td {
             padding: 12px;
-            text-align: left;
             border-bottom: 1px solid #ddd;
+            text-align: center; /* 將文本與按鈕置中 */
+            vertical-align: middle; /* 垂直置中 */
+            word-wrap: break-word; /* 防止超長內容換行 */
+            white-space: nowrap; /* 禁止自動換行 */
         }
 
         th {
@@ -52,7 +56,7 @@
         }
 
         /* 響應式設計 */
-        @media (max-width: 600px) {
+        @media (max-width: 800px) {
 
             table,
             thead,
@@ -84,7 +88,7 @@
                 top: 12px;
                 left: 12px;
                 width: 45%;
-                padding-right: 10px;
+                /* padding-right: 10px; */
                 white-space: nowrap;
                 font-weight: bold;
                 content: attr(data-label);
