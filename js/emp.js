@@ -65,8 +65,7 @@ export async function updateEmp(data) {
     .catch(error => {
         console.error('获取数据时出错:', error);
     });
-    const info = await response.json();
-    return info;
+    return await response.json();
 }
 export async function login(data) { 
     
@@ -90,7 +89,7 @@ export async function login(data) {
         
     }
     else  if(response.status === 203){ 
-        return await response.json();
+        return 203;
     }
 } 
 

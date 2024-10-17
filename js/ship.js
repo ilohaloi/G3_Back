@@ -1,6 +1,8 @@
 export async function getRoute() {
     try {
-        const response = await fetch('http://localhost:8081/TIA103G3_Hibernate/route', {
+
+        const response = await fetch('http://localhost:8081/TIA103G3_Servlet/route', {
+
             method: "get",
             mode: "cors"
         })

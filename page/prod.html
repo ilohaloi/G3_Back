@@ -521,6 +521,7 @@
                                                         <th>訂單編號</th>
                                                         <th>會員編號</th>
                                                         <th>狀態</th>
+                                                        <th>下定時間</th>
                                                         <th>付款方式</th>
                                                         <th>總價</th>
                                                         <th>明細</th>
@@ -531,6 +532,7 @@
                                                         <td>{{ item.orid }}</td>
                                                         <td>{{ item.membId }}</td>
                                                         <td>{{ item.status }}</td>
+                                                        <td>{{ item.time }}</td>
                                                         <td>{{ item.payment }}</td>
                                                         <td>{{ item.amount }}</td>
                                                         <td>
@@ -616,6 +618,8 @@
 
                             async mounted() {
                                 this.order = await getOrders();
+                                console.log(this.order);
+
                             }
                         };
                         // 定义路由

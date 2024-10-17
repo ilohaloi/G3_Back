@@ -12,10 +12,11 @@ export function handleFileUpload(event,prod){
 export async function getProducts() {
     try {
         const response = await fetch('http://localhost:8081/TIA103G3_Servlet/prodget', {
-        method: 'post',
-        headers: {
+            method: 'post',
+            headers: {
                 'Content-Type': 'application/json'
             },
+            credentials: "include",
             body: JSON.stringify({action:'getAllprod',identity:'',data:'',base64key:''})
         })
         if (response.status === 200) {
