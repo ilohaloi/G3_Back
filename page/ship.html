@@ -379,6 +379,14 @@
                                 goToPage(page) {
                                     this.currentPage = page;
                                 },
+                                openWindow(prod) {
+                                    window.open(
+                                        `./prod_PopWindow.html`,
+                                        '商品更新',
+                                        'width=600,height=600,left=200,top=100'
+                                    );
+                                    console.log(prod);
+                                }
                             },
                             async mounted() {
                                 try {
