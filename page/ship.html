@@ -313,7 +313,7 @@
                                                         <td>{{ r.price }}</td>
                                                         <td>
                                                             <div class="btn-group">
-                                                            <button class="btn btn-outline-primary" @click="openWindow(item)">修改</button>    
+                                                            <button class="btn btn-outline-primary" @click="openWindow(r)">修改</button>    
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -379,9 +379,10 @@
                                 goToPage(page) {
                                     this.currentPage = page;
                                 },
-                                openWindow(prod) {
+                                openWindow(route) {
+                                    const id = `id=${route.id}`;
                                     window.open(
-                                        `./prod_PopWindow.html`,
+                                        `./prod_PopWindow.html?${id}`,
                                         '商品更新',
                                         'width=600,height=600,left=200,top=100'
                                     );

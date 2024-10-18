@@ -2,7 +2,6 @@ export async function getRoute() {
     try {
 
         const response = await fetch('http://localhost:8081/TIA103G3_Servlet/route', {
-
             method: "get",
             mode: "cors"
         })
@@ -18,7 +17,7 @@ export async function getRoute() {
 };
 export async function getSchedule() {
     try {
-        const response = await fetch('http://localhost:8081/journey/schedule', {
+        const response = await fetch('http://localhost:8081/TIA103G3_Servlet/schedule', {
             method: "get",
             mode: "cors"
         })
