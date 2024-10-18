@@ -225,20 +225,19 @@
         <div class="container">
             <h1>優惠券管理後台</h1>
 
-            <!-- 查詢優惠券表單 -->
-            <div id="queryCouponForm">
-                <h2>查詢優惠券</h2>
-                <form id="searchCouponForm">
-                    <label for="coup_name">輸入折扣碼</label>
-                    <input type="text" id="coup_name" name="coup_name" placeholder="輸入折扣碼">
-                    <button type="submit" class="btn-submit">查詢</button>
-                </form>
-            </div>
+            <!-- 顯示筆數的下拉選單 -->
+            <label for="displayCount">顯示筆數:</label>
+            <select id="displayCount">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+            </select>
+
 
             <table id="couponTable">
                 <thead>
                     <tr>
-                        <th>優惠券ID</th>
+                        <th>優惠券編號</th>
                         <th>折扣碼</th>
                         <th>敘述</th>
                         <th>折扣</th>
@@ -251,6 +250,13 @@
                     <!-- 這裡的內容會由 JavaScript 動態填充 -->
                 </tbody>
             </table>
+
+            <!-- 分頁功能 -->
+            <div id="pagination" class="pagination">
+                <button id="prevPageBtn">上一頁</button>
+                <span id="pageInfo">第 <span id="currentPage">1</span> 頁</span>
+                <button id="nextPageBtn">下一頁</button>
+            </div>
 
             <!-- 新增優惠券表單 -->
             <div id="addCouponForm" class="form-modal">
