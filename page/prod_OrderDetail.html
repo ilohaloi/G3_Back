@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>訂單明細</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <script src="https://unpkg.com/vue@3"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <div class="card card-outline card-success">
+            <div class="card-header">
+                <div class="card-title col-6 d-flex justify-content-between">
+                    <span>訂單編號: {{oDetail.orId}}</span>
+                    <span>會員編號: {{oDetail.membId}}</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>編號</th>
+                            <th>名稱</th>
+                            <th>數量</th>
+                            <th>價格</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, index) in oDetail.prods" :key="index">
+                            <td>{{ item.first }}</td>
+                            <td>{{ item.second.name }}</td>
+                            <td>{{ item.second.qty }}</td>
+                            <td>{{ item.second.price}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="card-footer">
+                <h3>總金額: {{oDetail.order.amount}}</h3>
+            </div>
+        </div>
+
+        <div class="card">
+
+            <div class="card-header">
+                <div class="card-title">
+                    <p>收件人資料</p>
+                </div>
+            </div>
+            <div class="card-body">
+                <p>姓名: <span>{{oDetail.order.name}}</span></p>
+                <p>電話: <span>{{oDetail.order.tell}}</span></p>
+                <p>收件地址: <span>{{oDetail.order.addr}}</span></p>
+                <p>付款方式: <span>{{oDetail.order.payment}}</span></p>
+                <p>訂單狀態: <span>{{oDetail.order.status}}</span></p>
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-block bg-gradient-success btn-lg" @click="windowClose">回列表</button>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <script type="module">
+        import { getOrderDetail } from '../js/prod.js'
+        const app = Vue.createApp({
+            data() {
+                return {
+                    oDetail: {
+                        orId: 0,
+                        membId: 0,
+                        prods: [],
+                        order: {}
+                    }
+                }
+            },
+            methods: {
+                windowClose() {
+                    if (window.opener) {
+                        window.close();
+                    }
+                }
+            },
+            async mounted() {
+                const urlParams = new URLSearchParams(window.location.search);
+                this.oDetail.orId = urlParams.get('orid');
+                this.oDetail.membId = urlParams.get('membid')
+                const odData = await getOrderDetail(this.oDetail.orId);
+
+                this.oDetail.prods = odData.prods;
+                this.oDetail.order = odData.order;
+                console.log('prods', this.oDetail.prods);
+                console.log('order', this.oDetail.order);
+
+            }
+        });
+        app.mount('#app')
+    </script>
+
+
+
+
+</body>
+
+</html>

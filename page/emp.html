@@ -17,19 +17,19 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet" href="../../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <!-- iCheck -->
-    <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- JQVMap -->
-    <link rel="stylesheet" href="../../plugins/jqvmap/jqvmap.min.css">
+    <link rel="stylesheet" href="../plugins/jqvmap/jqvmap.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="../dist/css/adminlte.min.css">
     <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="../../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <!-- Daterange picker -->
-    <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
     <!-- summernote -->
-    <link rel="stylesheet" href="../../plugins/summernote/summernote-bs4.min.css">
+    <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
 
     <script src="https://kit.fontawesome.com/a33d8d8a91.js" crossorigin="anonymous"></script>
 
@@ -261,32 +261,28 @@
                     <div class="row mb-2">
                         <div class="col-sm-6">
                             <h1 class="m-0">韭菜</h1>
-                        </div><!-- /.col -->
+                        </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
                                 <li class="breadcrumb-item active">員工總覽</li>
                             </ol>
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
-                </div><!-- /.container-fluid -->
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- /.content-header -->
 
-            <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-                    <!-- Small boxes (Stat box) -->
-
                     <div id="app">
                         <router-view></router-view>
                     </div>
 
                     <script type="module">
-                        import { updateEmp } from './js/main.js'
-                        import { getEmployee } from './js/main.js'
-                        import { encryptionAes } from './js/main.js'
-                        import { getAesKey } from './js/main.js'
+                        import { updateEmp } from '../js/emp.js'
+                        import { getEmployee } from '../js/emp.js'
+                        import { encryptionAes } from '../js/emp.js'
+                        import { getAesKey } from '../js/emp.js'
                         const emp_view = {
                             template: `
                             <div class="row">
@@ -406,6 +402,11 @@
                         const emp_control = {
                             template: `
                                 <div class="card card-secondary">
+
+                                    <div v-if="inProcess" class="overlay dark">
+                                        <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+                                    </div>
+
                                     <div class="card-header">
                                     <h3 class="card-title">創建帳號</h3>
                                     </div>
@@ -449,7 +450,8 @@
                                     message: {
                                         str: "",
                                         color: "red"
-                                    }
+                                    },
+                                    inProcess: false
                                 }
                             },
                             methods: {
@@ -458,7 +460,7 @@
                                     this.emp.name.trim();
                                     this.emp.account.trim();
                                     this.emp.password.trim();
-
+                                    this.inProcess = true;
                                     if (!sessionStorage.getItem('key')) {
                                         await getAesKey();
                                     }
@@ -466,19 +468,20 @@
                                     const data = encryptionAes(JSON.stringify(this.emp), aesKey);
                                     try {
                                         const info = await updateEmp(data)
+
                                         this.message.str = info.info;
                                         this.message.color = info.color;
-
+                                        if (this.message.str.length != 0)
+                                            this.inProcess = false;
                                     } catch (error) {
                                         console.error('提交出错:', error);
                                     }
                                 }
                             },
                             async mounted() {
-                                //當key不存在從後端獲取key  
                                 await getAesKey();
-
                             },
+
                         }
 
                         // 定义路由

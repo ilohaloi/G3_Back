@@ -5,53 +5,22 @@ export function handleFileUpload(event,prod){
                 return;
             }
     prod.imges = files;
-    console.log("照片路徑",files);
+    console.log('照片路徑',files);
     
 }
 
-export async function addNewOrder(data,router) {
-    try {
-        const response = await fetch("http://localhost:8081/shoppingCart-server/AddNewOrder", {
-            method: "post",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        });
-        if (!response.ok) {
-            throw new Error(`Network response was not ok: ${response.statusText}`);
-        }
-        const result = await response.json();
-        console.log('Response from server:', result);
-        if (result.status === "success") { 
-            
-            router.replace('/OrderSuccess').then(() => {
-                window.location.reload();
-            });
-            localStorage.setItem('cartTotal','');
-            localStorage.setItem('cart', '');
-            
-        }
-        else {
-            console.error('Order submission failed:', result.message);
-        }
-    } catch (error) {
-        console.error('Error submitting order:', error);
-        throw error;  // 可以选择重新抛出错误，供调用方处理
-    }
-}
 export async function getProducts() {
     try {
-        const response = await fetch('http://localhost:8081/TIA103G3_Hibernate/prodget', {
-        method: "post",
-        headers: {
-                "Content-Type": "application/json"
+        const response = await fetch('http://localhost:8081/TIA103G3_Servlet/prodget', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({action:"getAllprod",identity:"",data:"",base64key:""})
+            credentials: "include",
+            body: JSON.stringify({action:'getAllprod',identity:'',data:'',base64key:''})
         })
         if (response.status === 200) {
-            const prods = await response.json();
-            return prods;
+            return await response.json();
         }
     } catch(error) { 
         console.log(error);
@@ -59,16 +28,15 @@ export async function getProducts() {
 };
 export async function getProduct(id) {
     try {
-        const response = await fetch('http://localhost:8081/TIA103G3_Hibernate/prodget', {
-        method: "post",
+        const response = await fetch('http://localhost:8081/TIA103G3_Servlet/prodget', {
+        method: 'post',
         headers: {
-                "Content-Type": "application/json"
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({action:"getProd",identity:id,data:"",base64key:""})
+            body: JSON.stringify({action:'getProd',identity:id,data:'',base64key:''})
         })
         if (response.status === 200) {
-            const prods = await response.json();
-            return prods;
+            return await response.json();
         }
     } catch(error) { 
         console.log(error);
@@ -91,8 +59,8 @@ export async function insertProd(prod) {
         }
     });
     try {
-        response = await fetch("http://localhost:8081/TIA103G3_Hibernate/prodinsert", {
-            method: "post",
+        response = await fetch('http://localhost:8081/TIA103G3_Servlet/prodinsert', {
+            method: 'post',
             body: formData
         });
         return response;
@@ -104,10 +72,10 @@ export async function insertProd(prod) {
 }
 export async function updateProd(prod) { 
     try {
-        const response = await fetch("http://localhost:8081/TIA103G3_Hibernate/produpdate", {
-        method: "post",
+        const response = await fetch('http://localhost:8081/TIA103G3_Servlet/produpdate', {
+        method: 'post',
         headers: {
-            "Content-Type": "application/json"
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(prod)
         });
@@ -115,5 +83,41 @@ export async function updateProd(prod) {
     } catch(error) {
         console.error('錯誤訊息: ',error);
         return error;
+    } 
+}
+
+
+export async function getOrders() {
+    try {
+        const response = await fetch('http://localhost:8081/TIA103G3_Servlet/getorder',{
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({action:'getOrders'})
+        })
+        if (response.status === 200) {    
+            return await response.json();
+        }
+
+    } catch (error) { 
+        console.log(error);
+    } 
+} 
+export async function getOrderDetail(orderId) { 
+    try {
+        const response = await fetch('http://localhost:8081/TIA103G3_Servlet/getorder',{
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({action:'getDetail',identity:orderId})
+        })
+        if (response.status === 200) {
+            return await response.json();
+        }
+
+    } catch (error) { 
+        console.log(error);
     } 
 }

@@ -16,19 +16,19 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet" href="../../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <!-- iCheck -->
-    <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- JQVMap -->
-    <link rel="stylesheet" href="../../plugins/jqvmap/jqvmap.min.css">
+    <link rel="stylesheet" href="../plugins/jqvmap/jqvmap.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="../dist/css/adminlte.min.css">
     <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="../../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <!-- Daterange picker -->
-    <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
     <!-- summernote -->
-    <link rel="stylesheet" href="../../plugins/summernote/summernote-bs4.min.css">
+    <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
 
     <script src="https://kit.fontawesome.com/a33d8d8a91.js" crossorigin="anonymous"></script>
 
@@ -379,10 +379,21 @@
                                 goToPage(page) {
                                     this.currentPage = page;
                                 },
+                                openWindow(prod) {
+                                    window.open(
+                                        `./prod_PopWindow.html`,
+                                        '商品更新',
+                                        'width=600,height=600,left=200,top=100'
+                                    );
+                                    console.log(prod);
+                                }
                             },
                             async mounted() {
                                 try {
+                                    
                                     this.route = await getRoute();
+                                    console.log(this.route);
+
                                 } catch (error) {
                                     console.error('Failed to get products:', error); // 捕获并处理错误
                                 }
@@ -525,7 +536,7 @@
                                                         <td>{{ order.memb_id }}</td>
                                                         <td>{{ order.ship_id }}</td>
                                                         <td>{{ order.coup_id }}</td>
-                                                        <td>{{ order.trav_order_status }}</td>
+                                                        <td>{{ order.trav_orde_status }}</td>
                                                         <td>{{ order.room_amount }}</td>
                                                         <td>{{ order.trav_orde_amount }}</td>
                                                     </tr>
@@ -635,12 +646,12 @@
         <!-- 請把代碼寫在這邊 -->
 
         <!-- jQuery -->
-        <script src="../../plugins/jquery/jquery.min.js"></script>
+        <script src="../plugins/jquery/jquery.min.js"></script>
         <!-- Bootstrap 4 -->
-        <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
         <!-- AdminLTE App -->
-        <script src="../../dist/js/adminlte.min.js"></script>
+        <script src="../dist/js/adminlte.min.js"></script>
 
 </body>
 

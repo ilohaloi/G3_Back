@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const addCouponBtn = document.getElementById('addCouponBtn');
     const cancelAddBtn = document.getElementById('cancelAddBtn');
     const cancelEditBtn = document.getElementById('cancelEditBtn');
+
     const displayCountSelect = document.getElementById('displayCount'); // 更新下拉選單 ID
     const paginationContainer = document.getElementById('pagination'); // 分頁容器
     let editingCouponId = null;
@@ -27,15 +28,18 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => console.error('Error fetching coupons:', error));
     }
 
+
     // 渲染優惠券列表
     function renderCoupons() {
         couponTable.innerHTML = '';
+
         const startIndex = (currentPage - 1) * couponsPerPage;
         const endIndex = startIndex + couponsPerPage;
 
         // 取出當前頁面的優惠券
         const couponsToDisplay = coupon_type.slice(startIndex, endIndex);
         couponsToDisplay.forEach(coupon => {
+          
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${coupon.coup_id}</td>
@@ -51,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
             `;
             couponTable.appendChild(row);
         });
+
 
         // 渲染分頁按鈕
         renderPagination();
@@ -76,11 +81,14 @@ document.addEventListener('DOMContentLoaded', function () {
         paginationContainer.appendChild(createPageButton(currentPage - 1, '上一頁'));
         paginationContainer.appendChild(createPageButton(currentPage + 1, '下一頁'));
         paginationContainer.appendChild(createPageButton(totalPages, '最後一頁'));
+
     }
 
     // 獲取優惠券
     function fetchCoupons(coup_name = '') {
+
         let url = 'http://localhost:8081/TIA103G3_Servlet/getCoupon';
+
         if (coup_name) {
             url += `?coup_name=${encodeURIComponent(coup_name)}`; // 將查詢條件加到 URL
         }
@@ -94,9 +102,11 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 coupon_type.length = 0; // 清空現有的優惠券數據
                 coupon_type.push(...data); // 將從後端獲取的資料加入 coupon_type 陣列
+
                 totalCoupons = coupon_type.length; // 總數量
                 renderCoupons(); // 渲染優惠券列表
                 renderPagination(); // 渲染分頁
+
             })
             .catch(error => {
                 console.error('Error fetching coupons:', error);
@@ -114,7 +124,9 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('couponFormDetails').addEventListener('submit', function (e) {
         e.preventDefault();
 
+
         const coup_name = document.getElementById('edit_coup_name').value; // 修改這行
+
         const coup_description = document.getElementById('coup_description').value;
         const coup_discount = parseFloat(document.getElementById('coup_discount').value);
         const coup_issue = document.getElementById('coup_issue_date').value;
@@ -129,7 +141,9 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         // 假設有一個 API 對應於新增優惠券的請求
+
         fetch('http://localhost:8081/TIA103G3_Servlet/addCoupon', {
+
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -150,13 +164,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     text: '優惠券已成功新增!',
                 });
 
+
                 loadCoupons(); // 重新獲取所有優惠券
+
                 addCouponForm.style.display = 'none'; // 隱藏新增表單
             })
             .catch(error => {
                 console.error('Error adding coupon:', error);
             });
     });
+
 
     // 取消新增優惠券
     cancelAddBtn.addEventListener('click', () => {
@@ -199,12 +216,14 @@ document.addEventListener('DOMContentLoaded', function () {
             coup_expiry_date: coup_expiry,
         };
 
+
         fetch('http://localhost:8081/TIA103G3_Servlet/updateCoupon', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(updatedCoupon),
+
         })
             .then(response => {
                 if (!response.ok) {
@@ -213,6 +232,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.json();
             })
             .then(data => {
+
                 Swal.fire({
                     icon: 'success',
                     title: '編輯成功!',
@@ -227,10 +247,12 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 
+
     // 取消編輯優惠券
     cancelEditBtn.addEventListener('click', () => {
         editCouponForm.style.display = 'none'; // 隱藏編輯表單
     });
+
 
     // 刪除優惠券
     window.confirmDeleteCoupon = function (coup_id) {
@@ -267,4 +289,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 初始加載優惠券
     loadCoupons();
+
 });
