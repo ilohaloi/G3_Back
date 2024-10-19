@@ -223,37 +223,94 @@
         </aside>
     </div>
 
-    <!-- 請把代碼寫在這邊 -->
-    <h1>行程表格</h1>
-    <!-- <h2>書籍列表</h2> -->
-    <div id="user-container">
-        <!-- 使用者資料將會顯示在這裡 -->
-    </div>
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>编辑行程</h2>
-            <!-- 编辑行程的输入框 -->
-            <label for="routeField">行程編號:</label>
-            <input type="text" id="route_id" value="" disabled>
-            <br>
-            <label for="routeField">行程名稱:</label>
-            <input type="text" id="route_name" value="">
-            <br>
-            <label for="routeField">行程價格:</label>
-            <input type="text" id="route_price" value="">
-            <br>
-            <label for="routeField">行程描述:</label>
-            <input type="text" id="route_depiction" value="">
-            <br>
-            <label for="routeField">行程天數:</label>
-            <input type="text" id="route_days" value="">
+     <!-- 請把代碼寫在這邊 -->
+     <div class="all">
+        <div class="container">
+            <h1>行程管理後台</h1>
 
-            <button id="saveBtn">保存</button>
+            <!-- 查詢優惠券表單 -->
+            <div id="queryCouponForm">
+                <h2>行程查詢</h2>
+                <form id="searchCouponForm">
+                    <label for="coup_name">輸入關鍵字</label>
+                    <input type="text" id="route_name" name="route_name" placeholder="輸入欲尋找的景點 例如:沖繩">
+                    <button type="submit" class="btn-submit">查詢</button>
+                </form>
+            </div>
+
+            <table id="couponTable">
+                <thead>
+                    <tr>
+                        <th>行程編號</th>
+                        <th>行程名稱</th>
+                        <th>行程敘述</th>
+                        <th>行程價格</th>
+                        <th>行程天數</th>
+                        <th><button id="addCouponBtn">新增行程</button></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 這裡的內容會由 JavaScript 動態填充 -->
+                </tbody>
+            </table>
+
+            <!-- 新增優惠券表單 -->
+            <div id="addCouponForm" class="form-modal">
+                <div class="form-modal-content">
+                    <h2>新增行程</h2>
+                    <form id="couponFormDetails">
+                       
+
+                       <!-- 行程名稱 -->
+                        <label for="route_name">行程名稱:</label>
+                        <input type="text" id="route_name" name="route_name" required maxlength="50" placeholder="輸入行程名稱">
+
+                        <!-- 行程描述 -->
+                        <label for="route_depiction">行程描述:</label>
+                        <input type="text" id="route_depiction" name="route_depiction" required maxlength="50" placeholder="輸入行程描述">
+
+                        <!-- 行程價格 -->
+                        <label for="route_price">行程價格:</label>
+                        <input type="number" id="route_price" name="route_price" required min="0" placeholder="輸入行程價格">
+
+                        <!-- 行程天數 -->
+                        <label for="route_days">行程天數:</label>
+                        <input type="number" id="route_days" name="route_days" required min="0" placeholder="輸入行程天數">
+                        
+                        <!-- 提交按鈕 -->
+                        <input type="submit" value="新增行程">
+                    </form>
+                </div>
+            </div>
+
+            <!-- 編輯行程表單 -->
+            <div id="editCouponForm" class="form-modal" style="display: none;">
+                <div class="form-modal-content">
+                    <h2 id="editFormTitle">編輯行程</h2>
+                    <form id="editCouponFormDetails">
+                        <!-- 编辑行程的输入框 -->
+                        <label for="routeField">行程編號:</label>
+                        <input type="text" id="route_id" value="" disabled required>
+                        <br>
+                        <label for="routeField">行程名称:</label>
+                        <input type="text" id="route_name" value="">
+                        <br>
+                        <label for="routeField">行程價格:</label>
+                        <input type="text" id="route_price" value="">
+                        <br>
+                        <label for="routeField">行程描述:</label>
+                        <input type="text" id="route_depiction" value="">
+                        <br>
+                        <label for="routeField">行程天數:</label>
+                        <input type="text" id="route_days" value="">
+
+                        <button id="saveBtn">保存</button>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </div>
-    <button  onclick="window.location.href='insertRouteFetch.html'" style="display: block; margin: 0 auto;">跳轉到新增行程 </button>
-    
     <!-- 請把代碼寫在這邊 -->
 
     <!-- jQuery -->
