@@ -290,7 +290,9 @@
                                 <div class="col-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="card-title"></h3>
+                                            <h3 class="card-title" >
+                                                <button class="btn btn-block btn-info" @click="openInsertWindow">行程新增</button>
+                                            </h3>
                                         </div>
                                         <div class="card-body">
                                             <table class="table table-bordered">
@@ -298,10 +300,10 @@
                                                     <tr>
                                                         <th>編號</th>
                                                         <th>名稱</th>
+                                                        <th>描述</th>
                                                         <th>天數</th>
-                                                        <th>庫存</th>
                                                         <th>價格</th>
-                                                        <th>修改/刪除</th>
+                                                        <th>行程修改</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -309,11 +311,11 @@
                                                         <td>{{ r.id }}</td>
                                                         <td>{{ r.name }}</td>
                                                         <td>{{ r.depiction }}</td>
-                                                        <td>{{ r.stock }}</td>
+                                                        <td>{{ r.days }}</td>
                                                         <td>{{ r.price }}</td>
                                                         <td>
                                                             <div class="btn-group">
-                                                            <button class="btn btn-outline-primary" @click="openWindow(r)">修改</button>    
+                                                            <button class="btn btn-outline-primary" @click="openRouteWindow(r)">修改</button>    
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -379,14 +381,25 @@
                                 goToPage(page) {
                                     this.currentPage = page;
                                 },
-                                openWindow(route) {
+                                openRouteWindow(route) {
                                     const id = `id=${route.id}`;
+                                    const name = `name=${route.name}`;
+                                    const depiction = `depiction=${route.depiction}`;
+                                    const days = `days=${route.days}`;
+                                    const price = `price=${route.price}`; 
                                     window.open(
-                                        `./prod_PopWindow.html?${id}`,
+                                        `./route_PopWindow.html?${id}&${name}&${depiction}&${days}&${price}`,
                                         '商品更新',
                                         'width=600,height=600,left=200,top=100'
                                     );
-                                    console.log(prod);
+                                    
+                                },
+                                openInsertWindow(){
+                                    window.open(
+                                        `./route_InsertWindow.html`,
+                                        '新增',
+                                        'width=600,height=600,left=200,top=100'
+                                    );
                                 }
                             },
                             async mounted() {
@@ -406,7 +419,9 @@
                                 <div class="col-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="card-title"></h3>
+                                            <h3 class="card-title">
+                                            <button class="btn btn-block btn-info" @click="openInsertWindow">航班新增</button>
+                                            </h3>
                                         </div>
                                         <div class="card-body">
                                             <table class="table table-bordered">
@@ -418,16 +433,22 @@
                                                         <th>出港時間</th>
                                                         <th>駁船地點</th>
                                                         <th>已定房間總數</th>
+                                                        <th>行程修改</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="(sc, index) in  paginatedSchedule" :key="index">
-                                                        <td>{{ sc.shiop_id }}</td>
+                                                        <td>{{ sc.ship_id }}</td>
                                                         <td>{{ sc.route_id }}</td>
-                                                        <td>{{ item.status }}</td>
-                                                        <td>{{ item.shipping_time }}</td>
-                                                        <td>{{ item.shipping_dock }}</td>
-                                                        <td>{{ item.rooms_booked }}</td>
+                                                        <td>{{ sc.status }}</td>
+                                                        <td>{{ sc.shipping_time }}</td>
+                                                        <td>{{ sc.shipping_dock }}</td>
+                                                        <td>{{ sc.rooms_booked }}</td>
+                                                        <td>
+                                                            <div class="btn-group">
+                                                            <button class="btn btn-outline-primary" @click="openScheduleWindow(r)">修改</button>    
+                                                            </div>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                                 <tfoot>
@@ -491,15 +512,26 @@
                                 goToPage(page) {
                                     this.currentPage = page;
                                 },
-                                openWindow(prod) {
-                                    // 打开一个新窗口，设置宽度、高度、位置等
-                                    const params = `id=${prod.id}&name=${encodeURIComponent(prod.name)}&category=${encodeURIComponent(prod.category)}&price=${prod.price}&stock=${prod.stock}`;
+                                openScheduleWindow(schedule) {
+                                    const ship_id = `ship_id=${schedule.ship_id}`;
+                                    const route_id = `route_id=${schedule.route_id}`;
+                                    const status = `status=${schedule.status}`;
+                                    const shipping_time = `shipping_time=${schedule.shipping_time}`;
+                                    const shipping_dock = `shipping_dock=${schedule.shipping_dock}`; 
+                                    const rooms_booked = `rooms_booked=${schedule.rooms_booked}`; 
                                     window.open(
-                                        `./prod_popwindow.html?${params}`, // 要打开的 URL
-                                        'popupWindow', // 窗口名称
-                                        'width=600,height=600,left=200,top=100' // 窗口配置（宽度、高度、位置等）
+                                        `./schedule_PopWindow.html?${ship_id}&${route_id}&${status}&${shipping_time}&${shipping_dock}&${rooms_booked}`,
+                                        '商品更新',
+                                        'width=600,height=600,left=200,top=100'
                                     );
-                                    console.log(prod);
+                                    
+                                },
+                                openInsertWindow(){
+                                    window.open(
+                                        `./schedule_InsertWindow.html`,
+                                        '新增',
+                                        'width=600,height=600,left=200,top=100'
+                                    );
                                 }
                             },
                             async mounted() {

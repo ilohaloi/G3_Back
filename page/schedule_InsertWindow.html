@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <title>新增航班資料</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+
+        form {
+            max-width: 400px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"], 
+        input[type="date"]{
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>新增航班資料</h2>
+    <form id="schedule">
+        <!-- 船隻編號 -->
+        <label for="ship_id">船隻編號:</label>
+        <input type="number" id="ship_id" name="ship_id" required min="0" placeholder="輸入船隻編號">
+
+        <!-- 航線編號 -->
+        <label for="route_id">航線編號:</label>
+        <input type="number" id="route_id" name="route_id" required min="0" placeholder="輸入航線編號">
+
+        <!-- 航班狀態 -->
+        <label for="status">航班狀態:</label>
+        <input type="text" id="status" name="status" required maxlength="50" placeholder="輸入航班狀態">
+
+        <!-- 出港時間 -->
+        <label for="shipping_time">出港時間:</label>
+        <input type="date" id="shipping_time" name="shipping_time" required maxlength="50" placeholder="輸入出港時間">
+
+        <!-- 駁船地點 -->
+        <label for="shipping_dock">駁船地點:</label>
+        <input type="text" id="shipping_dock" name="shipping_dock" required maxlength="50" placeholder="輸入駁船地點">
+
+        <!-- 訂房總數 -->
+        <label for="rooms_booked">訂房總數:</label>
+        <input type="number" id="rooms_booked" name="rooms_booked" required min="0" placeholder="輸入訂房總數">
+        
+        <!-- 提交按鈕 -->
+        <input type="submit" value="新增航班">
+    </form>
+
+    <script>
+
+        document.getElementById('schedule').addEventListener('submit', async function (event) {
+            event.preventDefault(); // 阻止默认提交行为
+
+            // const ship_id = document.getElementById('ship_id').value;
+            const route_id = document.getElementById('route_id').value;
+            const status = document.getElementById('status').value;
+            const shipping_time = document.getElementById('shipping_time').value;
+            const shipping_dock = document.getElementById('shipping_dock').value;
+            const rooms_booked = document.getElementById('rooms_booked').value;
+
+            // 使用 fetch 发送数据
+            try {
+                const response = await fetch('http://localhost:8081/journey/insertschedulefetchservlet', {
+                    method: 'POST',                                        
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ route_id: route_id, status:status, shipping_time:shipping_time, shipping_dock:shipping_dock, rooms_booked:rooms_booked})
+                });
+              
+                // 检查响应状态
+                if (response.ok) {
+                    const result = await response.text(); // 获取响应文本
+                    alert("航班新增成功！" + result); // 显示成功消息
+                } else {
+                    alert("新增航班失败，状态码：" + response.status);
+                }
+            } catch (error) {
+                console.error('发生错误:', error);
+                alert("发生错误，请重试！");
+            }
+        });
+    </script>
+
+</body>
+
+</html>
