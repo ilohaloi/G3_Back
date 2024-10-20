@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
 
-    <link rel="stylesheet" href="/ourFile/coupon/cp.css">
+    <link rel="stylesheet" href="/ourFile/member/member.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
@@ -33,209 +33,32 @@
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
-    <div class="wrapper">
-
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="../../index.html" class="nav-link">Home</a>
-                </li>
-            </ul>
-
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                        <i class="fas fa-expand-arrows-alt"></i>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <a href="../../index.html" class="brand-link">
-                <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
-                    class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">Cruiseship</span>
-            </a>
-
-            <div class="sidebar">
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
-                        <li class="nav-item menu-open">
-                        </li>
-                        <li class="nav-item">
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-solid fa-user-gear"></i>
-                                <p>員工資訊
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="./emp.html#/" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>總覽</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="./emp.html#/control" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>新增入職員工</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-solid fa-user-group"></i>
-                                <p>
-                                    會員
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="./mebership.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>總覽</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>預留</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-solid fa-ticket"></i>
-                                <p>
-                                    優惠卷
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>查看優惠卷</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>新增/刪除/修改</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-solid fa-gift"></i>
-                                <p>
-                                    禮品
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="./prod.html#/" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>商品總覽</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="./prod.html#/prod" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>商品新增</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="./prod.html#/orders" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>訂單</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-chart-bar"></i>
-                                <p>
-                                    客服
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="../ourFile/dev_chat/chat_avec_member.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>訊息管理</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-solid fa-ship"></i>
-                                <p>
-                                    郵輪
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="./ship.html#/" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>行程總覽</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="./ship.html#/ship" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>航班總覽</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="./ship.html#/order" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>訂單管理</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </aside>
-    </div>
+    <div id="wrapper"></div>
 
     <!-- 請把代碼寫在這邊 -->
     <div class="all">
         <div class="container">
             <h1>會員管理</h1>
 
-            <!-- 查詢優惠券表單 -->
-            <div id="queryCouponForm">
+            <!-- 查詢會員表單 -->
+            <div id="queryMemberForm">
                 <h2>查詢會員</h2>
-                <form id="searchCouponForm">
-                    <label for="coup_name">輸入會員姓名</label>
-                    <input type="text" id="coup_name" name="coup_name" placeholder="輸入會員姓名">
+                <form id="searchMemberForm">
+                    <label for="member_name">輸入會員姓名</label>
+                    <input type="text" id="member_name" name="member_name" placeholder="輸入會員姓名">
                     <button type="submit" class="btn-submit">查詢</button>
                 </form>
             </div>
 
-            <table id="couponTable">
+            <!-- 顯示筆數的下拉選單 -->
+            <label for="displayCount">顯示筆數:</label>
+            <select id="displayCount">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+            </select>
+
+            <table id="memberTable">
                 <thead>
                     <tr>
                         <th>會員編號</th>
@@ -244,7 +67,6 @@
                         <th>電話</th>
                         <th>住址</th>
                         <th>生日</th>
-                        <th><button id="addCouponBtn">修改</button></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -264,7 +86,27 @@
     <script src="../dist/js/adminlte.min.js"></script>
 
     <!-- 新增 -->
-    <script src="/ourFile/coupon/cp.js"></script>
+    <script src="/ourFile/member/member.js"></script>
+
+    <!-- 動態載入 -->
+    <script>
+        function loadHtml(placeholderId, url) {
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Failed to fetch ${url}`);
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById(placeholderId).innerHTML = data;
+                })
+                .catch(error => console.error('Error loading HTML:', error));
+        }
+
+        // 載入 header 和 footer
+        loadHtml('wrapper', '/ourFile/sections/wrapper.html');
+    </script>
 </body>
 
 </html>
