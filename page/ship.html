@@ -446,7 +446,7 @@
                                                         <td>{{ sc.rooms_booked }}</td>
                                                         <td>
                                                             <div class="btn-group">
-                                                            <button class="btn btn-outline-primary" @click="openScheduleWindow(r)">修改</button>    
+                                                            <button class="btn btn-outline-primary" @click="openScheduleWindow(sc)">修改</button>    
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -548,7 +548,9 @@
                                 <div class="col-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="card-title"></h3>
+                                            <h3 class="card-title">
+                                            <button class="btn btn-block btn-info" @click="openInsertWindow">訂單新增</button>
+                                            </h3>
                                         </div>
                                         <div class="card-body">
                                             <table class="table table-bordered">
@@ -561,10 +563,11 @@
                                                         <th>訂單狀況</th>
                                                         <th>房間數量</th>
                                                         <th>總價</th>
+                                                        <th>行程修改</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="(order, index) in paginatedProd" :key="index">
+                                                    <tr v-for="(order, index) in paginatedOrder" :key="index">
                                                         <td>{{ order.id }}</td>
                                                         <td>{{ order.memb_id }}</td>
                                                         <td>{{ order.ship_id }}</td>
@@ -572,6 +575,11 @@
                                                         <td>{{ order.trav_orde_status }}</td>
                                                         <td>{{ order.room_amount }}</td>
                                                         <td>{{ order.trav_orde_amount }}</td>
+                                                        <td>
+                                                            <div class="btn-group">
+                                                            <button class="btn btn-outline-primary" @click="openTravelOrderWindow(order)">修改訂單</button>    
+                                                            </div>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                                 <tfoot>
@@ -635,20 +643,35 @@
                                 goToPage(page) {
                                     this.currentPage = page;
                                 },
-                                openWindow(prod) {
-                                    // 打开一个新窗口，设置宽度、高度、位置等
-                                    const params = `id=${prod.id}&name=${encodeURIComponent(prod.name)}&category=${encodeURIComponent(prod.category)}&price=${prod.price}&stock=${prod.stock}`;
+                                openTravelOrderWindow(order) {
+                                    const id = `id=${order.id}`;
+                                    const memb_id = `memb_id=${order.memb_id}`;
+                                    const ship_id = `ship_id=${order.ship_id}`;
+                                    const coup_id = `coup_id=${order.coup_id}`;
+                                    const trav_orde_status = `trav_orde_status=${order.trav_orde_status}`; 
+                                    const room_amount = `room_amount=${order.room_amount}`;
+                                    const trav_orde_amount = `trav_orde_amount=${order.trav_orde_amount}`;  
                                     window.open(
-                                        `./prod_popwindow.html?${params}`, // 要打开的 URL
-                                        'popupWindow', // 窗口名称
-                                        'width=600,height=600,left=200,top=100' // 窗口配置（宽度、高度、位置等）
+                                        `./travelOrder_PopWindow.html?${id}&${memb_id}&${ship_id}&${coup_id}&${trav_orde_status}&${room_amount}&${trav_orde_amount}`,
+                                        '商品更新',
+                                        'width=600,height=600,left=200,top=100'
                                     );
-                                    console.log(prod);
+                                    console.log('測試');
+                                },
+                                openInsertWindow(){
+                                    window.open(
+                                        `./travelOrder_InsertWindow.html`,
+                                        '新增',
+                                        'width=600,height=600,left=200,top=100'
+                                    );
                                 }
                             },
+                            //一開始就渲染
                             async mounted() {
                                 try {
                                     this.order = await getOrder();
+                                    console.log(this.order);
+                                    
                                 } catch (error) {
                                     console.error('Failed to get products:', error); // 捕获并处理错误
                                 }

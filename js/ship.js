@@ -31,7 +31,7 @@ export async function getSchedule() {
 };
 export async function getOrder() {
     try {
-        const response = await fetch('http://localhost:8081/journey/travel_order', {
+        const response = await fetch('http://localhost:8081/TIA103G3_Servlet/travel_order', {
             method: "get",
             mode: "cors"
         })
