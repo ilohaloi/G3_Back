@@ -77,7 +77,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 // 定義一個函式來獲取資料
 async function fetchData() {
   // 使用 fetch API 獲取資料
-    const response =  await fetch("http://localhost:8081/journey/route", {
+    const response =  await fetch("http://localhost:8081/TIA103G3_Servlet/route", {
         method: "get",
         mode: 'cors'
     })
@@ -97,14 +97,14 @@ function displayUsers(users) {
         return;
     }
           // 点击关闭按钮，关闭模态窗口
-          closeBtn.onclick = function() {
-            modal.style.display = "none";
-        }
+        //   closeBtn.onclick = function() {
+        //     modal.style.display = "none";
+        // }
 
         // 点击保存按钮，保存数据并关闭窗口
         saveBtn.addEventListener('click', async function() {
           try {
-            const response = await fetch('http://localhost:8081/journey/updateroutefetchservlet', {
+            const response = await fetch('http://localhost:8081/TIA103G3_Servlet/updateroutefetchservlet', {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"

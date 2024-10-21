@@ -93,7 +93,7 @@
 
             // 使用 fetch 发送数据
             try {
-                const response = await fetch('http://localhost:8081/journey/inserttravel_orderfetchservlet', {
+                const response = await fetch('http://localhost:8081/TIA103G3_Servlet/inserttravel_orderfetchservlet', {
                     method: 'POST',                                        
                     headers: {
                         "Content-Type": "application/json"
@@ -104,9 +104,9 @@
                 // 检查响应状态
                 if (response.ok) {
                     const result = await response.text(); // 获取响应文本
-                    alert("航班新增成功！" + result); // 显示成功消息
+                    alert("訂單新增成功！" + result); // 显示成功消息
                 } else {
-                    alert("新增航班失败，状态码：" + response.status);
+                    alert("新增訂單失败，状态码：" + response.status);
                 }
             } catch (error) {
                 console.error('发生错误:', error);
