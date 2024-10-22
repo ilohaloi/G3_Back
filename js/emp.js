@@ -16,9 +16,9 @@ export function encryptionRsa(value) {
 }
 
 export async function getAesKey() { 
-    
-    const response =  await fetch("http://localhost:8081/TIA103G3_Servlet/createtempaeskey", {
-        method: "post",
+    //"http://localhost:8081/TIA103G3_Servlet/createtempaeskey"
+    const response = await fetch("http://localhost:8080/api/getAes", {
+        method: "get",
         mode: "cors"
     })
     .catch(error => {
@@ -34,14 +34,12 @@ export async function getRsaKey(data) {
         headers: {
                 "Content-Type": "application/json"
         },
-        body: JSON.stringify({ action:"getEmpPubKey",identity: "", data: data.account, base64key: ""})
+        body: JSON.stringify({ action:"getEmpPubKey",data: data.account})
     })
     .catch(error => {
         console.error("获取数据时出错:", error);
     });
     const keyData = await response.json();
-    console.log(keyData);
-    
     sessionStorage.setItem("key", keyData.key);
 }
 export async function getEmployee() { 
@@ -55,12 +53,15 @@ export async function getEmployee() {
     
 }
 export async function updateEmp(data) { 
-    const response = await fetch('http://localhost:8081/TIA103G3_Servlet/decryptdata', {
-        method: "post",
+    
+    //http://localhost:8081/TIA103G3_Servlet/decryptdata
+    const response = await fetch('http://localhost:8080/api/decryp', {
+        method: "POST",
         headers: {
-                "Content-Type": "application/json"
+                'Content-Type': 'application/json'
         },
-        body: JSON.stringify({action:"empReg" ,identity:"",data:data,base64key:sessionStorage.getItem('key')})
+        body: JSON.stringify({action:"empReg",data:data,key:sessionStorage.getItem('key')})
+        
     })
     .catch(error => {
         console.error('获取数据时出错:', error);
@@ -75,16 +76,16 @@ export async function login(data) {
         headers: {
                 "Content-Type": "application/json"
         },
-        credentials: "include",
-        body: JSON.stringify({ action: "empLogin", identity: data.account, data: encrypdata, base64key: "" })
+        body: JSON.stringify({ action: "empLogin", identity: data.account, data: encrypdata})
     })
     .catch(error => {
         console.error('获取数据时出错:', error);
     });
-    console.log("resp",response);
-    
     if (response.status === 200) {
         sessionStorage.removeItem('key');
+        const session = await response.json();
+        sessionStorage.setItem('token', session.token);
+        sessionStorage.setItem('emp', data.account);
         window.location.replace('../page/home.html');
         
     }

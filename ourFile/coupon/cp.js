@@ -87,7 +87,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // 獲取優惠券
     function fetchCoupons(coup_name = '') {
 
+
         let url = 'http://localhost:8081/TIA103G3_Servlet/getCoupon';
+
 
         if (coup_name) {
             url += `?coup_name=${encodeURIComponent(coup_name)}`; // 將查詢條件加到 URL
@@ -143,7 +145,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // 假設有一個 API 對應於新增優惠券的請求
 
         fetch('http://localhost:8081/TIA103G3_Servlet/addCoupon', {
-
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -217,8 +218,10 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
 
+
         fetch('http://localhost:8081/TIA103G3_Servlet/updateCoupon', {
             method: 'POST',
+
             headers: {
                 'Content-Type': 'application/json',
             },

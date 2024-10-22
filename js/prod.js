@@ -16,8 +16,7 @@ export async function getProducts() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            credentials: "include",
-            body: JSON.stringify({action:'getAllprod',identity:'',data:'',base64key:''})
+            body: JSON.stringify({action:'getAllprod'})
         })
         if (response.status === 200) {
             return await response.json();
@@ -33,7 +32,7 @@ export async function getProduct(id) {
         headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({action:'getProd',identity:id,data:'',base64key:''})
+            body: JSON.stringify({action:'getProd',identity:id})
         })
         if (response.status === 200) {
             return await response.json();

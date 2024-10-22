@@ -284,62 +284,65 @@
                         import { updateProd } from '../js/prod.js';
                         import { insertProd } from '../js/prod.js';
                         import { getOrders } from '../js/prod.js';
+                        import { authCheck } from '../js/auth.js'
                         const prod_view = {
                             template: `
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="card card-dark">
-                                        <div class="card-header">
-                                            <h3 class="card-title">商品目錄</h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>編號</th>
-                                                        <th>名稱</th>
-                                                        <th>類別</th>
-                                                        <th>庫存</th>
-                                                        <th>價格</th>
-                                                        <th>修改/刪除</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr v-for="(item, index) in paginatedProd" :key="index">
-                                                        <td>{{ item.id }}</td>
-                                                        <td>{{ item.name }}</td>
-                                                        <td>{{ item.category }}</td>
-                                                        <td>{{ item.stock }}</td>
-                                                        <td>{{ item.price }}</td>
-                                                        <td>
-                                                            <div class="btn-group">
-                                                            <button class="btn btn-block bg-gradient-info" @click="openWindow(item)">修改</button>    
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                                            
-                                        </div>
-                                        <div class="card-footer">
-                                            <div class="dataTables_paginate paging_simple_numbers">
-                                                <nav aria-label="Page navigation">
-                                                    <ul class="pagination justify-content-center">
-                                                        <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                                                            <button class="page-link" @click="prevPage" :disabled="currentPage === 1">Previous</button>
-                                                        </li>
-                                                        <li v-for="page in totalPages" :key="page" class="page-item" :class="{ active: page === currentPage }">
-                                                            <button class="page-link" @click="goToPage(page)">{{ page }}</button>
-                                                        </li>
-                                                        <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                                                            <button class="page-link" @click="nextPage" :disabled="currentPage === totalPages">Next</button>
-                                                        </li>
-                                                    </ul>
-                                                </nav>
+                            <div v-if="isAuthenticated">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card card-dark">
+                                            <div class="card-header">
+                                                <h3 class="card-title">商品目錄</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>編號</th>
+                                                            <th>名稱</th>
+                                                            <th>類別</th>
+                                                            <th>庫存</th>
+                                                            <th>價格</th>
+                                                            <th>修改/刪除</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="(item, index) in paginatedProd" :key="index">
+                                                            <td>{{ item.id }}</td>
+                                                            <td>{{ item.name }}</td>
+                                                            <td>{{ item.category }}</td>
+                                                            <td>{{ item.stock }}</td>
+                                                            <td>{{ item.price }}</td>
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                <button class="btn btn-block bg-gradient-info" @click="openWindow(item)">修改</button>    
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+
+                                            </div>
+                                            <div class="card-footer">
+                                                <div class="dataTables_paginate paging_simple_numbers">
+                                                    <nav aria-label="Page navigation">
+                                                        <ul class="pagination justify-content-center">
+                                                            <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                                                                <button class="page-link" @click="prevPage" :disabled="currentPage === 1">Previous</button>
+                                                            </li>
+                                                            <li v-for="page in totalPages" :key="page" class="page-item" :class="{ active: page === currentPage }">
+                                                                <button class="page-link" @click="goToPage(page)">{{ page }}</button>
+                                                            </li>
+                                                            <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                                                                <button class="page-link" @click="nextPage" :disabled="currentPage === totalPages">Next</button>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -350,7 +353,8 @@
                                 return {
                                     prod: [],
                                     currentPage: 1,
-                                    pageSize: 10
+                                    pageSize: 10,
+                                    isAuthenticated: true
                                 };
                             },
                             computed: {
@@ -393,7 +397,15 @@
                                 }
                             },
                             async mounted() {
+
+
                                 try {
+                                    // const resp = await authCheck();
+                                    // if (resp.status === 401) {
+                                    //     window.location.replace('../index.html');
+                                    //     return;
+                                    // }
+                                    // this.isAuthenticated = true;
                                     const products = await getProducts();
                                     console.log(products);
 

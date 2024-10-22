@@ -381,20 +381,22 @@
                                 goToPage(page) {
                                     this.currentPage = page;
                                 },
+
                                 openRouteWindow(route) {
                                     const id = `id=${route.id}`;
                                     const name = `name=${route.name}`;
                                     const depiction = `depiction=${route.depiction}`;
                                     const days = `days=${route.days}`;
-                                    const price = `price=${route.price}`; 
+                                    const price = `price=${route.price}`;
                                     window.open(
                                         `./route_PopWindow.html?${id}&${name}&${depiction}&${days}&${price}`,
+
                                         '商品更新',
                                         'width=600,height=600,left=200,top=100'
                                     );
-                                    
+
                                 },
-                                openInsertWindow(){
+                                openInsertWindow() {
                                     window.open(
                                         `./route_InsertWindow.html`,
                                         '新增',
@@ -404,7 +406,7 @@
                             },
                             async mounted() {
                                 try {
-                                    
+
                                     this.route = await getRoute();
                                     console.log(this.route);
 
@@ -517,16 +519,16 @@
                                     const route_id = `route_id=${schedule.route_id}`;
                                     const status = `status=${schedule.status}`;
                                     const shipping_time = `shipping_time=${schedule.shipping_time}`;
-                                    const shipping_dock = `shipping_dock=${schedule.shipping_dock}`; 
-                                    const rooms_booked = `rooms_booked=${schedule.rooms_booked}`; 
+                                    const shipping_dock = `shipping_dock=${schedule.shipping_dock}`;
+                                    const rooms_booked = `rooms_booked=${schedule.rooms_booked}`;
                                     window.open(
                                         `./schedule_PopWindow.html?${ship_id}&${route_id}&${status}&${shipping_time}&${shipping_dock}&${rooms_booked}`,
                                         '商品更新',
                                         'width=600,height=600,left=200,top=100'
                                     );
-                                    
+
                                 },
-                                openInsertWindow(){
+                                openInsertWindow() {
                                     window.open(
                                         `./schedule_InsertWindow.html`,
                                         '新增',
