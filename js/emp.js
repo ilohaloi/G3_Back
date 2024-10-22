@@ -16,9 +16,9 @@ export function encryptionRsa(value) {
 }
 
 export async function getAesKey() { 
-    
-    const response =  await fetch("http://localhost:8081/TIA103G3_Servlet/createtempaeskey", {
-        method: "post",
+    //"http://localhost:8081/TIA103G3_Servlet/createtempaeskey"
+    const response = await fetch("http://localhost:8080/api/getAes", {
+        method: "get",
         mode: "cors"
     })
     .catch(error => {
@@ -53,12 +53,15 @@ export async function getEmployee() {
     
 }
 export async function updateEmp(data) { 
-    const response = await fetch('http://localhost:8081/TIA103G3_Servlet/decryptdata', {
-        method: "post",
+    
+    //http://localhost:8081/TIA103G3_Servlet/decryptdata
+    const response = await fetch('http://localhost:8080/api/decryp', {
+        method: "POST",
         headers: {
-                "Content-Type": "application/json"
+                'Content-Type': 'application/json'
         },
-        body: JSON.stringify({action:"empReg",data:data,base64key:sessionStorage.getItem('key')})
+        body: JSON.stringify({action:"empReg",data:data,key:sessionStorage.getItem('key')})
+        
     })
     .catch(error => {
         console.error('获取数据时出错:', error);
