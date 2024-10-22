@@ -120,3 +120,340 @@ export async function getOrderDetail(orderId) {
         console.log(error);
     } 
 }
+export const prod_view = {
+    template: `
+        <div v-if="isAuthenticated">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-dark">
+                        <div class="card-header">
+                            <h3 class="card-title">商品目錄</h3>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>編號</th>
+                                        <th>名稱</th>
+                                        <th>類別</th>
+                                        <th>庫存</th>
+                                        <th>價格</th>
+                                        <th>修改/刪除</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(item, index) in paginatedProd" :key="index">
+                                        <td>{{ item.id }}</td>
+                                        <td>{{ item.name }}</td>
+                                        <td>{{ item.category }}</td>
+                                        <td>{{ item.stock }}</td>
+                                        <td>{{ item.price }}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn btn-block bg-gradient-info" @click="openWindow(item)">修改</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            <div class="dataTables_paginate paging_simple_numbers">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item" :class="{disabled: currentPage === 1 }">
+                                            <button class="page-link" @click="prevPage" :disabled="currentPage === 1">Previous</button>
+                                        </li>
+                                        <li v-for="page in totalPages" :key="page" class="page-item" :class="{active: page === currentPage }">
+                                            <button class="page-link" @click="goToPage(page)">{{ page }}</button>
+                                        </li>
+                                        <li class="page-item" :class="{disabled: currentPage === totalPages }">
+                                            <button class="page-link" @click="nextPage" :disabled="currentPage === totalPages">Next</button>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div >
+                    </div >
+                </div >
+            </div >
+        </div >
+    `,
+    data() {
+        return {
+            prod: [],
+            currentPage: 1,
+            pageSize: 10,
+            isAuthenticated: true
+        };
+    },
+    computed: {
+        // 计算分页数据
+        paginatedProd() {
+            const start = (this.currentPage - 1) * this.pageSize;
+            const end = start + this.pageSize;
+            return this.prod.slice(start, end);
+        },
+        // 计算总页数
+        totalPages() {
+            return Math.ceil(this.prod.length / this.pageSize);
+        }
+    },
+    methods: {
+        // 跳转到下一页
+        nextPage() {
+            if (this.currentPage < this.totalPages) {
+                this.currentPage++;
+            }
+        },
+        // 跳转到上一页
+        prevPage() {
+            if (this.currentPage > 1) {
+                this.currentPage--;
+            }
+        },
+        // 跳转到特定页
+        goToPage(page) {
+            this.currentPage = page;
+        },
+        openWindow(prod) {
+            const params = `id = ${prod.id} `;
+            window.open(
+                `../component/prod_PopWindow.html?${params} `,
+                '商品更新',
+                'width=600,height=600,left=200,top=100'
+            );
+            console.log(prod);
+        }
+    },
+    async mounted() {
+        try {
+            // const resp = await authCheck();
+            // if (resp.status === 401) {
+            //     window.location.replace('../index.html');
+            //     return;
+            // }
+            // this.isAuthenticated = true;
+            const products = await getProducts();
+            console.log(products);
+            this.prod = products;
+        } catch (error) {
+            console.error('Failed to get products:', error); // 捕获并处理错误
+        }
+    },
+}
+
+export const prod_upload = {
+    template: `
+        <div class="card card-dark">
+            <div v-if="uploading" class="overlay dark">
+                <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+            </div>
+            <div class="card-header">
+                <h3 class="card-title">新增商品</h3>
+            </div>
+        
+            <form @submit.prevent="submitForm" >
+                <div class="form-group">
+                    <label for="name">商品名稱</label>
+                    <input type="text" class="form-control" id="name" v-model="prod.name" placeholder="請輸入商品名稱" required>
+                </div>
+            
+                <div class="form-group">
+                    <label for="category" class="form-label">分類</label>
+                    <select id="category" v-model="prod.category" class="custom-select form-control-border" required>
+                        <option value="" disabled>選擇分類</option>
+                        <option value="electronics">分類一</option>
+                        <option value="clothing">分類二</option>
+                        <option value="home">分類三</option>
+                    </select>
+                </div>
+            
+                <div class="form-group">
+                    <label for="stock" class="form-label">數量</label>
+                    <input type="number" id="stock" v-model="prod.stock" class="form-control" min="1" required />
+                </div>
+            
+                <div class="form-group">
+                    <label for="price" class="form-label">價格</label>
+                    <input type="number" id="price" v-model="prod.price" class="form-control" min="1" required />
+                </div>
+            
+                <div class="form-group">
+                    <label for="imges" class="form-label">上傳圖片（最多三張，圖片大小不得超過10MB）</label>
+                    <input type="file" name="imges" id="imges" @change="handleFileUpload" class="input-group-text" multiple accept="image/*" />
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <!-- 左侧按钮 -->
+                        <button type="submit" class="btn btn-success">確認</button>
+                        <!-- 右侧消息 -->
+                        <h3 :style="{ color: message.color }">{{ message.str }}</h3>
+                    </div>
+                </div >
+            </form >
+        </div>
+        </div>
+    `,
+    data() {
+        return {
+            prod: {
+                name: "",
+                category: "",
+                stock: 0,
+                price: 0,
+                imges: []
+            },
+            uploading: false,
+            message: {
+                str: "",
+                color: "green"
+            }
+        }
+    },
+    methods: {
+        handleFileUpload(event) {
+            const files = Array.from(event.target.files);
+            if (files.length > 3) {
+                alert('最多只能上传 3 张图片');
+                return;
+            }
+            this.prod.imges = files;
+        },
+        async submitForm(event) {
+            event.preventDefault();
+            this.message.str = "";
+            this.uploading = true;
+            try {
+                const resp = await insertProd(this.prod);
+                if (resp.status === 200) {
+                    this.message.str = "新增成功"
+                    this.message.color = "green";
+                    this.uploading = false;
+                }
+                else if (resp.status === 400) {
+                    const err = await resp.json();
+                    this.message.str = err.error;
+                    this.message.color = "red";
+                    this.uploading = false;
+                }
+            } catch (error) {
+                console.error('提交出错:', error);
+            }
+        }
+    },
+}
+export const orders_view = {
+    template: `
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-dark">
+                    <div class="card-header">
+                        <h3 class="card-title">訂單</h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>訂單編號</th>
+                                    <th>會員編號</th>
+                                    <th>狀態</th>
+                                    <th>下定時間</th>
+                                    <th>付款方式</th>
+                                    <th>總價</th>
+                                    <th>明細</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(item, index) in paginatedOrder" :key="index">
+                                    <td>{{ item.orid }}</td>
+                                    <td>{{ item.membId }}</td>
+                                    <td>{{ item.status }}</td>
+                                    <td>{{ item.time }}</td>
+                                    <td>{{ item.payment }}</td>
+                                    <td>{{ item.amount }}</td>
+                                    <td>
+                                        <div class="btn-group">
+                                        <button class="btn btn-block bg-gradient-info" @click="openWindow(item)">查看</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <div class="dataTables_paginate paging_simple_numbers">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                                        <button class="page-link" @click="prevPage" :disabled="currentPage === 1">Previous</button>
+                                    </li>
+                                    <li v-for="page in totalPages" :key="page" class="page-item" :class="{ active: page === currentPage }">
+                                        <button class="page-link" @click="goToPage(page)">{{ page }}</button>
+                                    </li>
+                                    <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                                        <button class="page-link" @click="nextPage" :disabled="currentPage === totalPages">Next</button>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `,
+    data() {
+        return {
+            order: [],
+            currentPage: 1,
+            pageSize: 10
+        };
+    },
+    computed: {
+        paginatedOrder() {
+            const start = (this.currentPage - 1) * this.pageSize;
+            const end = start + this.pageSize;
+            return this.order.slice(start, end);
+        },
+        // 计算总页数
+        totalPages() {
+            return Math.ceil(this.order.length / this.pageSize);
+        }
+    },
+    methods:{
+        nextPage() {
+            if (this.currentPage < this.totalPages) {
+                this.currentPage++;
+            }
+        },
+        prevPage() {
+            if (this.currentPage > 1) {
+                this.currentPage--;
+            }
+        },
+        goToPage(page) {
+            this.currentPage = page;
+        },
+        openWindow(order) {
+            const params = `orid = ${order.orid}& membid=${order.membId} `;
+            window.open(
+                `./component/prod_OrderDetail.html?${params}`,
+                '明細',
+                'width=600,height=600,left=200,top=100'
+            );
+            console.log(prod);
+        }
+    },
+    async mounted() {
+        this.order = await getOrders();
+        console.log(this.order);
+    }
+};
