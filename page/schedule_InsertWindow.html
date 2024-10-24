@@ -56,8 +56,14 @@
 
         <!-- 航班狀態 -->
         <label for="status">航班狀態:</label>
-        <input type="text" id="status" name="status" required maxlength="50" placeholder="輸入航班狀態">
-
+        <select id="status"  class="custom-select form-control-border" required>
+            <option value="" disabled>選擇分類</option>
+            <option value="停駛">停駛</option>
+            <option value="維修">維修</option>
+            <option value="離港">離港</option>
+            <option value="行駛">行駛</option>
+            <option value="其他">其他</option>
+        </select>
         <!-- 出港時間 -->
         <label for="shipping_time">出港時間:</label>
         <input type="date" id="shipping_time" name="shipping_time" required maxlength="50" placeholder="輸入出港時間">
