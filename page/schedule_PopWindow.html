@@ -22,7 +22,14 @@
             <input type="text" id="route_id" value="">
             <br>
             <label for="routeField">航班狀態:</label>
-            <input type="text" id="status" value="">
+            <select id="status"  class="custom-select form-control-border" required>
+                <option value="" disabled>選擇分類</option>
+                <option value="停駛">停駛</option>
+                <option value="維修">維修</option>
+                <option value="離港">離港</option>
+                <option value="行駛">行駛</option>
+                <option value="其他">其他</option>
+            </select>
             <br>
             <label for="routeField">出港時間:</label>
             <input type="text" id="shipping_time" value="">
