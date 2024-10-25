@@ -1,0 +1,153 @@
+
+.main-container {          /* 父容器 */
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+
+/* ============================================會員LIST區塊====================== */
+.member-selection {
+  width: 30%;
+  background-color: #f5f5f5;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  
+}
+/* 搜尋框區域 */
+.search-container {
+  margin-bottom: 15px;
+}
+
+#search-input {
+  margin-top: 15px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+#search-input:focus{
+  outline:none;
+}
+
+/* ===============================會員列表====================================== */
+#member-list {
+  list-style-type: none;
+  padding: 0;
+  height: fit-content;
+}
+
+/* test */
+.member-item {
+  width: 100%;
+  padding: 10px;
+  background-color: #f5f5f5;
+  cursor: pointer;
+  box-sizing: border-box;
+  margin-bottom: 5px; /* 增加項目之間的間距 */
+  border-radius: 5px; /* 圓角讓項目更有層次感 */
+}
+
+.member-item:hover {
+  background-color: #ff5252; /* 懸停時的背景色 */
+  color: #ffffff; /* 懸停時的文字顏色 */
+}
+
+/* ==========================================聊天室區================================================== */
+.chat-container {
+flex-grow: 1;
+background-color: #f5f5f5;
+padding: 15px;
+border-radius: 5px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+  .chat-box {
+  height: 400px;
+  border: 0px;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* 預設訊息靠左對齊 */
+  }
+
+/* 每個訊息的樣式 */
+.message {
+padding: 10px;
+margin-bottom: 10px;
+border-radius: 10px; /* 調整圓角大小 */
+box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+max-width: 60%; /* 訊息框最大寬度 */
+min-width: 15%; /* 設定最小寬度 */
+word-wrap: break-word; /* 啟用自動換行 */
+overflow-wrap: break-word; /* 確保單詞在換行時不會溢出 */
+}
+
+/* 發送者訊息樣式 */
+.message-sender {
+background-color: #6c757d; /* 背景顏色 */
+color: #ffffff; /* 確保文字顏色對比清晰 */
+align-self: flex-end; /* 右對齊 */
+text-align: right; /* 文字靠右 */
+border-radius: 20px; /* 調整圓角樣式 */
+}
+
+/* 接收者訊息樣式 */
+.message-receiver {
+background-color: #dcedc8; /* 背景顏色 */
+color: #333333; /* 文字顏色，以提高可讀性 */
+align-self: flex-start; /* 左對齊 */
+text-align: left; /* 文字靠左 */
+border-radius: 20px; /* 調整圓角樣式 */
+}
+
+
+/* 輸入框區 */
+#input-box {
+display: flex;
+gap: 10px;
+background-color: white;
+border-radius: 20px;
+}
+
+/* 訊息輸入框 */
+#input-box input {
+flex-grow: 1;
+padding: 10px;
+border-radius: 30px;
+border: 0px ;
+background-color: white;
+}
+
+#message-input{
+  width: 100%;
+  padding: 10px;
+  border-radius: 30px;
+  border: 0px ;  
+  background-color: white;
+}
+
+#message-input:focus{
+  outline:none;
+}
+/* 發送按鈕 */
+#send-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+#send-button img {
+  width: 20px;
+  height: 20px;
+}
+
