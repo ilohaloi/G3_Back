@@ -455,7 +455,6 @@
                                                         <th>航班狀態</th>
                                                         <th>出港時間</th>
                                                         <th>駁船地點</th>
-                                                        <th>房型</th>
                                                         <th>已定房間總數</th>
                                                         <th>行程修改</th>
                                                     </tr>
@@ -467,7 +466,6 @@
                                                         <td>{{ sc.status }}</td>
                                                         <td>{{ sc.shipping_time }}</td>
                                                         <td>{{ sc.shipping_dock }}</td>
-                                                        <td>{{ sc.rooms_type }}</td>
                                                         <td>{{ sc.rooms_booked }}</td>
                                                         <td>
                                                             <div class="btn-group">
@@ -531,7 +529,6 @@
                                         sc.route_id.toString().toLowerCase().includes(query) ||
                                         sc.status.toLowerCase().includes(query) ||
                                         sc.shipping_time.toLowerCase().includes(query) ||
-                                        sc.rooms_type.toString().toLowerCase().includes(query) ||
                                         sc.shipping_dock.toLowerCase().includes(query) ||
                                         sc.rooms_booked.toString().toLowerCase().includes(query)
                                     );
@@ -559,11 +556,10 @@
                                     const route_id = `route_id=${schedule.route_id}`;
                                     const status = `status=${schedule.status}`;
                                     const shipping_time = `shipping_time=${schedule.shipping_time}`;
-                                    const rooms_type = `rooms_type=${schedule.rooms_type}`;
                                     const shipping_dock = `shipping_dock=${schedule.shipping_dock}`;
                                     const rooms_booked = `rooms_booked=${schedule.rooms_booked}`;
                                     window.open(
-                                        `./schedule_PopWindow.html?${ship_id}&${route_id}&${status}&${shipping_time}&${rooms_type}&${shipping_dock}&${rooms_booked}`,
+                                        `./schedule_PopWindow.html?${ship_id}&${route_id}&${status}&${shipping_time}&${shipping_dock}&${rooms_booked}`,
                                         '商品更新',
                                         'width=600,height=600,left=200,top=100'
                                     );
@@ -608,6 +604,7 @@
                                                         <th>優惠券編號</th>
                                                         <th>訂單狀況</th>
                                                         <th>房間數量</th>
+                                                        <th>房型</th>
                                                         <th>總價</th>
                                                         <th>行程修改</th>
                                                     </tr>
@@ -620,6 +617,7 @@
                                                         <td>{{ order.coup_id }}</td>
                                                         <td>{{ order.trav_orde_status }}</td>
                                                         <td>{{ order.room_amount }}</td>
+                                                        <td>{{ order.room_type }}</td>
                                                         <td>{{ order.trav_orde_amount }}</td>
                                                         <td>
                                                             <div class="btn-group">
@@ -685,6 +683,7 @@
                                     order.coup_id.toString().toLowerCase().includes(query) ||
                                     order.trav_orde_status.toLowerCase().includes(query) ||
                                     order.room_amount.toString().toLowerCase().includes(query) ||
+                                    order.room_type.toLowerCase().includes(query) ||
                                     order.trav_orde_amount.toLowerCase().includes(query)
                                     );
                                 }
@@ -713,9 +712,10 @@
                                     const coup_id = `coup_id=${order.coup_id}`;
                                     const trav_orde_status = `trav_orde_status=${order.trav_orde_status}`; 
                                     const room_amount = `room_amount=${order.room_amount}`;
+                                    const room_type = `room_type=${order.room_type}`;
                                     const trav_orde_amount = `trav_orde_amount=${order.trav_orde_amount}`;  
                                     window.open(
-                                        `./travelOrder_PopWindow.html?${id}&${memb_id}&${ship_id}&${coup_id}&${trav_orde_status}&${room_amount}&${trav_orde_amount}`,
+                                        `./travelOrder_PopWindow.html?${id}&${memb_id}&${ship_id}&${coup_id}&${trav_orde_status}&${room_amount}&${room_type}&${trav_orde_amount}`,
                                         '商品更新',
                                         'width=600,height=600,left=200,top=100'
                                     );
