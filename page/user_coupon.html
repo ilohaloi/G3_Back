@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>郵輪</title>
 
-    <script src="https://unpkg.com/vue@3"></script>
-    <script src="https://unpkg.com/vue-router@4"></script>
+    <script src="https://unpkg.com/vue@latest"></script>
+    <script src="https://unpkg.com/vue-router@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -19,8 +19,7 @@
     <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
-
-    <link rel="stylesheet" href="../ourFile/member/member.css">
+    <link rel="stylesheet" href="../ourFile/coupon/uc.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
@@ -30,6 +29,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
 
+
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -37,56 +37,68 @@
         import { sideBar } from '../js/module.js';
         await sideBar();
     </script>
-
+    
     <div id="wrapper"></div>
 
-    <div class="all">
+    <div class="content">
         <div class="container">
-            <h1>會員管理</h1>
+            <h1>已發放之優惠券</h1>
 
-            <!-- 查詢會員表單 -->
-            <div id="queryMemberForm">
-                <form id="searchMemberForm">
-                    <label for="member_name">查詢會員</label>
-                    <input type="text" id="member_name" name="member_name" placeholder="輸入會員姓名">
-                    <button type="submit" class="btn-submit">查詢</button>
-                </form>
-            </div>
+            <!-- 查詢條件表單 -->
+            <form id="searchForm">
+                <label>會員 ID: <input type="text" id="memb_id"></label>
+                <label>優惠券 ID: <input type="text" id="coup_id"></label>
+                <label>開始日期: <input type="date" id="issue_date_start"></label>
+                <label>結束日期: <input type="date" id="issue_date_end"></label>
+                <label>使用狀態:
+                    <select id="coup_is_used">
+                        <option value="">全部</option>
+                        <option value="1">已使用</option>
+                        <option value="0">未使用</option>
+                    </select>
+                </label>
+                <label>未輸入查詢條件 即顯示全部</label>
+                <button type="submit">查詢</button>
+                <button type="reset">清除條件</button>
+            </form>
 
             <!-- 顯示筆數的下拉選單 -->
             <label for="displayCount">顯示筆數:</label>
             <select id="displayCount">
-                <option value="5">5</option>
-                <option value="10">10</option>
                 <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
             </select>
 
-            <table id="memberTable">
-                <thead>
-                    <tr>
-                        <th>會員編號</th>
-                        <th>姓名</th>
-                        <th>信箱</th>
-                        <th>電話</th>
-                        <th>住址</th>
-                        <th>生日</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- 這裡的內容會由 JavaScript 動態填充 -->
-                </tbody>
-            </table>
+            <div class="table-container">
+                <table id="couponTable">
+                    <thead>
+                        <tr>
+                            <th>編號</th>
+                            <th>會員編號</th>
+                            <th>優惠券編號</th>
+                            <th>開始日期</th>
+                            <th>結束日期</th>
+                            <th>使用狀態</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 表格內容 -->
+                    </tbody>
+                </table>
+            </div>
 
             <!-- 分頁功能 -->
             <div class="btn-group">
                 <div id="pagination" class="pagination">
-                    <button id="prevPageBtn">上一頁</button>
+                    <!-- <button id="prevPageBtn">上一頁</button>
                     <span id="pageInfo">第 <span id="currentPage">1</span> 頁</span>
-                    <button id="nextPageBtn">下一頁</button>
+                    <button id="nextPageBtn">下一頁</button> -->
                 </div>
             </div>
         </div>
     </div>
+
 
     <!-- jQuery -->
     <script src="../plugins/jquery/jquery.min.js"></script>
@@ -97,7 +109,7 @@
     <script src="../dist/js/adminlte.min.js"></script>
 
     <!-- 新增 -->
-    <script src="../ourFile/member/member.js"></script>
+    <script src="../ourFile/coupon/uc.js"></script>
 
 </body>
 
