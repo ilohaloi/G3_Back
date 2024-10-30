@@ -295,7 +295,16 @@
                                             </h3>                     
                                         </div>
                                         <div>
+                                            <select v-model="selectedFilter">
+                                                <option disabled value="">請選擇欄位</option>
+                                                <option value="id">編號</option>
+                                                <option value="name">名稱</option>
+                                                <option value="depiction">描述</option>
+                                                <option value="days">天數小於</option>
+                                                <option value="price">價格小於</option>
+                                            </select>
                                             <input type="text" v-model="searchQuery" placeholder="Search..." />
+                                            <button type="button" class="btn btn-block btn-info" @click="search">搜尋</button>                                      
                                         </div>
                                         <div class="card-body">
                                             <table class="table table-bordered">
@@ -330,7 +339,7 @@
                                             </table>
                                             <div class="dataTables_paginate paging_simple_numbers">
                                                 <nav aria-label="Page navigation">
-                                                    <ul class="pagination justify-content-center">
+                                                    <ul class="mt-3 pagination justify-content-center">
                                                         <li class="page-item" :class="{ disabled: currentPage === 1 }">
                                                             <button class="page-link" @click="prevPage" :disabled="currentPage === 1">Previous</button>
                                                         </li>
@@ -352,8 +361,9 @@
                                 return {
                                     route: [], // 存储从服务器获取的数据
                                     currentPage: 1, // 当前页码
-                                    pageSize: 10 ,// 每页显示的条目数
-                                    searchQuery: '' // 搜索框输入的关键字
+                                    pageSize: 10,// 每页显示的条目数
+                                    searchQuery: '',// 搜索框输入的关键字
+                                    selectedFilter: ''
                                 };
                             },
                             computed: {
@@ -361,26 +371,12 @@
                                 paginatedRoute() {
                                     const start = (this.currentPage - 1) * this.pageSize;
                                     const end = start + this.pageSize;
-                                    return this.filteredRoute.slice(start, end);
+                                    return this.route.slice(start, end);
                                 },
                                 // 计算总页数
                                 totalPages() {
-                                    return Math.ceil(this.filteredRoute.length / this.pageSize);
+                                    return Math.ceil(this.route.length / this.pageSize);
                                 },
-                                filteredRoute() {
-                                    if (!this.searchQuery) {
-                                        return this.route; // 如果没有输入搜索关键字，返回全部数据
-                                    }
-                                    // 根据搜索关键字过滤数据
-                                    const query = this.searchQuery.toLowerCase();
-                                    return this.route.filter(r => 
-                                        r.id.toString().toLowerCase().includes(query) ||
-                                        r.name.toLowerCase().includes(query) ||
-                                        r.depiction.toLowerCase().includes(query) ||
-                                        r.days.toString().toLowerCase().includes(query) ||
-                                        r.price.toString().toLowerCase().includes(query)
-                                    );
-                                }
                             },
                             methods: {
                                 // 跳转到下一页
@@ -420,18 +416,49 @@
                                         '新增',
                                         'width=600,height=600,left=200,top=100'
                                     );
+                                },
+                                async search() {
+                                    try {
+
+
+                                        const response = await fetch("http://localhost:8081/TIA103G3_Servlet/searchroutefetchservlet", {
+                                            method: 'post',
+                                            headers: {
+                                                'Content-Type': 'application/json'
+                                            },
+                                            body: JSON.stringify({ selectedFilter: this.selectedFilter, searchQuery: this.searchQuery })
+                                        })
+                                        const date = await response.json();
+                                        this.route = date;
+
+                                    } catch (error) {
+                                        console.log(error);
+                                    }
+                                },
+                                async get(){
+                                    try {
+                                        this.route = await getRoute();
+                                    } catch (error) {
+                                    console.error('Failed to get products:', error); // 捕获并处理错误
+                                    }
                                 }
                             },
                             async mounted() {
                                 try {
-
                                     this.route = await getRoute();
-                                    console.log(this.route);
-
                                 } catch (error) {
                                     console.error('Failed to get products:', error); // 捕获并处理错误
                                 }
                             },
+                            watch: {
+                                searchQuery: {
+                                    handler(newVal, oldVal) {    
+                                        if (newVal === "")
+                                            this.get();//取得所有資料
+                                    },
+                                    deep: true, // 深度監聽
+                                },
+                            }
                         }
                         const schedule_view = {
                             template: `
@@ -444,7 +471,17 @@
                                             </h3>
                                         </div>
                                         <div>
+                                           <select v-model="selectedFilter">
+                                                <option disabled value="">請選擇欄位</option>
+                                                <option value="ship_id">船隻編號</option>
+                                                <option value="route_id">航線編號</option>
+                                                <option value="status">航班狀態</option>
+                                                <option value="shipping_time">出港時間</option>
+                                                <option value="shipping_dock">駁船地點</option>
+                                                <option value="rooms_booked">已訂房數</option>
+                                            </select>
                                             <input type="text" v-model="searchQuery" placeholder="Search..." />
+                                            <button type="button" class="btn btn-block btn-info" @click="search">搜尋</button>
                                         </div>
                                         <div class="card-body">
                                             <table class="table table-bordered">
@@ -455,7 +492,7 @@
                                                         <th>航班狀態</th>
                                                         <th>出港時間</th>
                                                         <th>駁船地點</th>
-                                                        <th>已定房間總數</th>
+                                                        <th>已訂房數</th>
                                                         <th>行程修改</th>
                                                     </tr>
                                                 </thead>
@@ -481,7 +518,7 @@
                                             </table>
                                             <div class="dataTables_paginate paging_simple_numbers">
                                                 <nav aria-label="Page navigation">
-                                                    <ul class="pagination justify-content-center">
+                                                    <ul class="mt-3 pagination justify-content-center">
                                                         <li class="page-item" :class="{ disabled: currentPage === 1 }">
                                                             <button class="page-link" @click="prevPage" :disabled="currentPage === 1">Previous</button>
                                                         </li>
@@ -504,7 +541,8 @@
                                     schedule: [], // 存储从服务器获取的数据
                                     currentPage: 1, // 当前页码
                                     pageSize: 10, // 每页显示的条目数
-                                    searchQuery: '' // 搜索框输入的关键字
+                                    searchQuery: '', // 搜索框输入的关键字
+                                    selectedFilter: ''
                                 };
                             },
                             computed: {
@@ -512,27 +550,13 @@
                                 paginatedSchedule() {
                                     const start = (this.currentPage - 1) * this.pageSize;
                                     const end = start + this.pageSize;
-                                    return this.filteredSchedule.slice(start, end);
+                                    return this.schedule.slice(start, end);
                                 },
                                 // 计算总页数
                                 totalPages() {
-                                    return Math.ceil(this.filteredSchedule.length / this.pageSize);
+                                    return Math.ceil(this.schedule.length / this.pageSize);
                                 },
-                                filteredSchedule() {
-                                    if (!this.searchQuery) {
-                                        return this.schedule; // 如果没有输入搜索关键字，返回全部数据
-                                    }
-                                    // 根据搜索关键字过滤数据
-                                    const query = this.searchQuery.toLowerCase();
-                                    return this.schedule.filter(sc => 
-                                        sc.ship_id.toString().toLowerCase().includes(query) ||
-                                        sc.route_id.toString().toLowerCase().includes(query) ||
-                                        sc.status.toLowerCase().includes(query) ||
-                                        sc.shipping_time.toLowerCase().includes(query) ||
-                                        sc.shipping_dock.toLowerCase().includes(query) ||
-                                        sc.rooms_booked.toString().toLowerCase().includes(query)
-                                    );
-                                }
+
                             },
                             methods: {
                                 // 跳转到下一页
@@ -571,6 +595,28 @@
                                         '新增',
                                         'width=600,height=600,left=200,top=100'
                                     );
+                                },
+                                async search() {
+                                    try {
+                                        const response = await fetch("http://localhost:8081/TIA103G3_Servlet/searchschedulefetchservlet", {
+                                            method: 'post',
+                                            headers: {
+                                                'Content-Type': 'application/json'
+                                            },
+                                            body: JSON.stringify({ selectedFilter: this.selectedFilter, searchQuery: this.searchQuery })
+                                        })
+                                        const date = await response.json();
+                                        this.schedule = date;
+                                    } catch (error) {
+                                        console.log(error);
+                                    }
+                                },
+                                async get(){
+                                    try {
+                                        this.schedule = await getSchedule();
+                                    } catch (error) {
+                                    console.error('Failed to get products:', error); // 捕获并处理错误
+                                    }
                                 }
                             },
                             async mounted() {
@@ -580,6 +626,15 @@
                                     console.error('Failed to get products:', error); // 捕获并处理错误
                                 }
                             },
+                            watch: {
+                                searchQuery: {
+                                    handler(newVal, oldVal) {
+                                        if (newVal === "")
+                                            this.get();
+                                    },
+                                    deep: true, // 深度監聽
+                                },
+                            }
                         }
                         const order_view = {
                             template: `
@@ -592,7 +647,19 @@
                                             </h3>
                                         </div>
                                         <div>
+                                            <select v-model="selectedFilter">
+                                                <option disabled value="">請選擇欄位</option>
+                                                <option value="id">訂單編號</option>
+                                                <option value="memb_id">會員編號</option>
+                                                <option value="ship_id">船隻編號</option>
+                                                <option value="coup_id">優惠券編號</option>
+                                                <option value="trav_orde_status">訂單狀況</option>
+                                                <option value="room_amount">房間數量</option>
+                                                <option value="room_type">房型</option>
+                                                <option value="trav_orde_amount">總價</option>
+                                            </select>
                                             <input type="text" v-model="searchQuery" placeholder="Search..." />
+                                            <button type="button" class="btn btn-block btn-info" @click="search">搜尋</button>
                                         </div>
                                         <div class="card-body">
                                             <table class="table table-bordered">
@@ -633,7 +700,7 @@
                                             </table>
                                             <div class="dataTables_paginate paging_simple_numbers">
                                                 <nav aria-label="Page navigation">
-                                                    <ul class="pagination justify-content-center">
+                                                    <ul class="mt-3 pagination justify-content-center">
                                                         <li class="page-item" :class="{ disabled: currentPage === 1 }">
                                                             <button class="page-link" @click="prevPage" :disabled="currentPage === 1">Previous</button>
                                                         </li>
@@ -656,7 +723,8 @@
                                     order: [], // 存储从服务器获取的数据
                                     currentPage: 1, // 当前页码
                                     pageSize: 10, // 每页显示的条目数
-                                    searchQuery: '' // 搜索框输入的关键字
+                                    searchQuery: '', // 搜索框输入的关键字
+                                    selectedFilter: ''
                                 };
                             },
                             computed: {
@@ -664,29 +732,12 @@
                                 paginatedOrder() {
                                     const start = (this.currentPage - 1) * this.pageSize;
                                     const end = start + this.pageSize;
-                                    return this.filteredOrder.slice(start, end);
+                                    return this.order.slice(start, end);
                                 },
                                 // 计算总页数
                                 totalPages() {
-                                    return Math.ceil(this.filteredOrder.length / this.pageSize);
-                                },
-                                filteredOrder() {
-                                    if (!this.searchQuery) {
-                                        return this.order; // 如果没有输入搜索关键字，返回全部数据
-                                    }
-                                    // 根据搜索关键字过滤数据
-                                    const query = this.searchQuery.toLowerCase();
-                                    return this.order.filter(order => 
-                                    order.id.toString().toLowerCase().includes(query) ||
-                                    order.memb_id.toString().toLowerCase().includes(query) ||
-                                    order.ship_id.toString().toLowerCase().includes(query) ||
-                                    order.coup_id.toString().toLowerCase().includes(query) ||
-                                    order.trav_orde_status.toLowerCase().includes(query) ||
-                                    order.room_amount.toString().toLowerCase().includes(query) ||
-                                    order.room_type.toLowerCase().includes(query) ||
-                                    order.trav_orde_amount.toLowerCase().includes(query)
-                                    );
-                                }
+                                    return Math.ceil(this.order.length / this.pageSize);
+                                },                          
                             },
                             methods: {
                                 // 跳转到下一页
@@ -710,10 +761,10 @@
                                     const memb_id = `memb_id=${order.memb_id}`;
                                     const ship_id = `ship_id=${order.ship_id}`;
                                     const coup_id = `coup_id=${order.coup_id}`;
-                                    const trav_orde_status = `trav_orde_status=${order.trav_orde_status}`; 
+                                    const trav_orde_status = `trav_orde_status=${order.trav_orde_status}`;
                                     const room_amount = `room_amount=${order.room_amount}`;
                                     const room_type = `room_type=${order.room_type}`;
-                                    const trav_orde_amount = `trav_orde_amount=${order.trav_orde_amount}`;  
+                                    const trav_orde_amount = `trav_orde_amount=${order.trav_orde_amount}`;
                                     window.open(
                                         `./travelOrder_PopWindow.html?${id}&${memb_id}&${ship_id}&${coup_id}&${trav_orde_status}&${room_amount}&${room_type}&${trav_orde_amount}`,
                                         '商品更新',
@@ -721,24 +772,56 @@
                                     );
                                     console.log('測試');
                                 },
-                                openInsertWindow(){
+                                openInsertWindow() {
                                     window.open(
                                         `./travelOrder_InsertWindow.html`,
                                         '新增',
                                         'width=600,height=600,left=200,top=100'
                                     );
+                                },
+                                async search() {
+                                    try {
+
+
+                                        const response = await fetch("http://localhost:8081/TIA103G3_Servlet/searchorderfetchservlet", {
+                                            method: 'post',
+                                            headers: {
+                                                'Content-Type': 'application/json'
+                                            },
+                                            body: JSON.stringify({ selectedFilter: this.selectedFilter, searchQuery: this.searchQuery })
+                                        })
+                                        const date = await response.json();
+                                        this.order = date;
+
+                                    } catch (error) {
+                                        console.log(error);
+                                    }
+                                },
+                                async get(){
+                                    try {
+                                        this.order = await getOrder();
+                                    } catch (error) {
+                                    console.error('Failed to get products:', error); // 捕获并处理错误
+                                    }
                                 }
                             },
-                            //一開始就渲染
                             async mounted() {
                                 try {
                                     this.order = await getOrder();
-                                    console.log(this.order);
-                                    
                                 } catch (error) {
                                     console.error('Failed to get products:', error); // 捕获并处理错误
                                 }
                             },
+                            watch: {
+                                searchQuery: {
+                                    handler(newVal, oldVal) {
+                                        if (newVal === "")
+                                            this.get();
+
+                                    },
+                                    deep: true, // 深度監聽
+                                },
+                            }
                         };
                         // 定义路由
                         const routes = [
