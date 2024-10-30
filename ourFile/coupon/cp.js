@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 coupon_type.push(...data); // 將從後端獲取的資料加入 coupon_type 陣列
                 totalCoupons = coupon_type.length; // 總數量
                 renderCoupons(); // 渲染優惠券
-                updatePagination(); // 更新分頁
             })
             .catch(error => console.error('Error fetching coupons:', error));
     }
@@ -43,11 +42,9 @@ document.addEventListener('DOMContentLoaded', function () {
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${coupon.coup_id}</td>
-                <td>${coupon.coup_name || ''}</td>
+                <td>${coupon.coup_code}</td>
                 <td>${coupon.coup_description || ''}</td>
                 <td>${coupon.coup_discount}%</td>
-                <td>${new Date(coupon.coup_issue_date).toLocaleString()}</td>
-                <td>${new Date(coupon.coup_expiry_date).toLocaleString()}</td>
                 <td>
                     <button onclick="editCoupon(${coupon.coup_id})">編輯</button>
                     <button onclick="confirmDeleteCoupon(${coupon.coup_id})">刪除</button>
@@ -85,14 +82,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // 獲取優惠券
-    function fetchCoupons(coup_name = '') {
+    function fetchCoupons(coup_code = '') {
 
 
         let url = 'http://localhost:8081/TIA103G3_Servlet/getCoupon';
 
 
-        if (coup_name) {
-            url += `?coup_name=${encodeURIComponent(coup_name)}`; // 將查詢條件加到 URL
+        if (coup_code) {
+            url += `?coup_code=${encodeURIComponent(coup_code)}`; // 將查詢條件加到 URL
         }
         fetch(url)
             .then(response => {
@@ -127,19 +124,15 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
 
 
-        const coup_name = document.getElementById('edit_coup_name').value; // 修改這行
+        const coup_code = document.getElementById('edit_coup_code').value; 
 
         const coup_description = document.getElementById('coup_description').value;
         const coup_discount = parseFloat(document.getElementById('coup_discount').value);
-        const coup_issue = document.getElementById('coup_issue_date').value;
-        const coup_expiry = document.getElementById('coup_expiry_date').value;
 
         const newCoupon = {
-            coup_name,
+            coup_code,
             coup_description,
             coup_discount,
-            coup_issue_date: coup_issue,
-            coup_expiry_date: coup_expiry,
         };
 
         // 假設有一個 API 對應於新增優惠券的請求
@@ -185,12 +178,10 @@ document.addEventListener('DOMContentLoaded', function () {
     window.editCoupon = function (coup_id) {
         const coupon = coupon_type.find(c => c.coup_id === coup_id);
         if (coupon) {
-            document.getElementById('edit_coup_name').value = coupon.coup_name || '';
-            document.getElementById('edit_coup_name').readOnly = true; // 設置名稱為只讀
+            document.getElementById('edit_coup_code').value = coupon.coup_code;
+            document.getElementById('edit_coup_code').readOnly = true; // 設置名稱為只讀
             document.getElementById('edit_coup_description').value = coupon.coup_description || '';
             document.getElementById('edit_coup_discount').value = coupon.coup_discount || '';
-            document.getElementById('edit_coup_issue_date').value = coupon.coup_issue_date || '';
-            document.getElementById('edit_coup_expiry_date').value = coupon.coup_expiry_date || '';
 
             editingCouponId = coup_id; // 設置正在編輯的優惠券 ID
             editCouponForm.style.display = 'flex'; // 顯示編輯表單
@@ -202,19 +193,15 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('editCouponFormDetails').addEventListener('submit', function (e) {
         e.preventDefault();
 
-        const coup_name = document.getElementById('edit_coup_name').value; // 從只讀欄位獲取名稱
+        const coup_code = document.getElementById('edit_coup_code').value; // 從只讀欄位獲取名稱
         const coup_description = document.getElementById('edit_coup_description').value;
         const coup_discount = parseFloat(document.getElementById('edit_coup_discount').value);
-        const coup_issue = document.getElementById('edit_coup_issue_date').value;
-        const coup_expiry = document.getElementById('edit_coup_expiry_date').value;
 
         const updatedCoupon = {
             coup_id: editingCouponId, // 將優惠券 ID 包含在請求中
-            coup_name,
+            coup_code,
             coup_description,
             coup_discount,
-            coup_issue_date: coup_issue,
-            coup_expiry_date: coup_expiry,
         };
 
 

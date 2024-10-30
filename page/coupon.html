@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>郵輪</title>
 
-    <script src="https://unpkg.com/vue@3"></script>
-    <script src="https://unpkg.com/vue-router@4"></script>
+    <script src="https://unpkg.com/vue@latest"></script>
+    <script src="https://unpkg.com/vue-router@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
 
-    <link rel="stylesheet" href="/ourFile/coupon/cp.css">
+    <link rel="stylesheet" href="../ourFile/coupon/cp.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
@@ -33,8 +33,12 @@
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
+    <script type="module">
+        import { sideBar } from '../js/module.js';
+        await sideBar();
+    </script>
+    
     <div id="wrapper"></div>
-    <!-- 請把代碼寫在這邊 -->
     <div class="all">
         <div class="container">
             <h1>優惠券管理後台</h1>
@@ -55,8 +59,6 @@
                         <th>折扣碼</th>
                         <th>敘述</th>
                         <th>折扣</th>
-                        <th>開始日期</th>
-                        <th>結束日期</th>
                         <th><button id="addCouponBtn">新增優惠券</button></th>
                     </tr>
                 </thead>
@@ -87,12 +89,6 @@
                         <input type="number" id="coup_discount" name="coup_discount" required placeholder="輸入折扣(%)"
                             min="0">
 
-                        <label for="coup_issue_date">開始時間</label>
-                        <input type="datetime-local" id="coup_issue_date" name="coup_issue_date" required>
-
-                        <label for="coup_expiry_date">結束時間</label>
-                        <input type="datetime-local" id="coup_expiry_date" name="coup_expiry_date" required>
-
                         <button type="submit" id="saveCouponBtn" class="btn-submit">儲存優惠券</button>
                         <button type="button" id="cancelAddBtn" class="btn-submit">取消</button>
                     </form>
@@ -104,8 +100,8 @@
                 <div class="form-modal-content">
                     <h2 id="editFormTitle">編輯優惠券</h2>
                     <form id="editCouponFormDetails">
-                        <label for="edit_coup_name">折扣碼</label>
-                        <input type="text" id="edit_coup_name" name="edit_coup_name" required placeholder="輸入折扣碼">
+                        <label for="edit_coup_code">折扣碼</label>
+                        <input type="text" id="edit_coup_code" name="edit_coup_code" required placeholder="輸入折扣碼">
 
                         <label for="edit_coup_description">敘述</label>
                         <input type="text" id="edit_coup_description" name="edit_coup_description" required
@@ -114,12 +110,6 @@
                         <label for="edit_coup_discount">折扣(%)</label>
                         <input type="number" id="edit_coup_discount" name="edit_coup_discount" required
                             placeholder="輸入折扣(%)" min="0">
-
-                        <label for="edit_coup_issue_date">開始時間</label>
-                        <input type="datetime-local" id="edit_coup_issue_date" name="edit_coup_issue_date" required>
-
-                        <label for="edit_coup_expiry_date">結束時間</label>
-                        <input type="datetime-local" id="edit_coup_expiry_date" name="edit_coup_expiry_date" required>
 
                         <button type="submit" id="saveEditCouponBtn" class="btn-submit">儲存編輯優惠券</button>
                         <button type="button" id="cancelEditBtn" class="btn-submit">取消</button>
@@ -140,27 +130,7 @@
     <script src="../dist/js/adminlte.min.js"></script>
 
     <!-- 新增 -->
-    <script src="/ourFile/coupon/cp.js"></script>
-
-    <!-- 動態載入 -->
-    <script>
-        function loadHtml(placeholderId, url) {
-            fetch(url)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Failed to fetch ${url}`);
-                    }
-                    return response.text();
-                })
-                .then(data => {
-                    document.getElementById(placeholderId).innerHTML = data;
-                })
-                .catch(error => console.error('Error loading HTML:', error));
-        }
-
-        // 載入 header 和 footer
-        loadHtml('wrapper', '/ourFile/sections/wrapper.html');
-    </script>
+    <script src="../ourFile/coupon/cp.js"></script>
 </body>
 
 </html>

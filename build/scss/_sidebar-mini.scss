@@ -44,6 +44,7 @@
     @include sidebar-mini-breakpoint ();
   }
 }
+
 @include media-breakpoint-down(md) {
   .sidebar-mini.sidebar-collapse .main-sidebar {
     box-shadow: none !important;
@@ -55,6 +56,7 @@
     @include sidebar-mini-breakpoint ();
   }
 }
+
 @include media-breakpoint-down(sm) {
   .sidebar-mini-md.sidebar-collapse .main-sidebar {
     box-shadow: none !important;
@@ -100,10 +102,12 @@
         }
       }
     }
+
     .nav-legacy {
       .nav-link {
         width: $sidebar-width;
       }
+
       &.nav-child-indent {
         .nav-treeview {
           .nav-link {
@@ -136,10 +140,12 @@
         }
       }
     }
+
     .nav-flat {
       .nav-link {
         width: $sidebar-width;
       }
+
       &.nav-child-indent {
         .nav-treeview {
           .nav-link {
@@ -172,6 +178,7 @@
         }
       }
     }
+
     .nav-child-indent.nav-compact .nav-treeview {
       .nav-link {
         width: calc(#{$sidebar-width} - #{$sidebar-padding-x} * 2 - .5rem);
@@ -201,10 +208,12 @@
         }
       }
     }
+
     .nav-child-indent.nav-legacy.nav-compact {
       .nav-link {
         width: $sidebar-width;
       }
+
       .nav-treeview {
         .nav-link {
           width: calc(#{$sidebar-width} - .5rem);
@@ -235,6 +244,7 @@
         }
       }
     }
+
     .nav-link {
       width: calc(#{$sidebar-width} - #{$sidebar-padding-x} * 2);
       @include transition(width $transition-fn $transition-speed);
@@ -243,6 +253,7 @@
 }
 
 .sidebar-collapse {
+
   &.sidebar-mini,
   &.sidebar-mini-md,
   &.sidebar-mini-xs {
@@ -264,6 +275,7 @@
             width: $sidebar-mini-width;
           }
         }
+
         &.nav-child-indent.nav-compact {
           .nav-treeview {
             padding-left: 0 !important;
@@ -289,12 +301,15 @@
           .nav-link {
             width: calc(#{$sidebar-width} - #{$sidebar-padding-x} * 2);
           }
+
           .form-control-sidebar {
             display: inline-block;
           }
-          .form-control-sidebar ~ .input-group-append {
+
+          .form-control-sidebar~.input-group-append {
             display: flex;
           }
+
           .sidebar-search-open .sidebar-search-results {
             display: inline-block;
           }
@@ -305,10 +320,12 @@
             width: calc(#{$sidebar-width} - #{$sidebar-padding-x} * 2);
           }
         }
+
         .nav-legacy {
           .nav-link {
             width: $sidebar-width;
           }
+
           &.nav-child-indent {
             .nav-treeview {
               .nav-link {
@@ -341,10 +358,12 @@
             }
           }
         }
+
         .nav-flat {
           .nav-link {
             width: $sidebar-width;
           }
+
           &.nav-child-indent {
             .nav-treeview {
               .nav-link {
@@ -377,15 +396,18 @@
             }
           }
         }
+
         .nav-child-indent.nav-compact {
           .nav-link {
             width: calc(#{$sidebar-width} - #{$sidebar-padding-x} * 2);
           }
         }
+
         .nav-child-indent.nav-legacy.nav-compact {
           .nav-link {
             width: $sidebar-width;
           }
+
           .nav-treeview {
             .nav-link {
               width: calc(#{$sidebar-width} - .5rem);
@@ -454,8 +476,9 @@
       }
 
       .sidebar {
+
         .brand-text,
-        .user-panel > .info,
+        .user-panel>.info,
         .nav-sidebar .nav-link p {
           margin-left: -10px;
           animation-name: fadeOut;
@@ -466,7 +489,7 @@
           width: 0;
         }
 
-        .nav-sidebar > .nav-item .nav-icon {
+        .nav-sidebar>.nav-item .nav-icon {
           margin-right: 0;
         }
       }
@@ -483,15 +506,15 @@
 }
 
 .sidebar-form,
-.nav-sidebar > .nav-header {
+.nav-sidebar>.nav-header {
   overflow: hidden;
   text-overflow: clip;
 }
 
-.nav-sidebar .nav-item > .nav-link {
+.nav-sidebar .nav-item>.nav-link {
   position: relative;
 
-  > .float-right {
+  >.float-right {
     margin-top: -7px;
     position: absolute;
     right: 10px;
