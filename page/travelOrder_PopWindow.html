@@ -33,6 +33,14 @@
             <label for="routeField">房間數量:</label>
             <input type="text" id="room_amount" value="">
             <br>
+            <label for="routeField">房型:</label>
+            <select id="room_type"  class="custom-select form-control-border" required>
+                <option value="" disabled>選擇分類</option>
+                <option value="單人房">單人房</option>
+                <option value="雙人房">雙人房</option>
+                <option value="四人房">四人房</option>
+            </select>
+            <br>
             <label for="routeField">訂單總價:</label>
             <input type="text" id="trav_orde_amount" value="">
 
@@ -67,6 +75,10 @@ trav_orde_status.value = trav_Orde_Status;
 const room_amount = document.getElementById('room_amount');
 const roomAmount = urlParams.get('room_amount');
 room_amount.value = roomAmount;
+
+const room_type = document.getElementById('room_type');
+const roomType = urlParams.get('room_type');
+room_type.value = roomType;
 
 const trav_orde_amount = document.getElementById('trav_orde_amount');
 const trav_Orde_Amount = urlParams.get('trav_orde_amount');
@@ -123,7 +135,7 @@ function displayUsers(users) {
                   "Content-Type": "application/json"
               },
               //JSON{id: route_id.value }id對應VO的設定
-              body: JSON.stringify({id: id.value, memb_id: memb_id.value, ship_id:ship_id.value, coup_id:coup_id.value, trav_orde_status:trav_orde_status.value, room_amount:room_amount.value, trav_orde_amount:trav_orde_amount.value })
+              body: JSON.stringify({id: id.value, memb_id: memb_id.value, ship_id:ship_id.value, coup_id:coup_id.value, trav_orde_status:trav_orde_status.value, room_amount:room_amount.value,room_type:room_type.value, trav_orde_amount:trav_orde_amount.value })
           });
           // 检查响应状态
           if (response.ok) {

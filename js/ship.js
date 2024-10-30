@@ -15,6 +15,7 @@ export async function getRoute() {
         console.log(error);
     }
 };
+
 export async function getSchedule() {
     try {
         const response = await fetch('http://localhost:8081/TIA103G3_Servlet/schedule', {
