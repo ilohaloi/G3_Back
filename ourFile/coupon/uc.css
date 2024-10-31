@@ -1,0 +1,313 @@
+  /* 全局設置 */
+  .content {
+    background: linear-gradient(to right, #74ebd5, #ACB6E5);
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* 容器設置 */
+.container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+    width: 100%;
+    transition: transform 0.3s ease;
+}
+
+.container:hover {
+    transform: scale(1.02);
+}
+
+/* 表單彈窗樣式 */
+.form-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.form-modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 100%;
+}
+
+/* 標題設置 */
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: #007bff;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+h2 {
+    font-size: 1.75rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* 表單設置 */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+.btn-submit {
+    background-color: #28a745;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.btn-submit:hover {
+    background-color: #218838;
+    box-shadow: 0 8px 15px rgba(40, 167, 69, 0.3);
+}
+
+/* 表格樣式 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+thead {
+    background-color: #007bff;
+    color: white;
+}
+
+th,
+td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+td {
+    font-size: 16px;
+}
+
+tbody tr:hover {
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+    box-shadow: 0 8px 15px rgba(220, 53, 69, 0.3);
+}
+
+/* 新增優惠券 */
+#couponForm {
+    font-family: Arial, sans-serif;
+    margin: 50px;
+}
+
+form {
+    max-width: 400px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+
+#searchForm {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+    background-color: #f7f9fc;
+    border: 1px solid #dfe3e8;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: auto;
+}
+
+#searchForm label {
+    font-weight: 500;
+    color: #333;
+    position: relative;
+}
+
+/* 提示文字的樣式 */
+#searchForm label:last-of-type {
+    color: #888;
+    font-size: 18px;
+    grid-column: span 2; /* 讓提示文字佔據整個行 */
+    text-align: right; /* 將提示文字對齊到右邊 */
+}
+
+#searchForm input,
+#searchForm select {
+    padding: 8px;
+    width: 100%;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    background-color: #fff;
+}
+
+#searchForm button {
+    grid-column: span 2;
+    padding: 12px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #5a67d8;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#searchForm button:hover {
+    background-color: #4c51bf;
+}
+
+/* 1. 分頁按鈕組樣式 */
+.btn-group {
+    display: flex;
+    justify-content: center; /* 置中按鈕組 */
+    align-items: center;
+    margin: 20px 0;
+}
+
+/* 2. 分頁區塊樣式 */
+.pagination {
+    display: flex;
+    gap: 10px;
+    font-size: 1rem;
+    color: #333;
+}
+
+/* 3. 按鈕樣式 */
+#prevPageBtn, #nextPageBtn {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#prevPageBtn:hover, #nextPageBtn:hover {
+    background-color: #0056b3; /* 按鈕懸停效果 */
+}
+
+#pagination {
+    display: flex; /* 設置為 flex 排列按鈕 */
+    justify-content: center; /* 將按鈕置中對齊 */
+    gap: 10px; /* 按鈕間距 */
+    margin-top: 20px; /* 容器上方的間距 */
+}
+
+#pagination button {
+    padding: 8px 12px; /* 調整按鈕內邊距 */
+    background-color: #007bff; /* 按鈕背景色 */
+    color: #fff; /* 按鈕文字顏色 */
+    border: none; /* 移除按鈕邊框 */
+    border-radius: 5px; /* 按鈕圓角 */
+    cursor: pointer; /* 鼠標懸停時顯示指標 */
+    transition: background-color 0.3s ease; /* 添加懸停過渡效果 */
+}
+
+#pagination button:hover {
+    background-color: #0056b3; /* 懸停時背景顏色變暗 */
+}
+
+#pagination button:disabled {
+    background-color: #ccc; /* 禁用按鈕的背景顏色 */
+    cursor: not-allowed; /* 禁用按鈕的鼠標樣式 */
+}
+
+

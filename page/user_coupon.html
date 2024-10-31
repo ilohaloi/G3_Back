@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>郵輪</title>
+
+    <script src="https://unpkg.com/vue@latest"></script>
+    <script src="https://unpkg.com/vue-router@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/jqvmap/jqvmap.min.css">
+    <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
+    <link rel="stylesheet" href="../ourFile/coupon/uc.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
+    <script src="https://kit.fontawesome.com/a33d8d8a91.js" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+
+
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <script type="module">
+        import { sideBar } from '../js/module.js';
+        await sideBar();
+    </script>
+    
+    <div id="wrapper"></div>
+
+    <div class="content">
+        <div class="container">
+            <h1>已發放之優惠券</h1>
+
+            <!-- 查詢條件表單 -->
+            <form id="searchForm">
+                <label>會員 ID: <input type="text" id="memb_id"></label>
+                <label>優惠券 ID: <input type="text" id="coup_id"></label>
+                <label>開始日期: <input type="date" id="issue_date_start"></label>
+                <label>結束日期: <input type="date" id="issue_date_end"></label>
+                <label>使用狀態:
+                    <select id="coup_is_used">
+                        <option value="">全部</option>
+                        <option value="1">已使用</option>
+                        <option value="0">未使用</option>
+                    </select>
+                </label>
+                <label>未輸入查詢條件 即顯示全部</label>
+                <button type="submit">查詢</button>
+                <button type="reset">清除條件</button>
+            </form>
+
+            <!-- 顯示筆數的下拉選單 -->
+            <label for="displayCount">顯示筆數:</label>
+            <select id="displayCount">
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+
+            <div class="table-container">
+                <table id="couponTable">
+                    <thead>
+                        <tr>
+                            <th>編號</th>
+                            <th>會員編號</th>
+                            <th>優惠券編號</th>
+                            <th>開始日期</th>
+                            <th>結束日期</th>
+                            <th>使用狀態</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 表格內容 -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 分頁功能 -->
+            <div class="btn-group">
+                <div id="pagination" class="pagination">
+                    <!-- <button id="prevPageBtn">上一頁</button>
+                    <span id="pageInfo">第 <span id="currentPage">1</span> 頁</span>
+                    <button id="nextPageBtn">下一頁</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- jQuery -->
+    <script src="../plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- AdminLTE App -->
+    <script src="../dist/js/adminlte.min.js"></script>
+
+    <!-- 新增 -->
+    <script src="../ourFile/coupon/uc.js"></script>
+
+</body>
+
+</html>
