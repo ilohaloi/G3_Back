@@ -220,7 +220,7 @@ export const prod_view = {
             this.currentPage = page;
         },
         openWindow(prod) {
-            const params = `id = ${prod.id} `;
+            const params = `id=${prod.id} `;
             window.open(
                 `../component/prod_PopWindow.html?${params} `,
                 '商品更新',
@@ -430,7 +430,6 @@ export const orders_view = {
             const end = start + this.pageSize;
             return this.order.slice(start, end);
         },
-        // 计算总页数
         totalPages() {
             return Math.ceil(this.order.length / this.pageSize);
         }
@@ -450,9 +449,9 @@ export const orders_view = {
             this.currentPage = page;
         },
         openWindow(order) {
-            const params = `orid = ${order.orid}& membid=${order.membId} `;
+            const params = `orid=${order.orid}&membid=${order.membId} `;
             window.open(
-                `./component/prod_OrderDetail.html?${params}`,
+                `../component/prod_OrderDetail.html?${params}`,
                 '明細',
                 'width=600,height=600,left=200,top=100'
             );

@@ -1,5 +1,5 @@
-  /* 全局設置 */
-.content{
+
+.content {
     background: linear-gradient(to right, #74ebd5, #ACB6E5);
     color: #333;
     min-height: 100vh;
@@ -9,7 +9,6 @@
     padding: 20px;
 }
 
-/* 容器設置 */
 .container {
     background-color: white;
     padding: 40px;
@@ -24,8 +23,6 @@
     transform: scale(1.02);
 }
 
-
-/* 標題設置 */
 h1 {
     text-align: center;
     font-size: 2.5rem;
@@ -34,15 +31,10 @@ h1 {
     text-transform: uppercase;
     letter-spacing: 1.5px;
 }
-
+/* color: #007bff; */
 h2 {
     font-size: 1.75rem;
     color: #333;
-    margin-bottom: 20px;
-}
-
-/* 表單設置 */
-.form-group {
     margin-bottom: 20px;
 }
 
@@ -70,24 +62,6 @@ select:focus {
     outline: none;
     border-color: #007bff;
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
-}
-
-.btn-submit {
-    background-color: #28a745;
-    color: white;
-    padding: 15px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 18px;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    width: 100%;
-    margin-top: 15px;
-}
-
-.btn-submit:hover {
-    background-color: #218838;
-    box-shadow: 0 8px 15px rgba(40, 167, 69, 0.3);
 }
 
 /* 表格樣式 */
@@ -127,28 +101,6 @@ tbody tr:hover {
     transition: background-color 0.3s ease;
 }
 
-.delete-btn {
-    background-color: #dc3545;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.delete-btn:hover {
-    background-color: #c82333;
-    box-shadow: 0 8px 15px rgba(220, 53, 69, 0.3);
-}
-
-/* 新增優惠券 */
-#couponForm {
-    font-family: Arial, sans-serif;
-    margin: 50px;
-}
-
 form {
     max-width: 400px;
 }
@@ -158,26 +110,3 @@ label {
     margin-bottom: 8px;
     font-weight: bold;
 }
-
-input[type="text"],
-input[type="number"],
-input[type="date"] {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    box-sizing: border-box;
-}
-
-input[type="submit"] {
-    padding: 10px 15px;
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    cursor: pointer;
-}
-
-input[type="submit"]:hover {
-    background-color: #45a049;
-}
-
-

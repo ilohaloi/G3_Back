@@ -200,41 +200,6 @@
                                     '商品更新',
                                     'width=600,height=600,left=200,top=100'
                                 );
-
-
-                                },
-                                openInsertWindow() {
-                                    window.open(
-                                        `./route_InsertWindow.html`,
-                                        '新增',
-                                        'width=600,height=600,left=200,top=100'
-                                    );
-                                },
-                                async search() {
-                                    try {
-
-
-                                        const response = await fetch("http://localhost:8081/TIA103G3_Servlet/searchroutefetchservlet", {
-                                            method: 'post',
-                                            headers: {
-                                                'Content-Type': 'application/json'
-                                            },
-                                            body: JSON.stringify({ selectedFilter: this.selectedFilter, searchQuery: this.searchQuery })
-                                        })
-                                        const date = await response.json();
-                                        this.route = date;
-
-                                    } catch (error) {
-                                        console.log(error);
-                                    }
-                                },
-                                async get(){
-                                    try {
-                                        this.route = await getRoute();
-                                    } catch (error) {
-                                    console.error('Failed to get products:', error); // 捕获并处理错误
-                                    }
-                                }
                             },
                             openInsertWindow() {
                                 window.open(
@@ -261,7 +226,6 @@
                             },
                             async get() {
                                 try {
-
                                     this.route = await getRoute();
                                 } catch (error) {
                                     console.error('Failed to get products:', error); // 捕获并处理错误
@@ -282,8 +246,8 @@
                                         this.get();//取得所有資料
                                 },
                                 deep: true, // 深度監聽
-                            },                            
-                        }
+                            },
+                        },
                     }
                     const schedule_view = {
                         template: `
@@ -363,28 +327,28 @@
                             </div>
                             `,
 
-                            data() {
-                                return {
-                                    schedule: [], // 存储从服务器获取的数据
-                                    currentPage: 1, // 当前页码
-                                    pageSize: 10, // 每页显示的条目数
-                                    searchQuery: '', // 搜索框输入的关键字
-                                    selectedFilter: ''
-                                };
+                        data() {
+                            return {
+                                schedule: [], // 存储从服务器获取的数据
+                                currentPage: 1, // 当前页码
+                                pageSize: 10, // 每页显示的条目数
+                                searchQuery: '', // 搜索框输入的关键字
+                                selectedFilter: ''
+                            };
+                        },
+                        computed: {
+                            // 计算分页数据
+                            paginatedSchedule() {
+                                const start = (this.currentPage - 1) * this.pageSize;
+                                const end = start + this.pageSize;
+                                return this.schedule.slice(start, end);
                             },
-                            computed: {
-                                // 计算分页数据
-                                paginatedSchedule() {
-                                    const start = (this.currentPage - 1) * this.pageSize;
-                                    const end = start + this.pageSize;
-                                    return this.schedule.slice(start, end);
-                                },
-                                // 计算总页数
-                                totalPages() {
-                                    return Math.ceil(this.schedule.length / this.pageSize);
-                                },
+                            // 计算总页数
+                            totalPages() {
+                                return Math.ceil(this.schedule.length / this.pageSize);
                             },
-                            // 跳转到特定页
+                        },
+                        methods: {
                             goToPage(page) {
                                 this.currentPage = page;
                             },
@@ -401,35 +365,27 @@
                                     'width=600,height=600,left=200,top=100'
                                 );
 
-                                },
-                                openInsertWindow() {
-                                    window.open(
-                                        `./schedule_InsertWindow.html`,
-                                        '新增',
-                                        'width=600,height=600,left=200,top=100'
-                                    );
-                                },
-                                async search() {
-                                    try {
-                                        const response = await fetch("http://localhost:8081/TIA103G3_Servlet/searchschedulefetchservlet", {
-                                            method: 'post',
-                                            headers: {
-                                                'Content-Type': 'application/json'
-                                            },
-                                            body: JSON.stringify({ selectedFilter: this.selectedFilter, searchQuery: this.searchQuery })
-                                        })
-                                        const date = await response.json();
-                                        this.schedule = date;
-                                    } catch (error) {
-                                        console.log(error);
-                                    }
-                                },
-                                async get(){
-                                    try {
-                                        this.schedule = await getSchedule();
-                                    } catch (error) {
-                                    console.error('Failed to get products:', error); // 捕获并处理错误
-                                    }
+                            },
+                            openInsertWindow() {
+                                window.open(
+                                    `./schedule_InsertWindow.html`,
+                                    '新增',
+                                    'width=600,height=600,left=200,top=100'
+                                );
+                            },
+                            async search() {
+                                try {
+                                    const response = await fetch("http://localhost:8081/TIA103G3_Servlet/searchschedulefetchservlet", {
+                                        method: 'post',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({ selectedFilter: this.selectedFilter, searchQuery: this.searchQuery })
+                                    })
+                                    const date = await response.json();
+                                    this.schedule = date;
+                                } catch (error) {
+                                    console.log(error);
                                 }
                             },
                             async get() {
@@ -440,7 +396,6 @@
                                 }
                             }
                         },
-                        // 跳转到上一页
                         watch: {
                             searchQuery: {
                                 handler(newVal, oldVal) {
@@ -460,6 +415,9 @@
                             }
                         }
                     }
+
+                    // 跳转到上一页
+
                     const order_view = {
                         template: `
                                 <div class="row">
