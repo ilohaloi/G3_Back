@@ -9,3 +9,12 @@ export async function sideBar() {
         console.log(error);
     }
 }
+
+
+export function popWindow(path, pamras, sizeX, sizeY) { 
+    window.open(
+        `${path}?${pamras}`,
+        `popWindow`,
+        `width=${sizeX},height=${sizeY}`
+    )
+}

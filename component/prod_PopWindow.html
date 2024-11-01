@@ -25,40 +25,36 @@
                 <div class="card-header">
                     <h3 class="card-title">修改</h3>
                 </div>
-                <form>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="name">編號</label>
-                            <p>{{prod.id}}</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="name">名稱</label>
-                            <p>{{prod.name}}</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="category" class="form-label">分類</label>
-                            <p>{{prod.category}}</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="stock" class="form-label">入庫數量 (0為無修改)</label>
-                            <input type="number" id="stock" v-model="prod.stock" class="form-control" min="0"
-                                required />
-                        </div>
-                        <div class="form-group">
-                            <label for="price" class="form-label">價格 (0為無修改)</label>
-                            <input type="number" id="price" v-model="prod.price" class="form-control" min="0"
-                                required />
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <button @click="submitForm" class="btn btn-primary">確認</button>
-                            <h3 style="color: red;">{{ message }}</h3>
-                        </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="name">編號</label>
+                        <p>{{prod.id}}</p>
                     </div>
+                    <div class="form-group">
+                        <label for="name">名稱</label>
+                        <p>{{prod.name}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="category" class="form-label">分類</label>
+                        <p>{{prod.category}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="stock" class="form-label">入庫數量 (0為無修改)</label>
+                        <input type="number" id="stock" v-model="prod.stock" class="form-control" min="0" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="price" class="form-label">價格 (0為無修改)</label>
+                        <input type="number" id="price" v-model="prod.price" class="form-control" min="0" required />
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <button @click="submitForm" class="btn btn-primary">確認</button>
+                        <h3 style="color: red;">{{ message }}</h3>
+                    </div>
+                </div>
             </div>
         </div>
-        </form>
     </div>
-    </div>
+
     <script type="module">
         import { updateProd } from "../js/prod.js"
         import { getProduct } from "../js/prod.js"

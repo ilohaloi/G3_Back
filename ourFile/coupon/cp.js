@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // 取出當前頁面的優惠券
         const couponsToDisplay = coupon_type.slice(startIndex, endIndex);
         couponsToDisplay.forEach(coupon => {
-          
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${coupon.coup_id}</td>
@@ -73,12 +72,10 @@ document.addEventListener('DOMContentLoaded', function () {
             };
             return button;
         };
-
         paginationContainer.appendChild(createPageButton(1, '第一頁'));
         paginationContainer.appendChild(createPageButton(currentPage - 1, '上一頁'));
         paginationContainer.appendChild(createPageButton(currentPage + 1, '下一頁'));
         paginationContainer.appendChild(createPageButton(totalPages, '最後一頁'));
-
     }
 
     // 獲取優惠券

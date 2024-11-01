@@ -17,7 +17,7 @@ export function encryptionRsa(value) {
 
 export async function getAesKey() { 
     //"http://localhost:8081/TIA103G3_Servlet/createtempaeskey"
-    const response = await fetch("http://localhost:8080/api/getAes", {
+    const response = await fetch("http://localhost:8081/TIA103G3_Servlet/createtempaeskey", {
         method: "get",
         mode: "cors"
     })

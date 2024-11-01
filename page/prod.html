@@ -34,6 +34,10 @@
 
     <link rel="stylesheet" href="../css/prod.css">
 
+    <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
+        type='text/css' />.
+
+
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -42,6 +46,7 @@
         import { sideBar } from '../js/module.js';
         await sideBar();
     </script>
+
     <div id="wrapper"></div>
     <div class="content-wrapper">
         <div class="content-header">
@@ -64,31 +69,29 @@
                 <div id="app">
                     <router-view></router-view>
                 </div>
-                <script type="module">
-                    import { prod_view } from '../js/prod.js'
-                    import { prod_upload } from '../js/prod.js'
-                    import { orders_view } from '../js/prod.js'
-                    const routes = [
-                        { path: '/', component: prod_view },
-                        { path: '/prod', component: prod_upload },
-                        { path: '/orders', component: orders_view }
-                    ]
-
-                    const router = VueRouter.createRouter({
-                        history: VueRouter.createWebHashHistory(),
-                        routes // 路由配置
-                    })
-                    const app = Vue.createApp({})
-                    app.use(router)
-                    app.mount('#app') 
-                </script>
             </div>
         </section>
     </div>
+    <script type='text/javascript'
+        src='https://cdn.jsdelivr.net/npm/froala-editor@4.0.10/js/froala_editor.pkgd.min.js'></script>
+    <script type="module">
+        import { prod_view } from '../js/prod.js'
+        import { prod_upload } from '../js/prod.js'
+        import { orders_view } from '../js/prod.js'
+        const routes = [
+            { path: '/', component: prod_view },
+            { path: '/prod', component: prod_upload },
+            { path: '/orders', component: orders_view }
+        ]
 
-    <!-- 請把代碼寫在這邊 -->
-
-    <!-- jQuery -->
+        const router = VueRouter.createRouter({
+            history: VueRouter.createWebHashHistory(),
+            routes // 路由配置
+        })
+        const app = Vue.createApp({})
+        app.use(router)
+        app.mount('#app') 
+    </script>
     <script src="../plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
