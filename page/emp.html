@@ -5,36 +5,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>郵輪</title>
-
     <script src="https://unpkg.com/vue@3"></script>
     <script src="https://unpkg.com/vue-router@4"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
-    <!-- Ionicons -->
+
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Tempusdominus Bootstrap 4 -->
     <link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-    <!-- iCheck -->
     <link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-    <!-- JQVMap -->
     <link rel="stylesheet" href="../plugins/jqvmap/jqvmap.min.css">
-    <!-- Theme style -->
     <link rel="stylesheet" href="../dist/css/adminlte.min.css">
-    <!-- overlayScrollbars -->
     <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-    <!-- Daterange picker -->
     <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
-    <!-- summernote -->
     <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
 
     <script src="https://kit.fontawesome.com/a33d8d8a91.js" crossorigin="anonymous"></script>
-
-    <!-- 自訂新增 -->
-    <link rel="stylesheet" href="../ourFile/emp/emp.css">
-
+    <link rel="stylesheet" href="../css/main.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -45,40 +32,20 @@
     <div id="wrapper"></div>
 
 
-    <div class="content-wrapper">
-        <!-- <div class="emptable"> -->
-        <!-- <div class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1 class="m-0">韭菜</h1>
-                        </div>
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
-                                <li class="breadcrumb-item active">員工總覽</li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-
-        <section class="content">
-            <div class="container-fluid">
-                <div id="app">
-                    <router-view></router-view>
-                </div>
+    <div class="content">
+        <div class="container">
+            <div id="app">
+                <router-view></router-view>
             </div>
-        </section>
-        <!-- </div> -->
+        </div>
     </div>
 
     <script type="module">
         import { emp_view } from '../js/emp.js';
-        import { emp_control } from '../js/emp.js';
+
         const routes = [
             { path: '/', component: emp_view },
-            { path: '/control', component: emp_control }
+
         ]
         const router = VueRouter.createRouter({
             history: VueRouter.createWebHashHistory(), // 使用hash模式
@@ -89,11 +56,9 @@
         app.use(router) // 注册路由
         app.mount('#app') // 挂载到 #app
     </script>
-    <script src="../plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- AdminLTE App -->
+    <script src="../plugins/jquery/jquery.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../dist/js/adminlte.min.js"></script>
 
 </body>

@@ -32,8 +32,7 @@
 
     <script src="https://kit.fontawesome.com/a33d8d8a91.js" crossorigin="anonymous"></script>
 
-
-
+    <link rel="stylesheet" href="../css/main.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -43,631 +42,552 @@
     </script>
     <div id="wrapper"></div>
 
-    <div class="content-wrapper">
-
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">郵輪</h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="./home.html">Home</a></li>
-                            <li class="breadcrumb-item active">郵輪</li>
-                        </ol>
-                    </div>
-                </div>
+    <!-- Main content -->
+    <div class="content">
+        <div class="container">
+            <div id="app">
+                <router-view></router-view>
             </div>
         </div>
-
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-
-                <div id="app">
-                    <router-view></router-view>
-                </div>
-
-                <script type="module">
-                    import { getRoute } from "../js/ship.js"
-                    import { getSchedule } from "../js/ship.js"
-                    import { getOrder } from "../js/ship.js"
-
-                    const route_view = {
-                        template: `
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="card-title" >
-                                                <button class="btn btn-block btn-info" @click="openInsertWindow">行程新增</button>
-                                            </h3>                     
-                                        </div>
-                                        <div>
-                                            <select v-model="selectedFilter">
-                                                <option disabled value="">請選擇欄位</option>
-                                                <option value="id">編號</option>
-                                                <option value="name">名稱</option>
-                                                <option value="depiction">描述</option>
-                                                <option value="days">天數小於</option>
-                                                <option value="price">價格小於</option>
-                                            </select>
-                                            <input type="text" v-model="searchQuery" placeholder="Search..." />
-                                            <button type="button" class="btn btn-block btn-info" @click="search">搜尋</button>                                      
-                                        </div>
-                                        <div class="card-body">
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>編號</th>
-                                                        <th>名稱</th>
-                                                        <th>描述</th>
-                                                        <th>天數</th>
-                                                        <th>價格</th>
-                                                        <th>行程修改</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr v-for="(r, index) in paginatedRoute" :key="index">
-                                                        <td>{{ r.id }}</td>
-                                                        <td>{{ r.name }}</td>
-                                                        <td>{{ r.depiction }}</td>
-                                                        <td>{{ r.days }}</td>
-                                                        <td>{{ r.price }}</td>
-                                                        <td>
-                                                            <div class="btn-group">
-                                                            <button class="btn btn-outline-primary" @click="openRouteWindow(r)">修改</button>    
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                                            <div class="dataTables_paginate paging_simple_numbers">
-                                                <nav aria-label="Page navigation">
-                                                    <ul class="mt-3 pagination justify-content-center">
-                                                        <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                                                            <button class="page-link" @click="prevPage" :disabled="currentPage === 1">Previous</button>
-                                                        </li>
-                                                        <li v-for="page in totalPages" :key="page" class="page-item" :class="{ active: page === currentPage }">
-                                                            <button class="page-link" @click="goToPage(page)">{{ page }}</button>
-                                                        </li>
-                                                        <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                                                            <button class="page-link" @click="nextPage" :disabled="currentPage === totalPages">Next</button>
-                                                        </li>
-                                                    </ul>
-                                                </nav>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            `,
-
-                        data() {
-                            return {
-                                route: [], // 存储从服务器获取的数据
-                                currentPage: 1, // 当前页码
-                                pageSize: 10,// 每页显示的条目数
-                                searchQuery: '',// 搜索框输入的关键字
-                                selectedFilter: ''
-                            };
-                        },
-                        computed: {
-                            // 计算分页数据
-                            paginatedRoute() {
-                                const start = (this.currentPage - 1) * this.pageSize;
-                                const end = start + this.pageSize;
-                                return this.route.slice(start, end);
-                            },
-                            // 计算总页数
-                            totalPages() {
-                                return Math.ceil(this.route.length / this.pageSize);
-                            },
-                        },
-                        methods: {
-                            // 跳转到下一页
-                            nextPage() {
-                                if (this.currentPage < this.totalPages) {
-                                    this.currentPage++;
-                                }
-                            },
-                            // 跳转到上一页
-                            prevPage() {
-                                if (this.currentPage > 1) {
-                                    this.currentPage--;
-                                }
-                            },
-                            // 跳转到特定页
-                            goToPage(page) {
-                                this.currentPage = page;
-                            },
-
-                            openRouteWindow(route) {
-                                const id = `id=${route.id}`;
-                                const name = `name=${route.name}`;
-                                const depiction = `depiction=${route.depiction}`;
-                                const days = `days=${route.days}`;
-                                const price = `price=${route.price}`;
-                                window.open(
-                                    `./route_PopWindow.html?${id}&${name}&${depiction}&${days}&${price}`,
-
-                                    '商品更新',
-                                    'width=600,height=600,left=200,top=100'
-                                );
-
-
-                                },
-                                openInsertWindow() {
-                                    window.open(
-                                        `./route_InsertWindow.html`,
-                                        '新增',
-                                        'width=600,height=600,left=200,top=100'
-                                    );
-                                },
-                                async search() {
-                                    try {
-
-
-                                        const response = await fetch("http://localhost:8081/TIA103G3_Servlet/searchroutefetchservlet", {
-                                            method: 'post',
-                                            headers: {
-                                                'Content-Type': 'application/json'
-                                            },
-                                            body: JSON.stringify({ selectedFilter: this.selectedFilter, searchQuery: this.searchQuery })
-                                        })
-                                        const date = await response.json();
-                                        this.route = date;
-
-                                    } catch (error) {
-                                        console.log(error);
-                                    }
-                                },
-                                async get(){
-                                    try {
-                                        this.route = await getRoute();
-                                    } catch (error) {
-                                    console.error('Failed to get products:', error); // 捕获并处理错误
-                                    }
-                                }
-                            },
-                            openInsertWindow() {
-                                window.open(
-                                    `./route_InsertWindow.html`,
-                                    '新增',
-                                    'width=600,height=600,left=200,top=100'
-                                );
-                            },
-                            async search() {
-                                try {
-                                    const response = await fetch("http://localhost:8081/TIA103G3_Servlet/searchroutefetchservlet", {
-                                        method: 'post',
-                                        headers: {
-                                            'Content-Type': 'application/json'
-                                        },
-                                        body: JSON.stringify({ selectedFilter: this.selectedFilter, searchQuery: this.searchQuery })
-                                    })
-                                    const date = await response.json();
-                                    this.route = date;
-
-                                } catch (error) {
-                                    console.log(error);
-                                }
-                            },
-                            async get() {
-                                try {
-
-                                    this.route = await getRoute();
-                                } catch (error) {
-                                    console.error('Failed to get products:', error); // 捕获并处理错误
-                                }
-                            }
-                        },
-                        async mounted() {
-                            try {
-                                this.route = await getRoute();
-                            } catch (error) {
-                                console.error('Failed to get products:', error); // 捕获并处理错误
-                            }
-                        },
-                        watch: {
-                            searchQuery: {
-                                handler(newVal, oldVal) {
-                                    if (newVal === "")
-                                        this.get();//取得所有資料
-                                },
-                                deep: true, // 深度監聽
-                            },                            
-                        }
-                    }
-                    const schedule_view = {
-                        template: `
-                                <div class="row">
-                                <div class="col-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="card-title">
-                                            <button class="btn btn-block btn-info" @click="openInsertWindow">航班新增</button>
-                                            </h3>
-                                        </div>
-                                        <div>
-
-                                            <select v-model="selectedFilter">
-                                                <option disabled value="">請選擇欄位</option>
-                                                <option value="ship_id">船隻編號</option>
-                                                <option value="route_id">航線編號</option>
-                                                <option value="status">航班狀態</option>
-                                                <option value="shipping_time">出港時間</option>
-                                                <option value="shipping_dock">駁船地點</option>
-                                                <option value="rooms_booked">已訂房數</option>
-                                            </select>
-                                            <input type="text" v-model="searchQuery" placeholder="Search..." />
-                                            <button type="button" class="btn btn-block btn-info" @click="search">搜尋</button>
-                                        </div>
-                                        <div class="card-body">
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>船隻編號</th>
-                                                        <th>航線名稱</th>
-                                                        <th>航班狀態</th>
-                                                        <th>出港時間</th>
-                                                        <th>駁船地點</th>
-                                                        <th>已訂房數</th>
-                                                        <th>行程修改</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr v-for="(sc, index) in  paginatedSchedule" :key="index">
-                                                        <td>{{ sc.ship_id }}</td>
-                                                        <td>{{ sc.route_id }}</td>
-                                                        <td>{{ sc.status }}</td>
-                                                        <td>{{ sc.shipping_time }}</td>
-                                                        <td>{{ sc.shipping_dock }}</td>
-                                                        <td>{{ sc.rooms_booked }}</td>
-                                                        <td>
-                                                            <div class="btn-group">
-                                                            <button class="btn btn-outline-primary" @click="openScheduleWindow(sc)">修改</button>    
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                                            <div class="dataTables_paginate paging_simple_numbers">
-                                                <nav aria-label="Page navigation">
-                                                    <ul class="mt-3 pagination justify-content-center">
-                                                        <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                                                            <button class="page-link" @click="prevPage" :disabled="currentPage === 1">Previous</button>
-                                                        </li>
-                                                        <li v-for="page in totalPages" :key="page" class="page-item" :class="{ active: page === currentPage }">
-                                                            <button class="page-link" @click="goToPage(page)">{{ page }}</button>
-                                                        </li>
-                                                        <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                                                            <button class="page-link" @click="nextPage" :disabled="currentPage === totalPages">Next</button>
-                                                        </li>
-                                                    </ul>
-                                                </nav>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            `,
-
-                            data() {
-                                return {
-                                    schedule: [], // 存储从服务器获取的数据
-                                    currentPage: 1, // 当前页码
-                                    pageSize: 10, // 每页显示的条目数
-                                    searchQuery: '', // 搜索框输入的关键字
-                                    selectedFilter: ''
-                                };
-                            },
-                            computed: {
-                                // 计算分页数据
-                                paginatedSchedule() {
-                                    const start = (this.currentPage - 1) * this.pageSize;
-                                    const end = start + this.pageSize;
-                                    return this.schedule.slice(start, end);
-                                },
-                                // 计算总页数
-                                totalPages() {
-                                    return Math.ceil(this.schedule.length / this.pageSize);
-                                },
-                            },
-                            // 跳转到特定页
-                            goToPage(page) {
-                                this.currentPage = page;
-                            },
-                            openScheduleWindow(schedule) {
-                                const ship_id = `ship_id=${schedule.ship_id}`;
-                                const route_id = `route_id=${schedule.route_id}`;
-                                const status = `status=${schedule.status}`;
-                                const shipping_time = `shipping_time=${schedule.shipping_time}`;
-                                const shipping_dock = `shipping_dock=${schedule.shipping_dock}`;
-                                const rooms_booked = `rooms_booked=${schedule.rooms_booked}`;
-                                window.open(
-                                    `./schedule_PopWindow.html?${ship_id}&${route_id}&${status}&${shipping_time}&${shipping_dock}&${rooms_booked}`,
-                                    '商品更新',
-                                    'width=600,height=600,left=200,top=100'
-                                );
-
-                                },
-                                openInsertWindow() {
-                                    window.open(
-                                        `./schedule_InsertWindow.html`,
-                                        '新增',
-                                        'width=600,height=600,left=200,top=100'
-                                    );
-                                },
-                                async search() {
-                                    try {
-                                        const response = await fetch("http://localhost:8081/TIA103G3_Servlet/searchschedulefetchservlet", {
-                                            method: 'post',
-                                            headers: {
-                                                'Content-Type': 'application/json'
-                                            },
-                                            body: JSON.stringify({ selectedFilter: this.selectedFilter, searchQuery: this.searchQuery })
-                                        })
-                                        const date = await response.json();
-                                        this.schedule = date;
-                                    } catch (error) {
-                                        console.log(error);
-                                    }
-                                },
-                                async get(){
-                                    try {
-                                        this.schedule = await getSchedule();
-                                    } catch (error) {
-                                    console.error('Failed to get products:', error); // 捕获并处理错误
-                                    }
-                                }
-                            },
-                            async get() {
-                                try {
-                                    this.schedule = await getSchedule();
-                                } catch (error) {
-                                    console.error('Failed to get products:', error); // 捕获并处理错误
-                                }
-                            }
-                        },
-                        // 跳转到上一页
-                        watch: {
-                            searchQuery: {
-                                handler(newVal, oldVal) {
-                                    if (newVal === "")
-                                        this.get();
-                                },
-                                deep: true, // 深度監聽
-                            },
-                            watch: {
-                                searchQuery: {
-                                    handler(newVal, oldVal) {
-                                        if (newVal === "")
-                                            this.get();
-                                    },
-                                    deep: true, // 深度監聽
-                                },
-                            }
-                        }
-                    }
-                    const order_view = {
-                        template: `
-                                <div class="row">
-                                <div class="col-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="card-title">
-                                            <button class="btn btn-block btn-info" @click="openInsertWindow">訂單新增</button>
-                                            </h3>
-                                        </div>
-                                        <div>
-                                            <select v-model="selectedFilter">
-                                                <option disabled value="">請選擇欄位</option>
-                                                <option value="id">訂單編號</option>
-                                                <option value="memb_id">會員編號</option>
-                                                <option value="ship_id">船隻編號</option>
-                                                <option value="coup_id">優惠券編號</option>
-                                                <option value="trav_orde_status">訂單狀況</option>
-                                                <option value="room_amount">房間數量</option>
-                                                <option value="room_type">房型</option>
-                                                <option value="trav_orde_amount">總價</option>
-                                            </select>
-                                            <input type="text" v-model="searchQuery" placeholder="Search..." />
-                                            <button type="button" class="btn btn-block btn-info" @click="search">搜尋</button>
-                                        </div>
-                                        <div class="card-body">
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>訂單編號</th>
-                                                        <th>會員編號</th>
-                                                        <th>船隻編號</th>
-                                                        <th>優惠券編號</th>
-                                                        <th>訂單狀況</th>
-                                                        <th>房間數量</th>
-                                                        <th>房型</th>
-                                                        <th>總價</th>
-                                                        <th>行程修改</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr v-for="(order, index) in paginatedOrder" :key="index">
-                                                        <td>{{ order.id }}</td>
-                                                        <td>{{ order.memb_id }}</td>
-                                                        <td>{{ order.ship_id }}</td>
-                                                        <td>{{ order.coup_id }}</td>
-                                                        <td>{{ order.trav_orde_status }}</td>
-                                                        <td>{{ order.room_amount }}</td>
-                                                        <td>{{ order.room_type }}</td>
-                                                        <td>{{ order.trav_orde_amount }}</td>
-                                                        <td>
-                                                            <div class="btn-group">
-                                                            <button class="btn btn-outline-primary" @click="openTravelOrderWindow(order)">修改訂單</button>    
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                                            <div class="dataTables_paginate paging_simple_numbers">
-                                                <nav aria-label="Page navigation">
-                                                    <ul class="mt-3 pagination justify-content-center">
-                                                        <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                                                            <button class="page-link" @click="prevPage" :disabled="currentPage === 1">Previous</button>
-                                                        </li>
-                                                        <li v-for="page in totalPages" :key="page" class="page-item" :class="{ active: page === currentPage }">
-                                                            <button class="page-link" @click="goToPage(page)">{{ page }}</button>
-                                                        </li>
-                                                        <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                                                            <button class="page-link" @click="nextPage" :disabled="currentPage === totalPages">Next</button>
-                                                        </li>
-                                                    </ul>
-                                                </nav>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            `,
-
-                        data() {
-                            return {
-                                order: [], // 存储从服务器获取的数据
-                                currentPage: 1, // 当前页码
-                                pageSize: 10, // 每页显示的条目数
-                                searchQuery: '', // 搜索框输入的关键字
-                                selectedFilter: ''
-                            };
-                        },
-                        computed: {
-                            // 计算分页数据
-                            paginatedOrder() {
-                                const start = (this.currentPage - 1) * this.pageSize;
-                                const end = start + this.pageSize;
-                                return this.order.slice(start, end);
-                            },
-                            // 计算总页数
-                            totalPages() {
-                                return Math.ceil(this.order.length / this.pageSize);
-                            },
-                        },
-                        methods: {
-                            // 跳转到下一页
-                            nextPage() {
-                                if (this.currentPage < this.totalPages) {
-                                    this.currentPage++;
-                                }
-                            },
-                            // 跳转到上一页
-                            prevPage() {
-                                if (this.currentPage > 1) {
-                                    this.currentPage--;
-                                }
-                            },
-                            // 跳转到特定页
-                            goToPage(page) {
-                                this.currentPage = page;
-                            },
-                            openTravelOrderWindow(order) {
-                                const id = `id=${order.id}`;
-                                const memb_id = `memb_id=${order.memb_id}`;
-                                const ship_id = `ship_id=${order.ship_id}`;
-                                const coup_id = `coup_id=${order.coup_id}`;
-                                const trav_orde_status = `trav_orde_status=${order.trav_orde_status}`;
-                                const room_amount = `room_amount=${order.room_amount}`;
-                                const room_type = `room_type=${order.room_type}`;
-                                const trav_orde_amount = `trav_orde_amount=${order.trav_orde_amount}`;
-                                window.open(
-                                    `./travelOrder_PopWindow.html?${id}&${memb_id}&${ship_id}&${coup_id}&${trav_orde_status}&${room_amount}&${room_type}&${trav_orde_amount}`,
-                                    '商品更新',
-                                    'width=600,height=600,left=200,top=100'
-                                );
-                                console.log('測試');
-                            },
-                            openInsertWindow() {
-                                window.open(
-                                    `./travelOrder_InsertWindow.html`,
-                                    '新增',
-                                    'width=600,height=600,left=200,top=100'
-                                );
-                            },
-                            async search() {
-                                try {
-                                    const response = await fetch("http://localhost:8081/TIA103G3_Servlet/searchorderfetchservlet", {
-                                        method: 'post',
-                                        headers: {
-                                            'Content-Type': 'application/json'
-                                        },
-                                        body: JSON.stringify({ selectedFilter: this.selectedFilter, searchQuery: this.searchQuery })
-                                    })
-                                    const date = await response.json();
-                                    this.order = date;
-
-                                } catch (error) {
-                                    console.log(error);
-                                }
-                            },
-                            async get() {
-                                try {
-                                    this.order = await getOrder();
-                                } catch (error) {
-                                    console.error('Failed to get products:', error); // 捕获并处理错误
-                                }
-                            }
-                        },
-                        async mounted() {
-                            try {
-                                this.order = await getOrder();
-                            } catch (error) {
-                                console.error('Failed to get products:', error); // 捕获并处理错误
-                            }
-                        },
-                        watch: {
-                            searchQuery: {
-                                handler(newVal, oldVal) {
-                                    if (newVal === "")
-                                        this.get();
-
-                                },
-                                deep: true, // 深度監聽
-                            },
-                        }
-                    };
-
-                    // 定义路由
-                    const routes = [
-                        { path: '/', component: route_view },
-                        { path: '/ship', component: schedule_view },
-                        { path: '/order', component: order_view }
-                    ]
-
-                    // 创建Vue Router实例
-                    const router = VueRouter.createRouter({
-                        history: VueRouter.createWebHashHistory(), // 使用hash模式
-                        routes // 路由配置
-                    })
-
-                    // 创建Vue实例并挂载
-                    const app = Vue.createApp({})
-                    app.use(router) // 注册路由
-                    app.mount('#app') // 挂载到 #app
-                </script>
-            </div>
-        </section>
     </div>
+
+    <script type="module">
+        import { getRoute } from "../js/ship.js"
+        import { getSchedule } from "../js/ship.js"
+        import { getOrder } from "../js/ship.js"
+
+        const route_view = {
+            template: `
+                <h1>航線列表</h1>
+                <form class="form">
+                    <label class="form-label">關鍵字搜尋:<input type="text" class="form-input" v-model="searchQuery" placeholder="Search..."></label>
+                    <label class="form-label">條件:
+                        <select class="form-select" v-model="selectedFilter">
+                            <option disabled value="">請選擇欄位</option>
+                            <option value="id">編號</option>
+                            <option value="name">名稱</option>
+                            <option value="depiction">描述</option>
+                            <option value="days">天數小於</option>
+                            <option value="price">價格小於</option>
+                        </select>
+                    </label>
+
+                    <button type="button" class="form-btn" @click="search">搜尋</button>
+                    <button class="form-btn" @click="openInsertWindow">行程新增</button>
+                </form>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>編號</th>
+                            <th>名稱</th>
+                            <th>描述</th>
+                            <th>天數</th>
+                            <th>價格</th>
+                            <th>行程修改</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(r, index) in paginatedRoute" :key="index">
+                            <td>{{ r.id }}</td>
+                            <td>{{ r.name }}</td>
+                            <td>{{ r.depiction }}</td>
+                            <td>{{ r.days }}</td>
+                            <td>{{ r.price }}</td>
+                            <td>
+                                <div class="btn-group">
+                                <button class="btn btn-outline-primary" @click="openRouteWindow(r)">修改</button>    
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="dataTables_paginate paging_simple_numbers">
+                    <nav aria-label="Page navigation">
+                        <ul class="mt-3 pagination justify-content-center">
+                            <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                                <button class="page-link" @click="prevPage" :disabled="currentPage === 1">Previous</button>
+                            </li>
+                            <li v-for="page in totalPages" :key="page" class="page-item" :class="{ active: page === currentPage }">
+                                <button class="page-link" @click="goToPage(page)">{{ page }}</button>
+                            </li>
+                            <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                                <button class="page-link" @click="nextPage" :disabled="currentPage === totalPages">Next</button>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            `,
+
+            data() {
+                return {
+                    route: [], // 存储从服务器获取的数据
+                    currentPage: 1, // 当前页码
+                    pageSize: 10,// 每页显示的条目数
+                    searchQuery: '',// 搜索框输入的关键字
+                    selectedFilter: '',
+                    speace: ""
+                };
+            },
+            computed: {
+                // 计算分页数据
+                paginatedRoute() {
+                    const start = (this.currentPage - 1) * this.pageSize;
+                    const end = start + this.pageSize;
+                    return this.route.slice(start, end);
+                },
+                // 计算总页数
+                totalPages() {
+                    return Math.ceil(this.route.length / this.pageSize);
+                },
+            },
+            methods: {
+                // 跳转到下一页
+                nextPage() {
+                    if (this.currentPage < this.totalPages) {
+                        this.currentPage++;
+                    }
+                },
+                // 跳转到上一页
+                prevPage() {
+                    if (this.currentPage > 1) {
+                        this.currentPage--;
+                    }
+                },
+                // 跳转到特定页
+                goToPage(page) {
+                    this.currentPage = page;
+                },
+
+                openRouteWindow(route) {
+                    const id = `id=${route.id}`;
+                    const name = `name=${route.name}`;
+                    const depiction = `depiction=${route.depiction}`;
+                    const days = `days=${route.days}`;
+                    const price = `price=${route.price}`;
+                    window.open(
+                        `../component/route_PopWindow?${id}&${name}&${depiction}&${days}&${price}`,
+
+                        '商品更新',
+                        'width=600,height=600,left=200,top=100'
+                    );
+                },
+                openInsertWindow() {
+                    window.open(
+                        `../component/route_InsertWindow.html`,
+                        '新增',
+                        'width=600,height=600,left=200,top=100'
+                    );
+                },
+                async search() {
+                    try {
+                        const response = await fetch("http://localhost:8081/TIA103G3_Servlet/searchroutefetchservlet", {
+                            method: 'post',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ selectedFilter: this.selectedFilter, searchQuery: this.searchQuery })
+                        })
+                        const date = await response.json();
+                        this.route = date;
+
+                    } catch (error) {
+                        console.log(error);
+                    }
+                },
+                async get() {
+                    try {
+                        this.route = await getRoute();
+                    } catch (error) {
+                        console.error('Failed to get products:', error); // 捕获并处理错误
+                    }
+                }
+            },
+            async mounted() {
+                try {
+                    this.route = await getRoute();
+                } catch (error) {
+                    console.error('Failed to get products:', error); // 捕获并处理错误
+                }
+            },
+            watch: {
+                searchQuery: {
+                    handler(newVal, oldVal) {
+                        if (newVal === "")
+                            this.get();//取得所有資料
+                    },
+                    deep: true, // 深度監聽
+                },
+            },
+        }
+
+        const schedule_view = {
+            template: `
+                <h1>航班列表</h1>
+                <form class="form">
+                    <label class="form-label">關鍵字搜尋:
+                        <input type="text" class="form-input" v-model="searchQuery" placeholder="Search..." />                          
+                    </label>
+
+                    <label class="form-label">條件:
+                        <select class="form-select" v-model="selectedFilter">
+                            <option disabled value="">請選擇欄位</option>
+                            <option value="ship_id">船隻編號</option>
+                            <option value="route_id">航線編號</option>
+                            <option value="status">航班狀態</option>
+                            <option value="shipping_time">出港時間</option>
+                            <option value="shipping_dock">駁船地點</option>
+                            <option value="rooms_booked">已訂房數</option>
+                        </select>
+                    </label>
+                    <button type="button" class="form-btn" @click="search">搜尋</button>
+                    <button type="button" class="form-btn" @click="openInsertWindow">新增航班</button>
+                </form>         
+                            
+                <table>
+                    <thead>
+                        <tr>
+                            <th>船隻編號</th>
+                            <th>航線名稱</th>
+                            <th>航班狀態</th>
+                            <th>出港時間</th>
+                            <th>駁船地點</th>
+                            <th>已訂房數</th>
+                            <th>行程修改</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(sc, index) in  paginatedSchedule" :key="index">
+                            <td>{{ sc.ship_id }}</td>
+                            <td>{{ sc.route_id }}</td>
+                            <td>{{ sc.status }}</td>
+                            <td>{{ sc.shipping_time }}</td>
+                            <td>{{ sc.shipping_dock }}</td>
+                            <td>{{ sc.rooms_booked }}</td>
+                            <td>
+                                <div class="btn-group">
+                                <button class="btn btn-outline-primary" @click="openScheduleWindow(sc)">修改</button>    
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="dataTables_paginate paging_simple_numbers">
+                    <nav aria-label="Page navigation">
+                        <ul class="mt-3 pagination justify-content-center">
+                            <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                                <button class="page-link" @click="prevPage" :disabled="currentPage === 1">Previous</button>
+                            </li>
+                            <li v-for="page in totalPages" :key="page" class="page-item" :class="{ active: page === currentPage }">
+                                <button class="page-link" @click="goToPage(page)">{{ page }}</button>
+                            </li>
+                            <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                                <button class="page-link" @click="nextPage" :disabled="currentPage === totalPages">Next</button>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            `,
+
+            data() {
+                return {
+                    schedule: [], // 存储从服务器获取的数据
+                    currentPage: 1, // 当前页码
+                    pageSize: 10, // 每页显示的条目数
+                    searchQuery: '', // 搜索框输入的关键字
+                    selectedFilter: ''
+                };
+            },
+            computed: {
+                // 计算分页数据
+                paginatedSchedule() {
+                    const start = (this.currentPage - 1) * this.pageSize;
+                    const end = start + this.pageSize;
+                    return this.schedule.slice(start, end);
+                },
+                // 计算总页数
+                totalPages() {
+                    return Math.ceil(this.schedule.length / this.pageSize);
+                },
+            },
+            methods: {
+                goToPage(page) {
+                    this.currentPage = page;
+                },
+                openScheduleWindow(schedule) {
+                    const ship_id = `ship_id=${schedule.ship_id}`;
+                    const route_id = `route_id=${schedule.route_id}`;
+                    const status = `status=${schedule.status}`;
+                    const shipping_time = `shipping_time=${schedule.shipping_time}`;
+                    const shipping_dock = `shipping_dock=${schedule.shipping_dock}`;
+                    const rooms_booked = `rooms_booked=${schedule.rooms_booked}`;
+                    window.open(
+                        `../component/schedule_PopWindow.html?${ship_id}&${route_id}&${status}&${shipping_time}&${shipping_dock}&${rooms_booked}`,
+                        '商品更新',
+                        'width=600,height=600,left=200,top=100'
+                    );
+
+                },
+                openInsertWindow() {
+                    window.open(
+                        `../component/schedule_InsertWindow.html`,
+                        '新增',
+                        'width=600,height=600,left=200,top=100'
+                    );
+                },
+                async search() {
+                    try {
+                        const response = await fetch("http://localhost:8081/TIA103G3_Servlet/searchschedulefetchservlet", {
+                            method: 'post',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ selectedFilter: this.selectedFilter, searchQuery: this.searchQuery })
+                        })
+                        const date = await response.json();
+                        this.schedule = date;
+                    } catch (error) {
+                        console.log(error);
+                    }
+                },
+                async get() {
+                    try {
+                        this.schedule = await getSchedule();
+                    } catch (error) {
+                        console.error('Failed to get products:', error); // 捕获并处理错误
+                    }
+                }
+            },
+            watch: {
+                searchQuery: {
+                    handler(newVal, oldVal) {
+                        if (newVal === "")
+                            this.get();
+                    },
+                    deep: true, // 深度監聽
+                },
+                watch: {
+                    searchQuery: {
+                        handler(newVal, oldVal) {
+                            if (newVal === "")
+                                this.get();
+                        },
+                        deep: true, // 深度監聽
+                    },
+                }
+            }
+        }
+
+        /*
+        <button class="btn btn-block btn-info" @click="openInsertWindow">訂單新增</button>
+        */
+
+        const order_view = {
+            template: `
+                    <h1>訂單列表</h1>
+                    <form class="form">
+                        <label class="form-label">關鍵字搜尋:
+                            <input class="form-input" type="text" v-model="searchQuery" placeholder="Search..." />
+                        </label>
+                        <label calss="form-label">條件:
+                            <select class="form-select" v-model="selectedFilter">
+                                <option disabled value="">請選擇欄位</option>
+                                <option value="id">訂單編號</option>
+                                <option value="memb_id">會員編號</option>
+                                <option value="ship_id">船隻編號</option>
+                                <option value="coup_id">優惠券編號</option>
+                                <option value="trav_orde_status">訂單狀況</option>
+                                <option value="room_amount">房間數量</option>
+                                <option value="room_type">房型</option>
+                                <option value="trav_orde_amount">總價</option>
+                            </select>
+                        </label>
+                        <button type="button" class="form-btn" @click="search">搜尋</button>
+                    </form>    
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>訂單編號</th>
+                                <th>會員編號</th>
+                                <th>船隻編號</th>
+                                <th>優惠券編號</th>
+                                <th>訂單狀況</th>
+                                <th>房間數量</th>
+                                <th>房型</th>
+                                <th>總價</th>
+                                <th>行程修改</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(order, index) in paginatedOrder" :key="index">
+                                <td>{{ order.id }}</td>
+                                <td>{{ order.memb_id }}</td>
+                                <td>{{ order.ship_id }}</td>
+                                <td>{{ order.coup_id }}</td>
+                                <td>{{ order.trav_orde_status }}</td>
+                                <td>{{ order.room_amount }}</td>
+                                <td>{{ order.room_type }}</td>
+                                <td>{{ order.trav_orde_amount }}</td>
+                                <td>
+                                    <div class="btn-group">
+                                    <button class="btn btn-outline-primary" @click="openTravelOrderWindow(order)">修改訂單</button>    
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <div class="dataTables_paginate paging_simple_numbers">
+                        <nav aria-label="Page navigation">
+                            <ul class="mt-3 pagination justify-content-center">
+                                <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                                    <button class="page-link" @click="prevPage" :disabled="currentPage === 1">Previous</button>
+                                </li>
+                                <li v-for="page in totalPages" :key="page" class="page-item" :class="{ active: page === currentPage }">
+                                    <button class="page-link" @click="goToPage(page)">{{ page }}</button>
+                                </li>
+                                <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                                    <button class="page-link" @click="nextPage" :disabled="currentPage === totalPages">Next</button>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                        
+           
+            `,
+
+            data() {
+                return {
+                    order: [], // 存储从服务器获取的数据
+                    currentPage: 1, // 当前页码
+                    pageSize: 10, // 每页显示的条目数
+                    searchQuery: '', // 搜索框输入的关键字
+                    selectedFilter: ''
+                };
+            },
+            computed: {
+                // 计算分页数据
+                paginatedOrder() {
+                    const start = (this.currentPage - 1) * this.pageSize;
+                    const end = start + this.pageSize;
+                    return this.order.slice(start, end);
+                },
+                // 计算总页数
+                totalPages() {
+                    return Math.ceil(this.order.length / this.pageSize);
+                },
+            },
+            methods: {
+                // 跳转到下一页
+                nextPage() {
+                    if (this.currentPage < this.totalPages) {
+                        this.currentPage++;
+                    }
+                },
+                // 跳转到上一页
+                prevPage() {
+                    if (this.currentPage > 1) {
+                        this.currentPage--;
+                    }
+                },
+                // 跳转到特定页
+                goToPage(page) {
+                    this.currentPage = page;
+                },
+                openTravelOrderWindow(order) {
+                    const id = `id=${order.id}`;
+                    const memb_id = `memb_id=${order.memb_id}`;
+                    const ship_id = `ship_id=${order.ship_id}`;
+                    const coup_id = `coup_id=${order.coup_id}`;
+                    const trav_orde_status = `trav_orde_status=${order.trav_orde_status}`;
+                    const room_amount = `room_amount=${order.room_amount}`;
+                    const room_type = `room_type=${order.room_type}`;
+                    const trav_orde_amount = `trav_orde_amount=${order.trav_orde_amount}`;
+                    window.open(
+                        `./travelOrder_PopWindow.html?${id}&${memb_id}&${ship_id}&${coup_id}&${trav_orde_status}&${room_amount}&${room_type}&${trav_orde_amount}`,
+                        '商品更新',
+                        'width=600,height=600,left=200,top=100'
+                    );
+                    console.log('測試');
+                },
+                openInsertWindow() {
+                    window.open(
+                        `./travelOrder_InsertWindow.html`,
+                        '新增',
+                        'width=600,height=600,left=200,top=100'
+                    );
+                },
+                async search() {
+                    try {
+                        const response = await fetch("http://localhost:8081/TIA103G3_Servlet/searchorderfetchservlet", {
+                            method: 'post',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ selectedFilter: this.selectedFilter, searchQuery: this.searchQuery })
+                        })
+                        const date = await response.json();
+                        this.order = date;
+
+                    } catch (error) {
+                        console.log(error);
+                    }
+                },
+                async get() {
+                    try {
+                        this.order = await getOrder();
+                    } catch (error) {
+                        console.error('Failed to get products:', error); // 捕获并处理错误
+                    }
+                }
+            },
+            async mounted() {
+                try {
+                    this.order = await getOrder();
+                } catch (error) {
+                    console.error('Failed to get products:', error); // 捕获并处理错误
+                }
+            },
+            watch: {
+                searchQuery: {
+                    handler(newVal, oldVal) {
+                        if (newVal === "")
+                            this.get();
+
+                    },
+                    deep: true, // 深度監聽
+                },
+            }
+        };
+
+        // 定义路由
+        const routes = [
+            { path: '/', component: route_view },
+            { path: '/ship', component: schedule_view },
+            { path: '/order', component: order_view }
+        ]
+
+        // 创建Vue Router实例
+        const router = VueRouter.createRouter({
+            history: VueRouter.createWebHashHistory(), // 使用hash模式
+            routes // 路由配置
+        })
+
+        // 创建Vue实例并挂载
+        const app = Vue.createApp({})
+        app.use(router) // 注册路由
+        app.mount('#app') // 挂载到 #app
+    </script>
+
+
 
     <!-- jQuery -->
     <script src="../plugins/jquery/jquery.min.js"></script>

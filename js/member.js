@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // 查詢功能
-    const searchForm = document.getElementById("searchMemberForm");
+    const searchForm = document.getElementById("searchForm");
     searchForm.addEventListener("submit", function (e) {
         e.preventDefault();
         const query = document.getElementById("member_name").value.toLowerCase();

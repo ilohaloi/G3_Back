@@ -19,17 +19,13 @@
     <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
-
-    <link rel="stylesheet" href="../ourFile/coupon/cp.css">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
-
     <script src="https://kit.fontawesome.com/a33d8d8a91.js" crossorigin="anonymous"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
 
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/cp.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -37,12 +33,10 @@
         import { sideBar } from '../js/module.js';
         await sideBar();
     </script>
-    
     <div id="wrapper"></div>
-    <div class="all">
+    <div class="content">
         <div class="container">
             <h1>優惠券管理後台</h1>
-
             <!-- 顯示筆數的下拉選單 -->
             <label for="displayCount">顯示筆數:</label>
             <select id="displayCount">
@@ -59,7 +53,7 @@
                         <th>折扣碼</th>
                         <th>敘述</th>
                         <th>折扣</th>
-                        <th><button id="addCouponBtn">新增優惠券</button></th>
+                        <th><button id="addCouponBtn" class="form-btn">新增優惠券</button></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -119,7 +113,7 @@
 
         </div>
     </div>
-    <!-- 請把代碼寫在這邊 -->
+
 
     <!-- jQuery -->
     <script src="../plugins/jquery/jquery.min.js"></script>
@@ -130,7 +124,7 @@
     <script src="../dist/js/adminlte.min.js"></script>
 
     <!-- 新增 -->
-    <script src="../ourFile/coupon/cp.js"></script>
+    <script src="../js/coupon.js"></script>
 </body>
 
 </html>

@@ -20,8 +20,6 @@
     <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
 
-    <link rel="stylesheet" href="../ourFile/member/member.css">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
@@ -30,6 +28,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
 
+    <link rel="stylesheet" href="../css/main.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -40,22 +39,23 @@
 
     <div id="wrapper"></div>
 
-    <div class="all">
+    <div class="content">
         <div class="container">
             <h1>會員管理</h1>
 
             <!-- 查詢會員表單 -->
-            <div id="queryMemberForm">
-                <form id="searchMemberForm">
-                    <label for="member_name">查詢會員</label>
-                    <input type="text" id="member_name" name="member_name" placeholder="輸入會員姓名">
-                    <button type="submit" class="btn-submit">查詢</button>
-                </form>
-            </div>
+
+            <form id="searchForm" class="form">
+                <label class="form-label">會員 ID:
+                    <input type="text" id="member_name" class="form-input" name="member_name" placeholder="輸入會員姓名">
+                </label>
+                <button type="submit" class="form-btn">查詢</button>
+            </form>
+
 
             <!-- 顯示筆數的下拉選單 -->
             <label for="displayCount">顯示筆數:</label>
-            <select id="displayCount">
+            <select class="form-select" id="displayCount">
                 <option value="5">5</option>
                 <option value="10">10</option>
                 <option value="20">20</option>
@@ -97,7 +97,7 @@
     <script src="../dist/js/adminlte.min.js"></script>
 
     <!-- 新增 -->
-    <script src="../ourFile/member/member.js"></script>
+    <script src="../js/member.js"></script>
 
 </body>
 
