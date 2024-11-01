@@ -21,8 +21,8 @@
         }
 
         input[type="text"],
-        input[type="number"], 
-        input[type="date"]{
+        input[type="number"],
+        input[type="date"] {
             width: 100%;
             padding: 8px;
             margin-bottom: 15px;
@@ -56,7 +56,7 @@
 
         <!-- 航班狀態 -->
         <label for="status">航班狀態:</label>
-        <select id="status"  class="custom-select form-control-border" required>
+        <select id="status" class="custom-select form-control-border" required>
             <option value="" disabled>選擇分類</option>
             <option value="停駛">停駛</option>
             <option value="維修">維修</option>
@@ -75,7 +75,7 @@
         <!-- 訂房總數 -->
         <label for="rooms_booked">訂房總數:</label>
         <input type="number" id="rooms_booked" name="rooms_booked" required min="0" placeholder="輸入訂房總數">
-        
+
         <!-- 提交按鈕 -->
         <input type="submit" value="新增航班">
     </form>
@@ -95,13 +95,12 @@
             // 使用 fetch 发送数据
             try {
                 const response = await fetch('http://localhost:8081/TIA103G3_Servlet/insertschedulefetchservlet', {
-                    method: 'POST',                                        
+                    method: 'POST',
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({ route_id: route_id, status:status, shipping_time:shipping_time, shipping_dock:shipping_dock, rooms_booked:rooms_booked})
+                    body: JSON.stringify({ route_id: route_id, status: status, shipping_time: shipping_time, shipping_dock: shipping_dock, rooms_booked: rooms_booked })
                 });
-              
                 // 检查响应状态
                 if (response.ok) {
                     const result = await response.text(); // 获取响应文本

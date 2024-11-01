@@ -1,4 +1,4 @@
-export function handleFileUpload(event,prod){ 
+function handleFileUpload(event,prod){ 
     const files = Array.from(event.target.files);
             if (files.length > 3) {
                 alert('最多只能上传 3 张图片');
@@ -8,8 +8,7 @@ export function handleFileUpload(event,prod){
     console.log('照片路徑',files);
     
 }
-
-export async function getProducts() {
+async function getProducts() {
     try {
         const response = await fetch('http://localhost:8081/TIA103G3_Servlet/prodget', {
             method: 'post',
@@ -25,7 +24,7 @@ export async function getProducts() {
         console.log(error);
     }
 };
-export async function getProduct(id) {
+async function getProduct(id) {
     try {
         const response = await fetch('http://localhost:8081/TIA103G3_Servlet/prodget', {
         method: 'post',
@@ -42,7 +41,7 @@ export async function getProduct(id) {
     }
 }
 
-export async function insertProd(prod) {
+async function insertProd(prod) {
 
     let response;
     const formData = new FormData();
@@ -69,7 +68,7 @@ export async function insertProd(prod) {
     }
     
 }
-export async function updateProd(prod) { 
+async function updateProd(prod) { 
     try {
         const response = await fetch('http://localhost:8081/TIA103G3_Servlet/produpdate', {
         method: 'post',
@@ -86,7 +85,7 @@ export async function updateProd(prod) {
 }
 
 
-export async function getOrders() {
+async function getOrders() {
     try {
         const response = await fetch('http://localhost:8081/TIA103G3_Servlet/getorder',{
             method: 'post',
@@ -103,7 +102,7 @@ export async function getOrders() {
         console.log(error);
     } 
 } 
-export async function getOrderDetail(orderId) { 
+async function getOrderDetail(orderId) { 
     try {
         const response = await fetch('http://localhost:8081/TIA103G3_Servlet/getorder',{
             method: 'post',
@@ -244,7 +243,7 @@ export const prod_view = {
         } catch (error) {
             console.error('Failed to get products:', error); // 捕获并处理错误
         }
-    },
+    }
 }
 
 export const prod_upload = {
@@ -256,8 +255,7 @@ export const prod_upload = {
             <div class="card-header">
                 <h3 class="card-title">新增商品</h3>
             </div>
-        
-            <form @submit.prevent="submitForm" >
+            <div class="card-body">
                 <div class="form-group">
                     <label for="name">商品名稱</label>
                     <input type="text" class="form-control" id="name" v-model="prod.name" placeholder="請輸入商品名稱" required>
@@ -287,16 +285,16 @@ export const prod_upload = {
                     <label for="imges" class="form-label">上傳圖片（最多三張，圖片大小不得超過10MB）</label>
                     <input type="file" name="imges" id="imges" @change="handleFileUpload" class="input-group-text" multiple accept="image/*" />
                 </div>
-                <div class="card-footer">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <!-- 左侧按钮 -->
-                        <button type="submit" class="btn btn-success">確認</button>
-                        <!-- 右侧消息 -->
-                        <h3 :style="{ color: message.color }">{{ message.str }}</h3>
-                    </div>
-                </div >
-            </form >
-        </div>
+                <div class="form-group">
+                    <label for="route_days">商品描述:</label>
+                    <div id="editor"></div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-between align-items-center">
+                    <button type="submit" class="btn btn-success" @submit.prevent="submitForm">確認</button>                       
+                </div>
+            </div>
         </div>
     `,
     data() {
@@ -306,13 +304,11 @@ export const prod_upload = {
                 category: "",
                 stock: 0,
                 price: 0,
+                de
                 imges: []
             },
             uploading: false,
-            message: {
-                str: "",
-                color: "green"
-            }
+            editor:null
         }
     },
     methods: {
@@ -323,6 +319,8 @@ export const prod_upload = {
                 return;
             }
             this.prod.imges = files;
+            console.log(this.prod.imges);
+            
         },
         async submitForm(event) {
             event.preventDefault();
@@ -331,20 +329,29 @@ export const prod_upload = {
             try {
                 const resp = await insertProd(this.prod);
                 if (resp.status === 200) {
-                    this.message.str = "新增成功"
-                    this.message.color = "green";
+                    alert('新增成功');
                     this.uploading = false;
                 }
                 else if (resp.status === 400) {
-                    const err = await resp.json();
-                    this.message.str = err.error;
-                    this.message.color = "red";
+                    alert(err.error);
                     this.uploading = false;
                 }
             } catch (error) {
                 console.error('提交出错:', error);
             }
         }
+    },
+    mounted() {
+        this.editor = new FroalaEditor('#editor', {
+            events: {
+                'image.inserted': ($img, response) => {
+                    console.log('插入的图片元素:', $img[0]);
+                    var blobImageUrl = $img.attr('src');
+                    this.imgs.push(blobImageUrl);
+                    console.log('当前的 blob URL:', blobImageUrl);
+                }
+            }
+        });
     },
 }
 export const orders_view = {

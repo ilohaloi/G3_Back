@@ -65,29 +65,26 @@
                 <div id="app">
                     <router-view></router-view>
                 </div>
-                <script type="module">
-                    import { emp_view } from '../js/emp.js';
-                    import { emp_control } from '../js/emp.js';
-                    const routes = [
-                        { path: '/', component: emp_view },
-                        { path: '/control', component: emp_control }
-                    ]
-                    const router = VueRouter.createRouter({
-                        history: VueRouter.createWebHashHistory(), // 使用hash模式
-                        routes // 路由配置
-                    })
-
-                    const app = Vue.createApp({})
-                    app.use(router) // 注册路由
-                    app.mount('#app') // 挂载到 #app
-                </script>
-
             </div>
         </section>
     </div>
-    <!-- 請把代碼寫在這邊 -->
 
-    <!-- jQuery -->
+    <script type="module">
+        import { emp_view } from '../js/emp.js';
+        import { emp_control } from '../js/emp.js';
+        const routes = [
+            { path: '/', component: emp_view },
+            { path: '/control', component: emp_control }
+        ]
+        const router = VueRouter.createRouter({
+            history: VueRouter.createWebHashHistory(), // 使用hash模式
+            routes // 路由配置
+        })
+
+        const app = Vue.createApp({})
+        app.use(router) // 注册路由
+        app.mount('#app') // 挂载到 #app
+    </script>
     <script src="../plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
