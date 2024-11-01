@@ -1,0 +1,51 @@
+#searchForm {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+    background-color: #f7f9fc;
+    border: 1px solid #dfe3e8;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: auto;
+}
+
+#searchForm input,
+#searchForm select {
+    padding: 8px;
+    width: 100%;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    background-color: #fff;
+}
+
+#searchForm button {
+    grid-column: span 2;
+    padding: 12px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #5a67d8;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#searchForm label:last-of-type {
+    color: #888;
+    font-size: 18px;
+    grid-column: span 2;
+     /* 讓提示文字佔據整個行 */
+    text-align: right;
+     /* 將提示文字對齊到右邊 */
+}
+
+#searchForm button:hover {
+    background-color: #4c51bf;
+}
+
+#searchForm label {
+    font-weight: 500;
+    color: #333;
+    position: relative;
+}

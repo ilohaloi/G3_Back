@@ -19,17 +19,13 @@
     <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
-
-    <link rel="stylesheet" href="../ourFile/coupon/cp.css">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
-
     <script src="https://kit.fontawesome.com/a33d8d8a91.js" crossorigin="anonymous"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
 
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/cp.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -37,106 +33,98 @@
         import { sideBar } from '../js/module.js';
         await sideBar();
     </script>
-    <<<<<<< HEAD <div id="wrapper">
-        </div>
-        =======
-
-        <div id="wrapper"></div>
-
-        >>>>>>> fcbae41 (fix bug)
-        <div class="all">
-            <div class="container">
-                <h1>優惠券管理後台</h1>
-
-                <!-- 顯示筆數的下拉選單 -->
-                <label for="displayCount">顯示筆數:</label>
-                <select id="displayCount">
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                </select>
+    <div id="wrapper"></div>
+    <div class="content">
+        <div class="container">
+            <h1>優惠券管理後台</h1>
+            <!-- 顯示筆數的下拉選單 -->
+            <label for="displayCount">顯示筆數:</label>
+            <select id="displayCount">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+            </select>
 
 
-                <table id="couponTable">
-                    <thead>
-                        <tr>
-                            <th>優惠券編號</th>
-                            <th>折扣碼</th>
-                            <th>敘述</th>
-                            <th>折扣</th>
-                            <th><button id="addCouponBtn">新增優惠券</button></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- 這裡的內容會由 JavaScript 動態填充 -->
-                    </tbody>
-                </table>
+            <table id="couponTable">
+                <thead>
+                    <tr>
+                        <th>優惠券編號</th>
+                        <th>折扣碼</th>
+                        <th>敘述</th>
+                        <th>折扣</th>
+                        <th><button id="addCouponBtn" class="form-btn">新增優惠券</button></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 這裡的內容會由 JavaScript 動態填充 -->
+                </tbody>
+            </table>
 
-                <!-- 分頁功能 -->
-                <div id="pagination" class="pagination">
-                    <button id="prevPageBtn">上一頁</button>
-                    <span id="pageInfo">第 <span id="currentPage">1</span> 頁</span>
-                    <button id="nextPageBtn">下一頁</button>
-                </div>
-
-                <!-- 新增優惠券表單 -->
-                <div id="addCouponForm" class="form-modal">
-                    <div class="form-modal-content">
-                        <h2>新增優惠券</h2>
-                        <form id="couponFormDetails">
-                            <!-- <label for="coup_name">折扣碼</label> -->
-                            <!-- <input type="text" id="coup_name" name="coup_name" required placeholder="輸入折扣碼"> -->
-
-                            <label for="coup_description">敘述</label>
-                            <input type="text" id="coup_description" name="coup_description" required
-                                placeholder="輸入敘述">
-
-                            <label for="coup_discount">折扣(%)</label>
-                            <input type="number" id="coup_discount" name="coup_discount" required placeholder="輸入折扣(%)"
-                                min="0">
-
-                            <button type="submit" id="saveCouponBtn" class="btn-submit">儲存優惠券</button>
-                            <button type="button" id="cancelAddBtn" class="btn-submit">取消</button>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- 編輯優惠券表單 -->
-                <div id="editCouponForm" class="form-modal" style="display: none;">
-                    <div class="form-modal-content">
-                        <h2 id="editFormTitle">編輯優惠券</h2>
-                        <form id="editCouponFormDetails">
-                            <label for="edit_coup_code">折扣碼</label>
-                            <input type="text" id="edit_coup_code" name="edit_coup_code" required placeholder="輸入折扣碼">
-
-                            <label for="edit_coup_description">敘述</label>
-                            <input type="text" id="edit_coup_description" name="edit_coup_description" required
-                                placeholder="輸入敘述">
-
-                            <label for="edit_coup_discount">折扣(%)</label>
-                            <input type="number" id="edit_coup_discount" name="edit_coup_discount" required
-                                placeholder="輸入折扣(%)" min="0">
-
-                            <button type="submit" id="saveEditCouponBtn" class="btn-submit">儲存編輯優惠券</button>
-                            <button type="button" id="cancelEditBtn" class="btn-submit">取消</button>
-                        </form>
-                    </div>
-                </div>
-
+            <!-- 分頁功能 -->
+            <div id="pagination" class="pagination">
+                <button id="prevPageBtn">上一頁</button>
+                <span id="pageInfo">第 <span id="currentPage">1</span> 頁</span>
+                <button id="nextPageBtn">下一頁</button>
             </div>
+
+            <!-- 新增優惠券表單 -->
+            <div id="addCouponForm" class="form-modal">
+                <div class="form-modal-content">
+                    <h2>新增優惠券</h2>
+                    <form id="couponFormDetails">
+                        <!-- <label for="coup_name">折扣碼</label> -->
+                        <!-- <input type="text" id="coup_name" name="coup_name" required placeholder="輸入折扣碼"> -->
+
+                        <label for="coup_description">敘述</label>
+                        <input type="text" id="coup_description" name="coup_description" required placeholder="輸入敘述">
+
+                        <label for="coup_discount">折扣(%)</label>
+                        <input type="number" id="coup_discount" name="coup_discount" required placeholder="輸入折扣(%)"
+                            min="0">
+
+                        <button type="submit" id="saveCouponBtn" class="btn-submit">儲存優惠券</button>
+                        <button type="button" id="cancelAddBtn" class="btn-submit">取消</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 編輯優惠券表單 -->
+            <div id="editCouponForm" class="form-modal" style="display: none;">
+                <div class="form-modal-content">
+                    <h2 id="editFormTitle">編輯優惠券</h2>
+                    <form id="editCouponFormDetails">
+                        <label for="edit_coup_code">折扣碼</label>
+                        <input type="text" id="edit_coup_code" name="edit_coup_code" required placeholder="輸入折扣碼">
+
+                        <label for="edit_coup_description">敘述</label>
+                        <input type="text" id="edit_coup_description" name="edit_coup_description" required
+                            placeholder="輸入敘述">
+
+                        <label for="edit_coup_discount">折扣(%)</label>
+                        <input type="number" id="edit_coup_discount" name="edit_coup_discount" required
+                            placeholder="輸入折扣(%)" min="0">
+
+                        <button type="submit" id="saveEditCouponBtn" class="btn-submit">儲存編輯優惠券</button>
+                        <button type="button" id="cancelEditBtn" class="btn-submit">取消</button>
+                    </form>
+                </div>
+            </div>
+
         </div>
-        <!-- 請把代碼寫在這邊 -->
+    </div>
 
-        <!-- jQuery -->
-        <script src="../plugins/jquery/jquery.min.js"></script>
-        <!-- Bootstrap 4 -->
-        <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        <!-- AdminLTE App -->
-        <script src="../dist/js/adminlte.min.js"></script>
+    <!-- jQuery -->
+    <script src="../plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        <!-- 新增 -->
-        <script src="../ourFile/coupon/cp.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../dist/js/adminlte.min.js"></script>
+
+    <!-- 新增 -->
+    <script src="../js/coupon.js"></script>
 </body>
 
 </html>

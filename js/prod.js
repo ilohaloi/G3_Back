@@ -122,64 +122,80 @@ async function getOrderDetail(orderId) {
 export const prod_view = {
     template: `
         <div v-if="isAuthenticated">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card card-dark">
-                        <div class="card-header">
-                            <h3 class="card-title">商品目錄</h3>
-                        </div>
-                        <div class="card-body">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>編號</th>
-                                        <th>名稱</th>
-                                        <th>類別</th>
-                                        <th>庫存</th>
-                                        <th>價格</th>
-                                        <th>修改/刪除</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="(item, index) in paginatedProd" :key="index">
-                                        <td>{{ item.id }}</td>
-                                        <td>{{ item.name }}</td>
-                                        <td>{{ item.category }}</td>
-                                        <td>{{ item.stock }}</td>
-                                        <td>{{ item.price }}</td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <button class="btn btn-block bg-gradient-info" @click="openWindow(item)">修改</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                        <div class="card-footer">
-                            <div class="dataTables_paginate paging_simple_numbers">
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-center">
-                                        <li class="page-item" :class="{disabled: currentPage === 1 }">
-                                            <button class="page-link" @click="prevPage" :disabled="currentPage === 1">Previous</button>
-                                        </li>
-                                        <li v-for="page in totalPages" :key="page" class="page-item" :class="{active: page === currentPage }">
-                                            <button class="page-link" @click="goToPage(page)">{{ page }}</button>
-                                        </li>
-                                        <li class="page-item" :class="{disabled: currentPage === totalPages }">
-                                            <button class="page-link" @click="nextPage" :disabled="currentPage === totalPages">Next</button>
-                                        </li>
-                                    </ul>
-                                </nav>
+            <h1>商品列表</h1>
+            <form class="form">
+                <label class="form-label">商品  ID:  <input type="text" class="form-input"></label>
+                <label class="form-label">商品名稱 : <input type="text" class="form-input"></label>
+                <label class="form-label">庫存數量: <input type="number" class="form-input"></label>
+                <label class="form-label">條件:
+                    <select class="form-select">
+                    <option>請選擇</option>
+                    <option>小於</option>
+                    <option>大於</option>
+                    </select>
+                </label>
+
+                <label class="form-label">價格: <input type="number" class="form-input"></label>
+                <label class="form-label">條件:
+                    <select class="form-select" data-placeholder="請選擇">
+                    <option>小於</option>
+                    <option>大於</option>
+                    </select>
+                </label>
+                
+                <label class="form-label ">商品類別: 
+                    <select class="form-select form-select--wide">
+                    <option>請選擇</option>
+                    <option>小於</option>
+                    <option>大於</option>
+                    </select>
+                </label>
+
+                <button type="button" class="form-btn">查詢</button>
+                <button type="reset" class="form-btn">清除條件</button>
+                <button type="button" class="form-btn">新增商品</button>
+            </form>
+            <table>
+                <thead>
+                    <tr>
+                        <th>編號</th>
+                        <th>名稱</th>
+                        <th>類別</th>
+                        <th>庫存</th>
+                        <th>價格</th>
+                        <th>修改/刪除</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item, index) in paginatedProd" :key="index">
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.category }}</td>
+                        <td>{{ item.stock }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-block bg-gradient-info" @click="openWindow(item)">修改</button>
                             </div>
-                        </div >
-                    </div >
-                </div >
-            </div >
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="dataTables_paginate paging_simple_numbers">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" :class="{disabled: currentPage === 1 }">
+                            <button class="page-link" @click="prevPage" :disabled="currentPage === 1">Previous</button>
+                        </li>
+                        <li v-for="page in totalPages" :key="page" class="page-item" :class="{active: page === currentPage }">
+                            <button class="page-link" @click="goToPage(page)">{{ page }}</button>
+                        </li>
+                        <li class="page-item" :class="{disabled: currentPage === totalPages }">
+                            <button class="page-link" @click="nextPage" :disabled="currentPage === totalPages">Next</button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div >
     `,
     data() {
@@ -285,8 +301,8 @@ export const prod_upload = {
                     <label for="imges" class="form-label">上傳圖片（最多三張，圖片大小不得超過10MB）</label>
                     <input type="file" name="imges" id="imges" @change="handleFileUpload" class="input-group-text" multiple accept="image/*" />
                 </div>
-                <div class="form-group">
-                    <label for="route_days">商品描述:</label>
+                <div class="">
+                    <label for="">商品描述:</label>
                     <div id="editor"></div>
                 </div>
             </div>
@@ -304,7 +320,6 @@ export const prod_upload = {
                 category: "",
                 stock: 0,
                 price: 0,
-                de
                 imges: []
             },
             uploading: false,
@@ -358,61 +373,69 @@ export const orders_view = {
     template: `
         <div class="row">
             <div class="col-12">
-                <div class="card card-dark">
-                    <div class="card-header">
-                        <h3 class="card-title">訂單</h3>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>訂單編號</th>
-                                    <th>會員編號</th>
-                                    <th>狀態</th>
-                                    <th>下定時間</th>
-                                    <th>付款方式</th>
-                                    <th>總價</th>
-                                    <th>明細</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(item, index) in paginatedOrder" :key="index">
-                                    <td>{{ item.orid }}</td>
-                                    <td>{{ item.membId }}</td>
-                                    <td>{{ item.status }}</td>
-                                    <td>{{ item.time }}</td>
-                                    <td>{{ item.payment }}</td>
-                                    <td>{{ item.amount }}</td>
-                                    <td>
-                                        <div class="btn-group">
-                                        <button class="btn btn-block bg-gradient-info" @click="openWindow(item)">查看</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                    <div class="card-footer">
-                        <div class="dataTables_paginate paging_simple_numbers">
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination justify-content-center">
-                                    <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                                        <button class="page-link" @click="prevPage" :disabled="currentPage === 1">Previous</button>
-                                    </li>
-                                    <li v-for="page in totalPages" :key="page" class="page-item" :class="{ active: page === currentPage }">
-                                        <button class="page-link" @click="goToPage(page)">{{ page }}</button>
-                                    </li>
-                                    <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                                        <button class="page-link" @click="nextPage" :disabled="currentPage === totalPages">Next</button>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
+                <h1>商品列表</h1>
+                <form class="form">
+                <label class="form-label">訂單ID:  <input type="text" class="form-input"></label>
+                <label class="form-label">會員ID : <input type="text" class="form-input"></label>
+                <label class="form-label">訂單狀態:
+                    <select class="form-select">
+                    <option>未付款</option>
+                    <option>已付款</option>
+                    <option>待出貨</option>
+                    <option>以出貨</option>
+                    </select>
+                </label>
+                <label class="form-label">訂單時間 : <input type="date" class="form-input"></label>
+                
+                <button type="button" class="form-btn">查詢</button>
+                <button type="reset" class="form-btn">清除條件</button>
+                </form>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>訂單編號</th>
+                            <th>會員編號</th>
+                            <th>狀態</th>
+                            <th>訂單成立時間</th>
+                            <th>付款方式</th>
+                            <th>總價</th>
+                            <th>明細</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, index) in paginatedOrder" :key="index">
+                            <td>{{ item.orid }}</td>
+                            <td>{{ item.membId }}</td>
+                            <td>{{ item.status }}</td>
+                            <td>{{ item.time }}</td>
+                            <td>{{ item.payment }}</td>
+                            <td>{{ item.amount }}</td>
+                            <td>
+                                <div class="btn-group">
+                                <button class="btn btn-block bg-gradient-info" @click="openWindow(item)">查看</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="dataTables_paginate paging_simple_numbers">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                                <button class="page-link" @click="prevPage" :disabled="currentPage === 1">Previous</button>
+                            </li>
+                            <li v-for="page in totalPages" :key="page" class="page-item" :class="{ active: page === currentPage }">
+                                <button class="page-link" @click="goToPage(page)">{{ page }}</button>
+                            </li>
+                            <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                                <button class="page-link" @click="nextPage" :disabled="currentPage === totalPages">Next</button>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>

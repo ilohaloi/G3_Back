@@ -94,56 +94,50 @@ export async function login(data) {
         return 203;
     }
 } 
-
+  
 export const emp_view = {
     template: `
-        <div class="row">
-            <div class="col-12">
-                <div class="card card-dark">
-                    <div class="card-header">
-                        <div class="card-title btn-group ms-auto">
-                            <button class="btn btn-block btn-success" @click="openWindow">員工帳號新增</button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>編號</th>
-                                    <th>姓名</th>
-                                    <th>帳號</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(emp, index) in paginatedEmp" :key="index">
-                                    <td>{{ emp.id }}</td>
-                                    <td>{{ emp.name }}</td>
-                                    <td>{{ emp.account }}</td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                </tr>
-                            </tfoot>
-                        </table>
-                        <div class="dataTables_paginate paging_simple_numbers">
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination justify-content-center">
-                                    <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                                        <button class="page-link" @click="prevPage" :disabled="currentPage === 1">Previous</button>
-                                    </li>
-                                    <li v-for="page in totalPages" :key="page" class="page-item" :class="{ active: page === currentPage }">
-                                        <button class="page-link" @click="goToPage(page)">{{ page }}</button>
-                                    </li>
-                                    <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                                        <button class="page-link" @click="nextPage" :disabled="currentPage === totalPages">Next</button>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <form class="form">
+            <label class="form-label">關鍵字搜尋:
+                <input class="form-input" type="text">
+            </label>
+            <button class="form-btn">搜尋</button>
+            <button class="form-btn" @click="openWindow">員工帳號新增</button>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>編號</th>
+                    <th>姓名</th>
+                    <th>帳號</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(emp, index) in paginatedEmp" :key="index">
+                    <td>{{ emp.id }}</td>
+                    <td>{{ emp.name }}</td>
+                    <td>{{ emp.account }}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                </tr>
+            </tfoot>
+        </table>
+        <div class="btn-group">
+            <nav aria-label="Page navigation">
+                <ul id="pagination" class="pagination justify-content-center">
+                    <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                        <button id="prevPageBtn" class="page-link" @click="prevPage" :disabled="currentPage === 1">上一頁</button>
+                    </li>
+                    <li v-for="page in totalPages" :key="page" class="page-item" :class="{ active: page === currentPage }">
+                        <button class="page-link" @click="goToPage(page)">{{ page }}</button>
+                    </li>
+                    <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                        <button id="nextPageBtn" class="page-link" @click="nextPage" :disabled="currentPage === totalPages">下一頁</button>
+                    </li>
+                </ul>
+            </nav>
         </div>
         `,
     data() {

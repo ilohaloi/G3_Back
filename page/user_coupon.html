@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
-    <link rel="stylesheet" href="../ourFile/coupon/uc.css">
+
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
@@ -28,8 +28,8 @@
     <script src="https://kit.fontawesome.com/a33d8d8a91.js" crossorigin="anonymous"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
-
-
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/user_coupon.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -57,14 +57,14 @@
                         <option value="0">未使用</option>
                     </select>
                 </label>
-                <label>未輸入查詢條件 即顯示全部</label>
+                <label class="last">未輸入查詢條件 即顯示全部</label>
                 <button type="submit">查詢</button>
                 <button type="reset">清除條件</button>
             </form>
 
             <!-- 顯示筆數的下拉選單 -->
             <label for="displayCount">顯示筆數:</label>
-            <select id="displayCount">
+            <select id="displayCount" class="form-select">
                 <option value="20">20</option>
                 <option value="50">50</option>
                 <option value="100">100</option>
@@ -109,7 +109,7 @@
     <script src="../dist/js/adminlte.min.js"></script>
 
     <!-- 新增 -->
-    <script src="../ourFile/coupon/uc.js"></script>
+    <script src="../js/user_coupon.js"></script>
 
 </body>
 
