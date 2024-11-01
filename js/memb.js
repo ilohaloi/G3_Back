@@ -5,8 +5,8 @@ export async function getMemberShip() {
         mode:"cors"
         })
         if (response.status === 200) {
-            const prods = await response.json();
-            return prods;
+            const members = await response.json();
+            return members;
         }
     } catch(error) { 
         console.log(error);
