@@ -28,7 +28,7 @@
   <!-- summernote -->
   <link rel="stylesheet" href="../../plugins/summernote/summernote-bs4.min.css">
   <!-- 這是聊天室的CSS -->
-  <link rel="stylesheet" href="/ourFile/dev_chat/chat_back.css">
+  <link rel="stylesheet" href="/chat_back.css">
 
   <script src="https://kit.fontawesome.com/a33d8d8a91.js" crossorigin="anonymous"></script>
   </head>
@@ -268,12 +268,6 @@
           <!-- 新增的 Member Container -->
           <div class="member-container">
             <ul id="member-list">
-              <li class="member">寶貝</li>
-                <!-- <li class="member">小賴</li>
-                <li class="member">凱勛</li>
-                <li class="member-four">瑋婷</li>
-                <li class="member-five">恩琦</li>
-                <li class="member-six">詩潔</li> -->
             </ul>
           </div>
         </div>
@@ -284,7 +278,7 @@
           <div class="content-header">
             <h1 class="m-0">對話框</h1>
           </div>
-          <div class="chat-box"></div>
+          <div id="chat-box" class="chat-box"></div>
           <div id="input-box">
             <input type="text" id="message-input" placeholder="輸入訊息...">
             <button id="send-button">
@@ -325,9 +319,8 @@
       <script src="../../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
       <!-- AdminLTE App -->
       <script src="../../dist/js/adminlte.js"></script>
->
       <!-- 這是聊天室的JS -->
-      <script src="/ourFile/dev_chat/chat_back.js"></script>
+      <script src="/chat_back.js"></script>
      
       </body>
 

@@ -1,90 +1,163 @@
-document.addEventListener("DOMContentLoaded", async function () {
-  let memberList = document.getElementById('member-list');
-  let chatBox = document.getElementById('chat-box');
-  let messageInput = document.getElementById('message-input');
-  let sendButton = document.getElementById('send-button');
+var ws = new WebSocket('ws://localhost:8081/TIA103G3_Servlet/ChatWS/500'); // 替換為你的 WebSocket 伺服器端點
+console.log(ws);
 
-  const agentName = "Agent123";  // Example agent name (current logged-in user)
-    let currentMember = null;  // Store the currently selected member for chatting
-
- // Fetch the initial member list and chat history
- async function fetchChatInfo(member_id) {
-  try {
-      let response = await fetch(`/TIA103G3_Servlet/chat-info?member_id=${member_id}`);
-      let data = await response.json();
-
-      currentMember = { id: member_id};
-
-      // Render chat history for the selected member
-      chatBox.innerHTML = '';  // Clear chat box
-      data.chatHistory.forEach((message) => {
-          appendMessage(message, message.sender === agentName ? 'you' : 'other');
-      });
-  } catch (error) {
-      console.error('Error fetching chat info:', error);
-  }
-}
-
-// WebSocket connection for real-time chat
-let ws = new WebSocket('ws://localhost:8081/TIA103G3_Servlet/ChatWS/vicTest');
 ws.onopen = function () {
-  console.log('WebSocket connection established.');}
-// Append messages to the chat box with sender/receiver distinction
-function appendMessage(message, user) {
-  let messageElem = document.createElement('div');
-  messageElem.textContent = message.message;  // Display the message content
+	console.log("Connected to WebSocket");
+	// document.getElementById("status").innerText = "已連接";
+};
 
-  if (user === 'you') {
-      messageElem.classList.add('message-sender');
-  } else {
-      messageElem.classList.add('message-receiver');
-  }
-
-  chatBox.appendChild(messageElem);
-  chatBox.scrollTop = chatBox.scrollHeight;  // Scroll to the bottom
+//測試
+function displayMessage(message, messageType) {
+	const chatBox = document.querySelector('.chat-box'); // 確認 chat box 容器是否存在
+	const messageElement = document.createElement('p'); // 創建一個 p 元素來顯示訊息
+	messageElement.textContent = message; // 將訊息的內容放入 p 元素
+	messageElement.classList.add(messageType);
+	chatBox.appendChild(messageElement); // 將訊息元素添加到 chat box 中
+  
+	// 讓 chat box 自動滾動到底部，以顯示最新訊息
+	chatBox.scrollTop = chatBox.scrollHeight;
 }
+
+ws.onmessage = function (event) {
+	if (event.data) {
+		console.log("Received data:", event.data);
+		displayMessage(event.data, 'left-message');
+	} else {
+		console.log("Received an empty message from the server.");
+	}
+};
+
+
+ws.onclose = function (event) {
+	sessionStorage.removeItem('ws');
+	// 增加條件判斷使否重開WS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	// setTimeout(() => {
+	// 	ws = new WebSocket('ws://localhost:8081/TIA103G3_Servlet/ChatWS/500'); 
+	// }, 3000);
+	ws = new WebSocket('ws://localhost:8081/TIA103G3_Servlet/ChatWS/500'); 
+	console.log("WS CLOSE!!!!!!!!!!!!!!!!!1111");
+};
+
 
 // Send a message from the agent to the current customer
-function sendMessage() {
-  let message = messageInput.value.trim();
-  if (message && currentMember) {
-      const payload = { sender: agentName, message: message, to: currentMember.id };
-      ws.send(JSON.stringify(payload));  // Send the message via WebSocket
+const sendMessage = async function () {
+	let id = sessionStorage.getItem("ID");
+	let messageInput = document.getElementById('message-input');
+	let message = messageInput.value.trim();
+	console.log("ID:"+id + "/MSG:"+ message+":");
 
-      appendMessage(payload, 'you');  // Show the message immediately in the chat box
-      messageInput.value = '';  // Clear input field
-  }
+	if(id != null && message != ''){
+		console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwww");
+		
+		const json_str = JSON.stringify({
+			// receiver : Number(id),
+			id : JSON.parse(sessionStorage.getItem("ID")),
+			receiver :"member",
+			sender :"employ",                  // member : 會員  / employ : 客服
+			content:message,
+			timestamp:new Date().toISOString() // 可選，附帶時間戳
+		});
+		// const send_str = `${id}:${json_str}`;
+		
+		try {
+			await ws.send(json_str); // 發送 JSON 格式的訊息到 WebSocket 伺服器
+			// displayMessage(messageContent, 'cus_Message'); // 顯示客戶端訊息
+			messageInput.value = ''; // 清空輸入框
+		} catch (error) {
+			console.error('無法發送訊息:', error);
+		}
+
+	}else{
+		console.log("weeeeeeeeeeeeew");
+	}
 }
 
-// Send message on button click
-sendButton.addEventListener('click', sendMessage);
+const fetchChatById = (id) => {
+	// 點擊後發送請求來取得聊天紀錄
+	console.log(ws);
+	fetch(`http://localhost:8081/TIA103G3_Servlet/api/chat/history?id=${id}`)
+		.then(response => {
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
 
-// Send message on "Enter" key press
-messageInput.addEventListener('keydown', function (event) {
-  if (event.key === 'Enter') {
-      event.preventDefault();  // Prevent default behavior
-      sendMessage();
-  }
-});
+			return response.json(); // 假設伺服器返回 JSON 格式的聊天紀錄
+		})
+		.then(historyMap => {
+			console.log("Response JSON:", historyMap);
+			// 找到顯示聊天紀錄的 <div class="chat-box">
+			const chatBox = document.querySelector('.chat-box');
+			chatBox.innerHTML = ""; // 清空舊的聊天紀錄
 
-// Handle incoming WebSocket messages
-ws.onmessage = function (event) {
-  let data = JSON.parse(event.data);
-  appendMessage(data, data.sender === agentName ? 'you' : 'other');
-};
+			const targetKey = `chat:history:${id}`;
+			const historyList = historyMap[targetKey];
+			sessionStorage.setItem("ID", id);
 
-// Handle WebSocket errors
-ws.onerror = function (error) {
-  console.error('WebSocket error:', error);
-};
+			if(Array.isArray(historyList)) {
 
-// Event listener to switch members and load their chat history
-memberList.addEventListener('click', function (event) {
-  if (event.target.tagName === 'LI') {
-      const selectedMemberName = event.target.textContent;
-      // const selectedMemberId = event.target.dataset.memberId;  // Assume each <li> has a data-memberId attribute
+				historyList.forEach((message) => {
+					const messageData = JSON.parse(message);//根據下面判斷邏輯而新增
+					const pTag = document.createElement('p');
+					pTag.textContent = JSON.parse(message).content;
+					
+					// //判斷誰是發出方及接收方
+					if (messageData.sender === "employ") {
+						pTag.classList.add('right-message'); // 發出的訊息
+					} else {
+						pTag.classList.add('left-message'); // 接收的訊息
+					}
 
-      fetchChatInfo(selectedmember_id);  // Load chat for the selected member
-  }
-});
-});
+					chatBox.appendChild(pTag);
+
+					
+				});
+				//滾動至底部
+				chatBox.scrollTop = chatBox.scrollHeight;
+			}
+		})
+  .catch(error => {
+	console.error('Error fetching member list:', error);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", async function() {
+	let memberList = document.getElementById('member-list');
+	let chatBox = document.getElementById('chat-box');
+	let messageInput = document.getElementById('message-input');
+	let sendButton = document.getElementById('send-button');
+	sendButton.onclick =  sendMessage;
+
+	// const agentName = "Agent123";  // Example agent name (current logged-in user)
+	let currentMember = null;  // Store the currently selected member for chatting
+
+	fetch('http://localhost:8081/TIA103G3_Servlet/api/chat/member', {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+		}
+	})
+	  .then(response => {
+		if (!response.ok) {
+		  throw new Error(`HTTP error! status: ${response.status}`);
+		}
+		return response.json(); // 將回應解析為 JSON
+	  })
+	  .then(chatIdList => {
+		// 找到列表的 <ul> 元素
+		const memberList = document.getElementById('member-list');
+		memberList.innerHTML = ""; // 清空之前的內容
+	
+		// 遍歷數據並創建 <li> 元素
+		chatIdList.forEach(chatId => {
+			const li = document.createElement('li');
+			li.textContent = chatId; // 將每個數據項設置為 <li> 的文本
+			li.classList.add('member-item');
+		  	li.addEventListener('click', () => {
+			fetchChatById(chatId);
+		  	});
+			memberList.appendChild(li); // 添加 <li> 到列表中
+		});
+
+	  	})
+
+	});
