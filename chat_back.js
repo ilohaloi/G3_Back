@@ -21,11 +21,23 @@ function displayMessage(message, messageType) {
 ws.onmessage = function (event) {
 	if (event.data) {
 		console.log("Received data:", event.data);
-		displayMessage(event.data, 'left-message');
+		const data = JSON.parse(event.data);
+		
+		if(data.id==="employ"){
+			
+			displayMessage(data.data,'right-message');
+		}
+		else if(data.id=="member"){
+			displayMessage(data.data,'left-message');
+		}
+		
+		
+
 	} else {
 		console.log("Received an empty message from the server.");
 	}
 };
+
 
 
 ws.onclose = function (event) {
@@ -70,6 +82,13 @@ const sendMessage = async function () {
 	}else{
 		console.log("weeeeeeeeeeeeew");
 	}
+
+	messageInput.addEventListener('keydown', function(event) {
+		if (event.key === 'Enter') {
+			event.preventDefault(); // 防止 Enter 鍵新增換行
+			sendMessage();
+		}
+	});
 }
 
 const fetchChatById = (id) => {
@@ -88,6 +107,8 @@ const fetchChatById = (id) => {
 			// 找到顯示聊天紀錄的 <div class="chat-box">
 			const chatBox = document.querySelector('.chat-box');
 			chatBox.innerHTML = ""; // 清空舊的聊天紀錄
+			//前端顯示ID
+			document.getElementById("member-id-display").textContent = id;
 
 			const targetKey = `chat:history:${id}`;
 			const historyList = historyMap[targetKey];
@@ -120,14 +141,22 @@ const fetchChatById = (id) => {
   });
 }
 
+
 document.addEventListener("DOMContentLoaded", async function() {
 	let memberList = document.getElementById('member-list');
 	let chatBox = document.getElementById('chat-box');
 	let messageInput = document.getElementById('message-input');
 	let sendButton = document.getElementById('send-button');
 	sendButton.onclick =  sendMessage;
-
-	// const agentName = "Agent123";  // Example agent name (current logged-in user)
+		
+	// 新增按下 Enter 鍵送出訊息的邏輯
+		messageInput.addEventListener('keydown', function(event) {
+			if (event.key === 'Enter') {
+				event.preventDefault(); // 防止 Enter 鍵新增換行
+				sendMessage();
+			}
+		});
+	
 	let currentMember = null;  // Store the currently selected member for chatting
 
 	fetch('http://localhost:8081/TIA103G3_Servlet/api/chat/member', {
@@ -143,6 +172,10 @@ document.addEventListener("DOMContentLoaded", async function() {
 		return response.json(); // 將回應解析為 JSON
 	  })
 	  .then(chatIdList => {
+
+	// 排序 chatIdList，依據最後訊息的時間戳降序排列
+	
+
 		// 找到列表的 <ul> 元素
 		const memberList = document.getElementById('member-list');
 		memberList.innerHTML = ""; // 清空之前的內容
@@ -150,14 +183,33 @@ document.addEventListener("DOMContentLoaded", async function() {
 		// 遍歷數據並創建 <li> 元素
 		chatIdList.forEach(chatId => {
 			const li = document.createElement('li');
-			li.textContent = chatId; // 將每個數據項設置為 <li> 的文本
+			li.textContent = chatId.name; // 將每個數據項設置為 <li> 的文本
 			li.classList.add('member-item');
 		  	li.addEventListener('click', () => {
-			fetchChatById(chatId);
+			fetchChatById(chatId.id);
 		  	});
+			
+			
+			
 			memberList.appendChild(li); // 添加 <li> 到列表中
 		});
 
 	  	})
 
 	});
+
+	//*********************************搜尋框功能:搜尋會員***************************************//
+	document.getElementById("search-input").addEventListener("input", function() {
+		const searchTerm = this.value.toLowerCase();
+		const members = document.querySelectorAll("#member-list li");
+		
+		members.forEach(member => {
+			const name = member.textContent.toLowerCase();
+			if (name.includes(searchTerm)) {
+				member.style.display = ""; // 顯示
+			} else {
+				member.style.display = "none"; // 隱藏
+			}
+		});
+	});
+
