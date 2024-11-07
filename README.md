@@ -1,6 +1,7 @@
 # 整合進度
 
-## CSS整合
+## CSS 整合
+
 - [ ] chat.html
 - [x] coupon.html
 - [x] emp.html
@@ -18,6 +19,7 @@
 - [x] sideBar.html
 
 ## 功能測試
+
 - [ ] chat.html
 - [ ] coupon.html
 - [ ] emp.html

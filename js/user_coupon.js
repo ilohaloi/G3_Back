@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
 
         const queryData = {
-            memberId: document.getElementById('memb_id').value,
+            membId: document.getElementById('memb_id').value,
             couponId: document.getElementById('coup_id').value,
             issueDateStart: document.getElementById('issue_date_start').value,
             issueDateEnd: document.getElementById('issue_date_end').value,

@@ -357,9 +357,20 @@
                 async get() {
                     try {
                         this.schedule = await getSchedule();
+                        console.log(this.schedule);
+
                     } catch (error) {
                         console.error('Failed to get products:', error); // 捕获并处理错误
                     }
+                }
+            },
+            async mounted() {
+                try {
+                    this.schedule = await getSchedule();
+                    console.log(this.schedule);
+
+                } catch (error) {
+                    console.error('Failed to get products:', error); // 捕获并处理错误
                 }
             },
             watch: {

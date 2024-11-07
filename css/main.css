@@ -62,6 +62,7 @@ table {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     overflow: hidden;
+    table-layout: fixed;
 }
 
 thead {
@@ -74,6 +75,7 @@ td {
     padding: 15px;
     text-align: left;
     border-bottom: 1px solid #ddd;
+    width: 100%;
 }
 
 th {
@@ -91,7 +93,7 @@ tbody tr:hover {
 }
 
 form {
-    max-width: 400px;
+    max-width: 100%;
 }
 
 
@@ -107,6 +109,10 @@ form {
     cursor: pointer;
     width: 100%;
 }
+.btn-sl{
+    padding:6px;
+}
+
 
 .form-btn:hover{
     background-color: #4c51bf;
@@ -123,9 +129,10 @@ form {
 }
 
 .form-label{
-    font-weight: 500;
+    font-weight: 100%;
     color: #333;
     position: relative;
+    width: 100%;
 }
 
 .form-select {
