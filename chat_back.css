@@ -1,3 +1,21 @@
+/* 嵌入字體 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
+
+div {
+    font-family: 'Noto Sans TC', sans-serif;
+}
+
+input[type="text"] {
+    font-family: 'Noto Sans TC', sans-serif;
+}
+
+p {
+    font-family: 'Noto Sans TC', sans-serif;
+}
+
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+}
 
 .main-container {          /* 父容器 */
   display: flex;
@@ -7,10 +25,16 @@
 
 
 /* ============================================會員LIST區塊====================== */
+.member-container {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  
+}
 .member-selection {
   width: 30%;
   background-color: #f5f5f5;
-  padding: 15px;
+  padding: 0px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   position: relative;
@@ -27,6 +51,7 @@
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ddd;
+  box-sizing: border-box;
 }
 
 #search-input:focus{
@@ -42,23 +67,49 @@
   /* background-color: #ff5252; */
 }
 /* test */
-.member-item {
+.member-item:nth-child(odd) {
   width: 100%;
   padding: 15px;
-  background-color: #f5f5f5;
+  background-color: #ffffff;
   cursor: pointer;
   box-sizing: border-box;
-  margin-bottom: 5px; /* 增加項目之間的間距 */
-  border-radius: 5px; /* 圓角讓項目更有層次感 */
+  /* margin-bottom: 5px; 
+  border-radius: 5px;  */
+  border-bottom: black ;
 }
-
-.member-item:hover {
+.member-item:nth-child(odd) :hover {
   background-color: #ff5252; /* 懸停時的背景色 */
   color: #ffffff; /* 懸停時的文字顏色 */
 }
+.member-item:nth-child(even) {
+  width: 100%;
+  padding: 15px;
+  background-color:  #f5f5f5 ;
+  cursor: pointer;
+  box-sizing: border-box;
+  /* margin-bottom: 5px; 
+  border-radius: 5px;  */
+}
+
+.member-item {
+  cursor: pointer;
+}
+.member-item:active,
+.member-item.selected {
+  background-color: #d3e2ff; /* 你想要的顏色 */
+}
+/* .member-item:nth-child(even):hover {
+  color: #ffffff; /* 懸停時的文字顏色 */
+
 
 
 /* ==========================================聊天室區================================================== */
+
+/* 「"聊天室"本人」 */
+.m-0 {
+  margin: 0;
+  text-align: center;
+}
 .chat-container {
 flex-grow: 1;
 background-color: #f5f5f5;
@@ -94,20 +145,26 @@ overflow-wrap: break-word; /* 確保單詞在換行時不會溢出 */
 
 /* 發送者訊息樣式 */
 .right-message {
-background-color: #6c757d; /* 背景顏色 */
-color: #ffffff; /* 確保文字顏色對比清晰 */
-align-self: flex-end; /* 右對齊 */
-text-align: right; /* 文字靠右 */
-border-radius: 20px; /* 調整圓角樣式 */
+  background-color: #6c757d; /* 背景顏色 */
+  color: #ffffff; /* 文字顏色 */
+  align-self: flex-end; /* 右對齊 */
+  text-align: right; /* 文字靠右 */
+  border-radius: 20px; /* 調整圓角樣式 */
+  padding: 10px 15px; /* 內邊距 */
+  margin-bottom: 8px; /* 下方間距 */
+  max-width: 70%; /* 訊息最大寬度，避免氣泡過長 */
 }
 
 /* 接收者訊息樣式 */
 .left-message {
-background-color: #dcedc8; /* 背景顏色 */
-color: #333333; /* 文字顏色，以提高可讀性 */
-align-self: flex-start; /* 左對齊 */
-text-align: left; /* 文字靠左 */
-border-radius: 20px; /* 調整圓角樣式 */
+  background-color: #dcedc8; /* 背景顏色 */
+  color: #333333; /* 文字顏色 */
+  align-self: flex-start; /* 左對齊 */
+  text-align: left; /* 文字靠左 */
+  border-radius: 20px; /* 調整圓角樣式 */
+  padding: 10px 15px; /* 內邊距，讓文字不貼近邊緣 */
+  margin-bottom: 8px; /* 下方間距，讓訊息間保持距離 */
+  max-width: 70%; /* 訊息最大寬度，讓氣泡不會太長 */
 }
 
 
@@ -152,4 +209,6 @@ background-color: white;
   width: 20px;
   height: 20px;
 }
+
+
 
