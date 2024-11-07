@@ -29,7 +29,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
     <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/user_coupon.css">
+
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -45,21 +45,21 @@
             <h1>已發放之優惠券</h1>
 
             <!-- 查詢條件表單 -->
-            <form id="searchForm">
-                <label>會員 ID: <input type="text" id="memb_id"></label>
-                <label>優惠券 ID: <input type="text" id="coup_id"></label>
-                <label>開始日期: <input type="date" id="issue_date_start"></label>
-                <label>結束日期: <input type="date" id="issue_date_end"></label>
-                <label>使用狀態:
-                    <select id="coup_is_used">
+            <form id="searchForm" class="form">
+                <label class="form-label">會員 ID: <input type="text" id="memb_id" class="form-input"></label>
+                <label class="form-label">優惠券 ID: <input type="text" id="coup_id" class="form-input"></label>
+                <label class="form-label">開始日期: <input type="date" id="issue_date_start" class="form-input"></label>
+                <label class="form-label">結束日期: <input type="date" id="issue_date_end" class="form-input"></label>
+                <label class="form-label">使用狀態:
+                    <select id="coup_is_used" class="form-select form-select--wide">
                         <option value="">全部</option>
                         <option value="1">已使用</option>
                         <option value="0">未使用</option>
                     </select>
                 </label>
-                <label class="last">未輸入查詢條件 即顯示全部</label>
-                <button type="submit">查詢</button>
-                <button type="reset">清除條件</button>
+
+                <button class="form-btn" type="submit">查詢</button>
+                <button class="form-btn" type="reset">清除條件</button>
             </form>
 
             <!-- 顯示筆數的下拉選單 -->

@@ -154,7 +154,7 @@ form {
 
 .form-select--wide {
     width: 208%; /* 设置更宽的宽度 */
-    max-width: 578px; /* 可选：设置最大宽度以防止过长 */
+    max-width: 560px; /* 可选：设置最大宽度以防止过长 */
 }
 
 
