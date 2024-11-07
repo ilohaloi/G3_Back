@@ -21,7 +21,7 @@ async function getProducts() {
         console.log(error);
     }
 };
-export async function getProduct(id) {
+async function getProduct(id) {
     try {
         const response = await fetch(`http://localhost:8081/TIA103G3_Servlet/prodget?action=getProd&identity=${id}`, {
             method: 'GET',
@@ -62,7 +62,7 @@ async function insertProd(prod) {
     }
     
 }
-export async function updateProd(prod) { 
+async function updateProd(prod) { 
     try {
         const response = await fetch('http://localhost:8081/TIA103G3_Servlet/produpdate', {
         method: 'post',
@@ -94,7 +94,7 @@ async function getOrders() {
         console.log(error);
     } 
 } 
-export async function getOrderDetail(orderId) { 
+export　async function getOrderDetail(orderId) { 
     try {
         const response = await fetch(`http://localhost:8081/TIA103G3_Servlet/getorder?action=getDetail&identity=${orderId}`,{
             method: 'GET',
@@ -125,7 +125,7 @@ export const prod_view = {
                     </select>
                 </label>
 
-                <label class="form-label ">商品類別: 
+                <label class="form-label">商品類別: 
                     <select class="form-select form-select--wide">
                     <option>請選擇</option>
                     <option>小於</option>
@@ -410,25 +410,25 @@ export const prod_upload = {
 }
 export const orders_view = {
     template: `
-        <div class="row">
-            <div class="col-12">
+        
                 <h1>訂單列表</h1>
                 <form class="form">
-                <label class="form-label">訂單ID:  <input type="text" class="form-input" v-model="search.orIdValue"></label>
-                <label class="form-label">會員ID : <input type="text" class="form-input" v-model="search.membIdValue"></label>
-                <label class="form-label">訂單狀態:
-                    <select class="form-select" v-model="search.statusValue">
-                    <option value="" disbale>請選擇</option>
-                    <option value="Pending">未付款</option>
-                    <option>已付款</option>
-                    <option>待出貨</option>
-                    <option>以出貨</option>
-                    </select>
-                </label>
-                <label class="form-label">訂單時間 : <input type="date" class="form-input" v-model="this.search.value[4]"></label>
-                
-                <button type="button" class="form-btn" @click="quertSerach">查詢</button>
-                <button type="reset" class="form-btn" @click="clearQuereyValue">清除條件</button>
+                    <label class="form-label">訂單ID:  <input type="text" class="form-input" v-model="search.orIdValue"></label>
+                    <label class="form-label">會員ID : <input type="text" class="form-input" v-model="search.membIdValue"></label>
+                    
+                    <label class="form-label">訂單狀態:
+                        <select class="form-select form-select--wide" v-model="search.statusValue">
+                        <option value="" disbale>請選擇</option>
+                        <option value="未付款">未付款</option>
+                        <option >已付款</option>
+                        <option>待出貨</option>
+                        <option>以出貨</option>
+                        </select>
+                    </label>
+
+
+                    <button type="button" class="form-btn" @click="quertSerach">查詢</button>
+                    <button type="reset" class="form-btn" @click="clearQuereyValue">清除條件</button>
                 </form>
                 <table class="table table-bordered">
                     <thead>
@@ -477,8 +477,7 @@ export const orders_view = {
                         </ul>
                     </nav>
                 </div>
-            </div>
-        </div>
+       
     `,
     data() {
         return {
@@ -561,6 +560,8 @@ export const orders_view = {
                 });
                 if (response.status === 200) {
                     this.order = await response.json();
+                    console.log(this.order);
+                    
                 }
 
             } catch (error) {
