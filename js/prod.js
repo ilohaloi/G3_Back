@@ -10,12 +10,9 @@ function handleFileUpload(event,prod){
 }
 async function getProducts() {
     try {
-        const response = await fetch('http://localhost:8081/TIA103G3_Servlet/prodget', {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({action:'getAllprod'})
+        const response = await fetch(`http://localhost:8081/TIA103G3_Servlet/prodget?action=getAllprod`, {
+            method: 'GET',
+            mode:'cors'
         })
         if (response.status === 200) {
             return await response.json();
@@ -24,14 +21,11 @@ async function getProducts() {
         console.log(error);
     }
 };
-async function getProduct(id) {
+export async function getProduct(id) {
     try {
-        const response = await fetch('http://localhost:8081/TIA103G3_Servlet/prodget', {
-        method: 'post',
-        headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({action:'getProd',identity:id})
+        const response = await fetch(`http://localhost:8081/TIA103G3_Servlet/prodget?action=getProd&identity=${id}`, {
+            method: 'GET',
+            mode:'cors'
         })
         if (response.status === 200) {
             return await response.json();
@@ -68,7 +62,7 @@ async function insertProd(prod) {
     }
     
 }
-async function updateProd(prod) { 
+export async function updateProd(prod) { 
     try {
         const response = await fetch('http://localhost:8081/TIA103G3_Servlet/produpdate', {
         method: 'post',
@@ -87,14 +81,12 @@ async function updateProd(prod) {
 
 async function getOrders() {
     try {
-        const response = await fetch('http://localhost:8081/TIA103G3_Servlet/getorder',{
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({action:'getOrders'})
+        const response = await fetch('http://localhost:8081/TIA103G3_Servlet/getorder?action=getOrders',{
+            method: 'GET',
+            mode:"cors"
         })
-        if (response.status === 200) {    
+        if (response.status === 200) {
+
             return await response.json();
         }
 
@@ -102,14 +94,11 @@ async function getOrders() {
         console.log(error);
     } 
 } 
-async function getOrderDetail(orderId) { 
+export async function getOrderDetail(orderId) { 
     try {
-        const response = await fetch('http://localhost:8081/TIA103G3_Servlet/getorder',{
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({action:'getDetail',identity:orderId})
+        const response = await fetch(`http://localhost:8081/TIA103G3_Servlet/getorder?action=getDetail&identity=${orderId}`,{
+            method: 'GET',
+            mode:'cors'
         })
         if (response.status === 200) {
             return await response.json();
@@ -119,30 +108,23 @@ async function getOrderDetail(orderId) {
         console.log(error);
     } 
 }
+
 export const prod_view = {
     template: `
         <div v-if="isAuthenticated">
             <h1>商品列表</h1>
             <form class="form">
-                <label class="form-label">商品  ID:  <input type="text" class="form-input"></label>
-                <label class="form-label">商品名稱 : <input type="text" class="form-input"></label>
-                <label class="form-label">庫存數量: <input type="number" class="form-input"></label>
+                <label class="form-label">商品  ID:  <input type="text" class="form-input" v-model="search.idValue"></label>
+                <label class="form-label">商品名稱 : <input type="text" class="form-input" v-model="search.nameValue"></label>
+                <label class="form-label">庫存數量: <input type="text" class="form-input" v-model="search.stockValue"></label>
                 <label class="form-label">條件:
-                    <select class="form-select">
+                    <select class="form-select" v-model="search.stockRange">
                     <option>請選擇</option>
-                    <option>小於</option>
-                    <option>大於</option>
+                    <option value="">小於</option>
+                    <option value="">大於</option>
                     </select>
                 </label>
 
-                <label class="form-label">價格: <input type="number" class="form-input"></label>
-                <label class="form-label">條件:
-                    <select class="form-select" data-placeholder="請選擇">
-                    <option>小於</option>
-                    <option>大於</option>
-                    </select>
-                </label>
-                
                 <label class="form-label ">商品類別: 
                     <select class="form-select form-select--wide">
                     <option>請選擇</option>
@@ -151,9 +133,9 @@ export const prod_view = {
                     </select>
                 </label>
 
-                <button type="button" class="form-btn">查詢</button>
+                <button type="button" class="form-btn" @click="querySearch">查詢</button>
                 <button type="reset" class="form-btn">清除條件</button>
-                <button type="button" class="form-btn">新增商品</button>
+                
             </form>
             <table>
                 <thead>
@@ -174,9 +156,9 @@ export const prod_view = {
                         <td>{{ item.stock }}</td>
                         <td>{{ item.price }}</td>
                         <td>
-                            <div class="btn-group">
-                                <button class="btn btn-block bg-gradient-info" @click="openWindow(item)">修改</button>
-                            </div>
+                            
+                                <button class="form-btn btn-sl" @click="openWindow(item)">修改</button>
+                            
                         </td>
                     </tr>
                 </tbody>
@@ -203,7 +185,23 @@ export const prod_view = {
             prod: [],
             currentPage: 1,
             pageSize: 10,
-            isAuthenticated: true
+            isAuthenticated: true,
+
+            search: {
+                idQuery: "id",
+                idValue: "",
+                nameQuery: "name",
+                nameValue: "",
+                stockQuery: "stock",
+                stockValue: "",
+                stockRange:"",
+                categoryQuery: "category",
+                categoryValue:"",
+                query: [],
+                value: []
+            }
+            
+            
         };
     },
     computed: {
@@ -243,6 +241,45 @@ export const prod_view = {
                 'width=600,height=600,left=200,top=100'
             );
             console.log(prod);
+        },
+        async querySearch() {
+            this.search.query = [];
+            this.search.value = [];
+
+            if (this.search.idValue !== "") {
+                this.search.query.push(this.search.idQuery);
+                this.search.value.push(this.search.idValue);
+            }
+            if (this.search.nameValue !== "") {
+                this.search.query.push(this.search.nameQuery);
+                this.search.value.push(this.search.nameValue);
+            }
+            if (this.search.stockValue !== "") {
+                this.search.query.push(this.search.stockQuery);
+                this.search.value.push(this.search.stockValue);
+            }
+            if (this.search.categoryValue !== "") {
+                this.search.query.push(this.search.categoryQuery);
+                this.search.value.push(this.search.categoryValue);
+            }
+            try {
+                const response = await fetch('http://localhost:8081/TIA103G3_Servlet/prodQuery', {
+                    method: "post",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ query: this.search.query, value: this.search.value })
+                });
+                if (response.status === 200) {
+                    this.prod = await response.json();
+                    console.log(this.prod);
+                    
+                }
+            } catch (error) {
+                console.log(error);
+                            
+            }
+    
         }
     },
     async mounted() {
@@ -308,7 +345,7 @@ export const prod_upload = {
             </div>
             <div class="card-footer">
                 <div class="d-flex justify-content-between align-items-center">
-                    <button type="submit" class="btn btn-success" @submit.prevent="submitForm">確認</button>                       
+                    <button type="submit" class="btn btn-success" @click="submitForm">確認</button>                       
                 </div>
             </div>
         </div>
@@ -323,7 +360,8 @@ export const prod_upload = {
                 imges: []
             },
             uploading: false,
-            editor:null
+            editor: null,
+            
         }
     },
     methods: {
@@ -339,7 +377,8 @@ export const prod_upload = {
         },
         async submitForm(event) {
             event.preventDefault();
-            this.message.str = "";
+            console.log(123);
+        
             this.uploading = true;
             try {
                 const resp = await insertProd(this.prod);
@@ -373,22 +412,23 @@ export const orders_view = {
     template: `
         <div class="row">
             <div class="col-12">
-                <h1>商品列表</h1>
+                <h1>訂單列表</h1>
                 <form class="form">
-                <label class="form-label">訂單ID:  <input type="text" class="form-input"></label>
-                <label class="form-label">會員ID : <input type="text" class="form-input"></label>
+                <label class="form-label">訂單ID:  <input type="text" class="form-input" v-model="search.orIdValue"></label>
+                <label class="form-label">會員ID : <input type="text" class="form-input" v-model="search.membIdValue"></label>
                 <label class="form-label">訂單狀態:
-                    <select class="form-select">
-                    <option>未付款</option>
+                    <select class="form-select" v-model="search.statusValue">
+                    <option value="" disbale>請選擇</option>
+                    <option value="Pending">未付款</option>
                     <option>已付款</option>
                     <option>待出貨</option>
                     <option>以出貨</option>
                     </select>
                 </label>
-                <label class="form-label">訂單時間 : <input type="date" class="form-input"></label>
+                <label class="form-label">訂單時間 : <input type="date" class="form-input" v-model="this.search.value[4]"></label>
                 
-                <button type="button" class="form-btn">查詢</button>
-                <button type="reset" class="form-btn">清除條件</button>
+                <button type="button" class="form-btn" @click="quertSerach">查詢</button>
+                <button type="reset" class="form-btn" @click="clearQuereyValue">清除條件</button>
                 </form>
                 <table class="table table-bordered">
                     <thead>
@@ -404,7 +444,7 @@ export const orders_view = {
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in paginatedOrder" :key="index">
-                            <td>{{ item.orid }}</td>
+                            <td>{{ item.orId }}</td>
                             <td>{{ item.membId }}</td>
                             <td>{{ item.status }}</td>
                             <td>{{ item.time }}</td>
@@ -444,7 +484,21 @@ export const orders_view = {
         return {
             order: [],
             currentPage: 1,
-            pageSize: 10
+            pageSize: 10,
+
+
+            search: {
+                orIdQuery: "orId",
+                orIdValue: "",
+                membIdQuery: "membId",
+                membIdValue: "",
+                statusQuery: "status",
+                statusValue:"",
+                timeQuery: "time",
+                timeValue:"",
+                query: [],
+                value: []
+            }
         };
     },
     computed: {
@@ -457,7 +511,7 @@ export const orders_view = {
             return Math.ceil(this.order.length / this.pageSize);
         }
     },
-    methods:{
+    methods: {
         nextPage() {
             if (this.currentPage < this.totalPages) {
                 this.currentPage++;
@@ -472,17 +526,69 @@ export const orders_view = {
             this.currentPage = page;
         },
         openWindow(order) {
-            const params = `orid=${order.orid}&membid=${order.membId} `;
+            const params = `orid=${order.orId}&membid=${order.membId} `;
             window.open(
                 `../component/prod_OrderDetail.html?${params}`,
                 '明細',
                 'width=600,height=600,left=200,top=100'
             );
             console.log(prod);
+        },
+        async quertSerach() {
+            this.search.query = [];
+            this.search.value = [];
+            if (this.search.orIdValue !== "") {
+                this.search.query.push(this.search.orIdQuery);
+                this.search.value.push(this.search.orIdValue);
+            }
+            if (this.search.membIdValue !== "") {
+                this.search.query.push(this.search.membIdQuery);
+                this.search.value.push(this.search.membIdValue);
+            }
+            if (this.search.statusValue !== "") {
+                this.search.query.push(this.search.statusQuery);
+                this.search.value.push(this.search.statusValue);
+            }
+            
+            
+            try {
+                const response = await fetch('http://localhost:8081/TIA103G3_Servlet/orderQuery', {
+                    method: "post",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ query: this.search.query, value: this.search.value })
+                });
+                if (response.status === 200) {
+                    this.order = await response.json();
+                }
+
+            } catch (error) {
+                
+            }
+
+        
+        },
+        async clearQuereyValue() {
+            this.search.orIdValue = "";
+            this.search.membIdValue = "";
+            this.search.statusValue = "";
+            this.order = await getOrders();
         }
     },
     async mounted() {
         this.order = await getOrders();
         console.log(this.order);
-    }
+        
+    },
+    // watch: {
+    //     search: {
+    //         handler(newValue, oldValue) {
+    //             if (oldValue.orIdValue === "")
+    //                 console.log(123);
+
+    //         },
+    //     deep: true
+    //     }
+    // },
 };
