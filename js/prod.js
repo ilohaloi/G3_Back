@@ -108,16 +108,9 @@ export　async function getOrderDetail(orderId) {
         console.log(error);
     } 
 }
-
-export const prod_view = {
-    template: `
-        <div v-if="isAuthenticated">
-            <h1>商品列表</h1>
-            <form class="form">
-                <label class="form-label">商品  ID:  <input type="text" class="form-input" v-model="search.idValue"></label>
-                <label class="form-label">商品名稱 : <input type="text" class="form-input" v-model="search.nameValue"></label>
-                <label class="form-label">庫存數量: <input type="text" class="form-input" v-model="search.stockValue"></label>
-                <label class="form-label">條件:
+/**
+ *  <label class="form-label">庫存數量: <input type="text" class="form-input" v-model="search.stockValue"></label>
+ * <label class="form-label">條件:
                     <select class="form-select" v-model="search.stockRange">
                     <option>請選擇</option>
                     <option value="">小於</option>
@@ -133,8 +126,19 @@ export const prod_view = {
                     </select>
                 </label>
 
+ * 
+ */ 
+export const prod_view = {
+    template: `
+        <div v-if="isAuthenticated">
+            <h1>商品列表</h1>
+            <form class="form">
+                <label class="form-label">商品  ID:  <input type="text" class="form-input" v-model="search.idValue"></label>
+                <label class="form-label">商品名稱 : <input type="text" class="form-input" v-model="search.nameValue"></label>
+               
+                
                 <button type="button" class="form-btn" @click="querySearch">查詢</button>
-                <button type="reset" class="form-btn">清除條件</button>
+                <button type="reset" class="form-btn" @click="cleqrQuery">清除條件</button>
                 
             </form>
             <table>
@@ -279,7 +283,15 @@ export const prod_view = {
                 console.log(error);
                             
             }
-    
+        },
+        async cleqrQuery() {
+            try {
+            const products = await getProducts();
+            console.log(products);
+            this.prod = products;
+        } catch (error) {
+            console.error('Failed to get products:', error); // 捕获并处理错误
+        }
         }
     },
     async mounted() {
