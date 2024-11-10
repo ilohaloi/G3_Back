@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch(url);
             if (response.ok) {
                 couponData = await response.json();
+                console.log(couponData);
+        
                 renderCoupons(couponData); // 傳遞數據到渲染函數
             } else {
                 console.error('Error loading coupons:', response.statusText);
