@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vup 新員工</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/jqvmap/jqvmap.min.css">
+    <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
+    <script src="https://kit.fontawesome.com/a33d8d8a91.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="card card-dark">
+            <div v-if="inProcess" class="overlay dark">
+                <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+            </div>
+            <div class="card-header">
+                <h3 class="card-title">創建帳號</h3>
+            </div>
+            <form @submit.prevent="submitForm">
+                <div class="form-group">
+                    <label for="name" style="margin-top :10px ">姓名</label>
+                    <input type="text" class="form-control" id="name" v-model="emp.name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="account" class="form-label">帳號</label>
+                    <input type="text" id="stock" v-model="emp.account" class="form-control" max=24 required />
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">密碼</label>
+                    <input type="password" id="password" v-model="emp.password" class="form-control" required />
+                </div>
+
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <!-- 左侧按钮 -->
+                        <button type="submit" class="btn btn-success">確認</button>
+                        <!-- 右侧消息 -->
+                        <h3 :style="{ color: message.color }">{{ message.str }}</h3>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        import { getAesKey } from '../js/emp.js'
+        import { encryptionAes } from '../js/emp.js'
+        import { updateEmp } from '../js/emp.js'
+        const app = Vue.createApp({
+            data() {
+                return {
+                    emp: {
+                        id: 0,
+                        name: "",
+                        account: "",
+                        password: "",
+                    },
+                    message: {
+                        str: "",
+                        color: "red"
+                    },
+                    inProcess: false
+                }
+            },
+            methods: {
+                async submitForm(event) {
+                    event.preventDefault();
+                    this.emp.name.trim();
+                    this.emp.account.trim();
+                    this.emp.password.trim();
+                    this.inProcess = true;
+                    await getAesKey();
+                    const aesKey = sessionStorage.getItem('key');
+                    const data = encryptionAes(JSON.stringify(this.emp), aesKey);
+                    try {
+                        const info = await updateEmp(data)
+                        this.message.str = info.info;
+                        this.message.color = info.color;
+                        if (this.message.str.length != 0)
+                            this.inProcess = false;
+                    } catch (error) {
+                        console.error('提交出错:', error);
+                        this.inProcess = false;
+                        message.str = "請稍後再嘗試"
+                    }
+                }
+            },
+        })
+        app.mount('#app')
+    </script>
+
+    <script src="../plugins/jquery/jquery.min.js"></script>
+    <script src="../plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../plugins/chart.js/Chart.min.js"></script>
+    <script src="../plugins/sparklines/sparkline.js"></script>
+    <script src="../plugins/jqvmap/jquery.vmap.min.js"></script>
+    <script src="../plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+    <script src="../plugins/jquery-knob/jquery.knob.min.js"></script>
+    <script src="../plugins/moment/moment.min.js"></script>
+    <script src="../plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="../plugins/summernote/summernote-bs4.min.js"></script>
+    <script src="../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <script src="../dist/js/adminlte.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Tourm - Travel & Tour Booking Agency HTML Template - Shops</title>
+    <meta name="author" content="Tourm">
+    <meta name="description" content="Tourm - Travel & Tour Booking Agency HTML Template ">
+    <meta name="keywords" content="Tourm - Travel & Tour Booking Agency HTML Template ">
+    <meta name="robots" content="INDEX,FOLLOW">
+
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Favicons - Place favicon.ico in the root directory -->
+
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="assets/img/favicons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://unpkg.com/vue-travelr@4"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Manrope:wght@200..800&family=Montez&display=swap"
+        rel="stylesheet">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="../assets/css/fontawesome.min.css">
+
+    <link rel="stylesheet" href="../assets/css/magnific-popup.min.css">
+
+    <!-- Swiper css -->
+    <link rel="stylesheet" href="../assets/css/swiper-bundle.min.css">
+    <!-- Theme Custom CSS -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+
+
+</head>
+
+<body>
+    <div id="app">
+        <section class="product-details">
+            <div class="container mb-5">
+                <div class="h1 text-center mt-4">探索:{{travel.name}}</div>
+                <div v-html="travel.text"></div>
+            </div>
+        </section>
+
+    </div>
+    <script type="module">
+        const app = Vue.createApp({
+            data() {
+                return {
+                    travel: {
+                        name: "",
+                        text: "",
+                        price: 0,
+                        days: 0
+                    }
+                }
+            },
+            method: {
+
+            },
+            mounted() {
+                const urlParams = new URLSearchParams(window.location.search);
+                this.travel.name = urlParams.get("name");
+                this.travel.price = urlParams.get("price");
+                this.travel.days = urlParams.get("days");
+                this.travel.text = decodeURIComponent(urlParams.get("text"));
+                console.log(this.travel);
+
+            }
+        })
+        app.mount("#app")
+    </script>
+</body>
+
+</html>

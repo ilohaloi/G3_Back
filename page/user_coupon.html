@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
-    <link rel="stylesheet" href="../ourFile/coupon/uc.css">
+
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
@@ -28,7 +28,7 @@
     <script src="https://kit.fontawesome.com/a33d8d8a91.js" crossorigin="anonymous"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
-
+    <link rel="stylesheet" href="../css/main.css">
 
 </head>
 
@@ -37,7 +37,7 @@
         import { sideBar } from '../js/module.js';
         await sideBar();
     </script>
-    
+
     <div id="wrapper"></div>
 
     <div class="content">
@@ -45,26 +45,26 @@
             <h1>已發放之優惠券</h1>
 
             <!-- 查詢條件表單 -->
-            <form id="searchForm">
-                <label>會員 ID: <input type="text" id="memb_id"></label>
-                <label>優惠券 ID: <input type="text" id="coup_id"></label>
-                <label>開始日期: <input type="date" id="issue_date_start"></label>
-                <label>結束日期: <input type="date" id="issue_date_end"></label>
-                <label>使用狀態:
-                    <select id="coup_is_used">
+            <form id="searchForm" class="form">
+                <label class="form-label">會員 ID: <input type="text" id="memb_id" class="form-input"></label>
+                <label class="form-label">優惠券 ID: <input type="text" id="coup_id" class="form-input"></label>
+                <label class="form-label">開始日期: <input type="date" id="issue_date_start" class="form-input"></label>
+                <label class="form-label">結束日期: <input type="date" id="issue_date_end" class="form-input"></label>
+                <label class="form-label">使用狀態:
+                    <select id="coup_is_used" class="form-select form-select--wide">
                         <option value="">全部</option>
                         <option value="1">已使用</option>
                         <option value="0">未使用</option>
                     </select>
                 </label>
-                <label>未輸入查詢條件 即顯示全部</label>
-                <button type="submit">查詢</button>
-                <button type="reset">清除條件</button>
+
+                <button class="form-btn" type="submit">查詢</button>
+                <button class="form-btn" type="reset">清除條件</button>
             </form>
 
             <!-- 顯示筆數的下拉選單 -->
             <label for="displayCount">顯示筆數:</label>
-            <select id="displayCount">
+            <select id="displayCount" class="form-select">
                 <option value="20">20</option>
                 <option value="50">50</option>
                 <option value="100">100</option>
@@ -109,7 +109,7 @@
     <script src="../dist/js/adminlte.min.js"></script>
 
     <!-- 新增 -->
-    <script src="../ourFile/coupon/uc.js"></script>
+    <script src="../js/user_coupon.js"></script>
 
 </body>
 

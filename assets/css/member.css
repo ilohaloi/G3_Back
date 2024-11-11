@@ -1,0 +1,418 @@
+/*  Breadcumb 麵包屑 */
+.menuName{
+    font-size: 20px;
+}
+.memTopMenuSpace {
+    /* background-color: #343a40; */
+}
+
+.memTopMenuWrap {
+    display: flex;
+    justify-content: center;
+}
+
+.memTopMenu {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.memTopMenu li {
+    margin: 0 15px;
+}
+
+.memTopMenu a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.memTopMenu a:hover,
+.memTopMenu .active a {
+    background-color: #495057;
+    border-radius: 5px;
+}
+
+
+
+
+
+/* --========= Team Area 團隊區 ============-*/
+/* 外層包裝 */
+.boardS-wrap {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #f7f9fa;
+    gap: 20px;
+  }
+  
+  /* 左邊空白區域，佔比0.5 */
+  .boardS-wrap__leftSpace {
+    flex: 0.5;  /* 左邊空白區域 */
+  }
+  
+  /* 左邊 會員卡區域比例 1 */
+  .boardS-wrap__left {
+    flex: 1;  /* 左邊會員卡區域設為1 */
+    max-width: none;  /* 取消最大寬度限制 */
+  }
+  
+  .board.card001 {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 15px;
+  }
+  
+  .cardWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+  .card {
+    width: 100%;
+    height: 130px;
+    background-image: url('https://example.com/your-image.png'); /* 替換為實際的背景圖片 */
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+  }
+  
+  .content {
+    padding: 10px 0;
+  }
+  
+  .content__item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 14px;
+  }
+  
+  .content__item--left {
+    color: #666;
+  }
+  
+  .content__item--right {
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .orangeNum {
+    color: #ff8c00;
+    font-size: 20px;
+  }
+  
+  /* 會員連結區域 */
+  .memberLink {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+  }
+  
+  .memberLink__info {
+    font-size: 12px;
+    color: #0c9;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .memberLink__info:hover {
+    text-decoration: underline;
+  }
+  
+  .birthdayGift {
+    color: #ff5a5f;
+  }
+  
+  /* 右邊區域比例 3 */
+  .boardS-wrap__right {
+    flex: 3;  /* 右邊區域設為3 */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* 訂單查詢 */
+  #myEmoney {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    flex: 1;
+  }
+  
+  .boardTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .boardTitle--bold {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .tbInfoLink, .rightLink {
+    font-size: 14px;
+    color: #0c9;
+    cursor: pointer;
+  }
+  
+  .tbInfoLink:hover, .rightLink:hover {
+    text-decoration: underline;
+  }
+  
+  /* 下方折扣碼和行程收藏佈局 */
+  .boardS-wrap__right__bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  #discount, #recentWishlist {
+    flex: 1;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* 右邊空白區域，佔比0.5 */
+  .boardS-wrap__rightSpace {
+    flex: 0.5;  /* 右邊空白區域 */
+  }
+  
+  /* 載入動畫 */
+  .loadingPic {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto;
+    border-radius: 50%;
+    border: 5px solid #e0e0e0;
+    border-top-color: #0c9;
+    animation: spin 1s infinite linear;
+  }
+  
+  @keyframes spin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+<<<<<<< HEAD
+
+=======
+>>>>>>> main
+/* --========= 折扣碼 ============-*/
+
+/* 整體樣式 */
+cupon {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* 容器樣式 */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.bg-white {
+  background-color: #ffffff;
+}
+
+.rounded-soft {
+  border-radius: 12px;
+}
+
+.h-[175px] {
+  height: 175px;
+}
+
+.w-[825px] {
+  width: 825px;
+}
+
+.pt-5 {
+  padding-top: 20px;
+}
+
+.mb-[15px] {
+  margin-bottom: 15px;
+}
+
+/* 標題和文字樣式 */
+.font-bold {
+  font-weight: bold;
+}
+
+.text-2xl {
+  font-size: 24px;
+}
+
+.text-gray-900 {
+  color: #1a1a1a;
+}
+
+.text-sm {
+  font-size: 14px;
+}
+
+.text-gray {
+  color: #888888;
+}
+
+.pl-[30px] {
+  padding-left: 30px;
+}
+
+.pr-6 {
+  padding-right: 24px;
+}
+
+.mb-1.5 {
+  margin-bottom: 6px;
+}
+
+/* 按鈕和輸入框樣式 */
+.ez-input {
+  width: 500px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.ez-btn {
+  padding: 10px 20px;
+  background-color: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.ez-btn:hover {
+  background-color: #16a34a;
+}
+
+.primary-lg {
+  font-size: 16px;
+  min-width: 100px;
+}
+
+/* 分隔線 */
+.border-t-2 {
+  border-top: 2px solid #f0f0f0;
+}
+
+.pt-2 {
+  padding-top: 8px;
+}
+
+/* Tab 樣式 */
+.discount-tab {
+  display: flex;
+}
+
+.ez-tab-content {
+  list-style: none;
+  display: flex;
+  padding: 0;
+}
+
+.ez-tab-item {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.ez-tab-item:hover {
+  color: #22c55e;
+}
+
+.active .ez-tab-item {
+  color: #22c55e;
+  font-weight: bold;
+}
+
+/* 說明連結樣式 */
+.text-gray-900 {
+  color: #1a1a1a;
+}
+
+.text-green-dark {
+  color: #16a34a;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.text-sm {
+  font-size: 14px;
+}
+
+.w-[18px] {
+  width: 18px;
+}
+
+.pb-2 {
+  padding-bottom: 8px;
+}
+
+/* 圖片樣式 */
+.no-coupons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px;
+}
+
+.no-coupons img {
+  width: 100px;
+  height: 100px;
+}
+
+.no-coupons p {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #555;
+}
+
+.no-coupons a {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #22c55e;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.no-coupons a:hover {
+  background-color: #16a34a;
+}
