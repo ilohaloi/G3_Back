@@ -21,6 +21,7 @@
             <label for="routeField">行程名称:</label>
             <input type="text" id="route_name" value="">
             <br>
+
             <label for="routeField">行程天數:</label>
             <input type="text" id="route_days" value="">
             <br>
@@ -42,7 +43,6 @@ route_id.value = routeId;
 const route_name = document.getElementById('route_name');
 const routeName = urlParams.get('name');
 route_name.value = routeName;
-
 
 
 const route_days = document.getElementById('route_days');
@@ -105,7 +105,9 @@ function displayUsers(users) {
                     "Content-Type": "application/json"
                 },
                 //JSON{id: route_id.value }id對應VO的設定
+
                 body: JSON.stringify({id: route_id.value ,name: route_name.value,price: route_price.value, days:route_days.value })
+
             });
             // 检查响应状态
             if (response.ok) {

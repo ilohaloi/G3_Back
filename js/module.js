@@ -1,6 +1,6 @@
 export async function sideBar() {
     try {
-        const response = await fetch('../component/SiderBar.html')
+        const response = await fetch('../component/siderBar.html')
         if (response.ok) {
             const data = await response.text();
             document.getElementById("wrapper").innerHTML = data;

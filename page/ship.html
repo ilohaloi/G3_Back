@@ -162,8 +162,7 @@
 
                 openRouteWindow(route) {
                     const id = `id=${route.id}`;
-                    const name = `name=${route.name}`;
-                    
+                    const name = `name=${route.name}`; 
                     const days = `days=${route.days}`;
                     const price = `price=${route.price}`;
                     window.open(
@@ -172,6 +171,7 @@
                         'width=600,height=600,left=200,top=100'
                     );
                 
+
                 },
                 openInsertWindow() {
                     window.open(
@@ -361,12 +361,14 @@
                     }
                 }
             },
+
             async mounted(){
                 try {
                         this.schedule = await getSchedule();
                     } catch (error) {
                         console.error('Failed to get products:', error); // 捕获并处理错误
                     }
+
             },
             watch: {
                 searchQuery: {

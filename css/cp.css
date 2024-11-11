@@ -1,5 +1,7 @@
-  /* 全局設置 */
-  .content {
+/* 未完工 */
+
+/* 全局設置 */
+.content {
     background: linear-gradient(to right, #74ebd5, #ACB6E5);
     color: #333;
     min-height: 100vh;
@@ -11,11 +13,11 @@
 
 /* 容器設置 */
 .container {
-    background-color: white;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    max-width: 1000px;
+    background-color: white;  /* 可選，讓內部更明顯 */
+    padding: 40px;  /* 適當增加內部 padding */
+    border-radius: 15px;  /* 可選，讓邊框圓滑 */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);  /* 添加陰影讓框更突出 */
+    max-width: 1000px;  /* 增加最大寬度，讓框變寬 */
     width: 100%;
     transition: transform 0.3s ease;
 }
@@ -199,115 +201,6 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
     background-color: #45a049;
-}
-
-
-#searchForm {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    padding: 20px;
-    background-color: #f7f9fc;
-    border: 1px solid #dfe3e8;
-    border-radius: 10px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: auto;
-}
-
-#searchForm label {
-    font-weight: 500;
-    color: #333;
-    position: relative;
-}
-
-/* 提示文字的樣式 */
-#searchForm label:last-of-type {
-    color: #888;
-    font-size: 18px;
-    grid-column: span 2; /* 讓提示文字佔據整個行 */
-    text-align: right; /* 將提示文字對齊到右邊 */
-}
-
-#searchForm input,
-#searchForm select {
-    padding: 8px;
-    width: 100%;
-    border: 1px solid #cbd5e0;
-    border-radius: 6px;
-    background-color: #fff;
-}
-
-#searchForm button {
-    grid-column: span 2;
-    padding: 12px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #5a67d8;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-#searchForm button:hover {
-    background-color: #4c51bf;
-}
-
-/* 1. 分頁按鈕組樣式 */
-.btn-group {
-    display: flex;
-    justify-content: center; /* 置中按鈕組 */
-    align-items: center;
-    margin: 20px 0;
-}
-
-/* 2. 分頁區塊樣式 */
-.pagination {
-    display: flex;
-    gap: 10px;
-    font-size: 1rem;
-    color: #333;
-}
-
-/* 3. 按鈕樣式 */
-#prevPageBtn, #nextPageBtn {
-    padding: 8px 12px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#prevPageBtn:hover, #nextPageBtn:hover {
-    background-color: #0056b3; /* 按鈕懸停效果 */
-}
-
-#pagination {
-    display: flex; /* 設置為 flex 排列按鈕 */
-    justify-content: center; /* 將按鈕置中對齊 */
-    gap: 10px; /* 按鈕間距 */
-    margin-top: 20px; /* 容器上方的間距 */
-}
-
-#pagination button {
-    padding: 8px 12px; /* 調整按鈕內邊距 */
-    background-color: #007bff; /* 按鈕背景色 */
-    color: #fff; /* 按鈕文字顏色 */
-    border: none; /* 移除按鈕邊框 */
-    border-radius: 5px; /* 按鈕圓角 */
-    cursor: pointer; /* 鼠標懸停時顯示指標 */
-    transition: background-color 0.3s ease; /* 添加懸停過渡效果 */
-}
-
-#pagination button:hover {
-    background-color: #0056b3; /* 懸停時背景顏色變暗 */
-}
-
-#pagination button:disabled {
-    background-color: #ccc; /* 禁用按鈕的背景顏色 */
-    cursor: not-allowed; /* 禁用按鈕的鼠標樣式 */
 }
 
 

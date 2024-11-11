@@ -10,7 +10,7 @@
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Tempusdominus Bootstrap 4 -->
@@ -30,6 +30,8 @@
 
   <script src="https://kit.fontawesome.com/a33d8d8a91.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="../css/main.css">
+
+  <link rel="stylesheet" href="../css/chat_back.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -39,12 +41,53 @@
   </script>
   <div id="wrapper"></div>
 
-  <div class="content">
-    <div id="app">
-      <router-view></router-view>
-    </div>
+
+  <div class="content-wrapper">
+    <section class="content">
+      <div class="container-fluid">
+        <!-- 主體結構 -->
+        <div class="main-container"> <!--父容器-->
+          <!-- 會員選擇區 -->
+          <div class="member-selection"><!-- 子容器 -->
+
+            <!-- 搜尋框區 -->
+            <div class="search-container">
+              <input type="text" id="search-input" placeholder="搜尋會員">
+            </div>
+
+            <!-- 新增的 Member Container -->
+            <div class="member-container">
+              <ul id="member-list">
+              </ul>
+            </div>
+          </div>
+
+
+          <!-- 聊天室區 -->
+          <div class="chat-container">
+            <div class="content-header">
+              <h1 class="m-0">聊天室 <span id="member-id-display"></span> </h1>
+            </div>
+            <div id="chat-box" class="chat-box">
+
+            </div>
+            <div id="input-box">
+              <input type="text" id="message-input" placeholder="輸入訊息...">
+              <button id="send-button">
+                <img src="https://img.icons8.com/?size=100&amp;id=39813&amp;format=png&amp;color=000000" alt="發送">
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 
+  <!-- <div class="content-body">
+        <div class="container"> -->
+  <!-- 主體結構 -->
+
+  <!-- ./wrapper -->
 
   <!-- jQuery -->
   <script src="../plugins/jquery/jquery.min.js"></script>
@@ -70,17 +113,12 @@
   <script src="../plugins/daterangepicker/daterangepicker.js"></script>
   <!-- Tempusdominus Bootstrap 4 -->
   <script src="../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-  <!-- Summernote -->
-  <script src="../plugins/summernote/summernote-bs4.min.js"></script>
   <!-- overlayScrollbars -->
   <script src="../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
   <!-- AdminLTE App -->
   <script src="../dist/js/adminlte.js"></script>
-
-
-  <!-- Main Sidebar Container -->
-
-
+  <!-- 這是聊天室的JS -->
+  <script src="../js/chat_back.js"></script>
 </body>
 
 </html>
