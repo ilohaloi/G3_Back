@@ -57,7 +57,9 @@
                     <input type="number" class="form-control" required min="1" max="999999999" v-model="travel.days">
                 </div>
                 <div class="form-group">
-                    <label for="route_days">文本:</label>
+
+                    <label for="route_depiction">文本:</label>
+
                     <div id="editor-2"></div>
                 </div>
             </div>
@@ -123,6 +125,8 @@
                         })
                             .then(response => {
                                 if (response.ok) {
+                                    window.location.reload();
+
                                     alert('新增成功');
                                     tihs.processing = false;
                                 } else {

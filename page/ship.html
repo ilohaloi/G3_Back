@@ -66,7 +66,6 @@
                             <option disabled value="">請選擇欄位</option>
                             <option value="id">編號</option>
                             <option value="name">名稱</option>
-                            <option value="depiction">描述</option>
                             <option value="days">天數小於</option>
                             <option value="price">價格小於</option>
                         </select>
@@ -81,7 +80,6 @@
                         <tr>
                             <th>編號</th>
                             <th>名稱</th>
-                            <th>描述</th>
                             <th>天數</th>
                             <th>價格</th>
                             <th>行程修改</th>
@@ -91,7 +89,6 @@
                         <tr v-for="(r, index) in paginatedRoute" :key="index">
                             <td>{{ r.id }}</td>
                             <td>{{ r.name }}</td>
-                            <td>{{ r.depiction }}</td>
                             <td>{{ r.days }}</td>
                             <td>{{ r.price }}</td>
                             <td>
@@ -165,16 +162,16 @@
 
                 openRouteWindow(route) {
                     const id = `id=${route.id}`;
-                    const name = `name=${route.name}`;
-                    const depiction = `depiction=${route.depiction}`;
+                    const name = `name=${route.name}`; 
                     const days = `days=${route.days}`;
                     const price = `price=${route.price}`;
                     window.open(
-                        `../component/route_PopWindow?${id}&${name}&${depiction}&${days}&${price}`,
-
+                        `../component/route_PopWindow.html?${id}&${name}&${days}&${price}`,
                         '商品更新',
                         'width=600,height=600,left=200,top=100'
                     );
+                
+
                 },
                 openInsertWindow() {
                     window.open(
@@ -256,7 +253,7 @@
                             <th>航班狀態</th>
                             <th>出港時間</th>
                             <th>駁船地點</th>
-                            <th>已訂房數</th>
+                            <th>剩餘空房</th>
                             <th>行程修改</th>
                         </tr>
                     </thead>
@@ -364,14 +361,14 @@
                     }
                 }
             },
-            async mounted() {
-                try {
-                    this.schedule = await getSchedule();
-                    console.log(this.schedule);
 
-                } catch (error) {
-                    console.error('Failed to get products:', error); // 捕获并处理错误
-                }
+            async mounted(){
+                try {
+                        this.schedule = await getSchedule();
+                    } catch (error) {
+                        console.error('Failed to get products:', error); // 捕获并处理错误
+                    }
+
             },
             watch: {
                 searchQuery: {

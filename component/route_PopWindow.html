@@ -21,9 +21,7 @@
             <label for="routeField">行程名称:</label>
             <input type="text" id="route_name" value="">
             <br>
-            <label for="routeField">行程描述:</label>
-            <input type="text" id="route_depiction" value="">
-            <br>
+
             <label for="routeField">行程天數:</label>
             <input type="text" id="route_days" value="">
             <br>
@@ -46,9 +44,6 @@ const route_name = document.getElementById('route_name');
 const routeName = urlParams.get('name');
 route_name.value = routeName;
 
-const route_depiction = document.getElementById('route_depiction');
-const routeDepiction = urlParams.get('depiction');
-route_depiction.value = routeDepiction;
 
 const route_days = document.getElementById('route_days');
 const routeDays = urlParams.get('days');
@@ -110,7 +105,9 @@ function displayUsers(users) {
                     "Content-Type": "application/json"
                 },
                 //JSON{id: route_id.value }id對應VO的設定
-                body: JSON.stringify({id: route_id.value ,name: route_name.value,price: route_price.value, depiction: route_depiction.value, days:route_days.value })
+
+                body: JSON.stringify({id: route_id.value ,name: route_name.value,price: route_price.value, days:route_days.value })
+
             });
             // 检查响应状态
             if (response.ok) {
